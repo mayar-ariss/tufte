@@ -1,20 +1,16 @@
 # tufte-skill
 
-An agent skill that applies [Edward Tufte's](https://www.edwardtufte.com/) data visualization principles when generating charts, plots, and graphs. Produces clean, honest, high-data-ink-ratio visualizations across the main charting libraries for JavaScript, Python and R — extended with modern screen-first standards for accessibility, responsiveness, and interactivity.
+**Your agent's charts, maps and diagrams, drawn by Edward Tufte's rules. Every rule names its source in his books, and says so plainly when a rule is not his.**
 
 ![The same data twice: a default chart with gridlines, a legend and markers on every point, and the Tufte version with direct labels and no chartjunk](_docs/before-after.png)
-
-**[Try the live demo](https://mayar-ariss.github.io/tufte-skill/)**: toggle between default and Tufte styling across ECharts, Chart.js, Plotly and D3.js, in light and dark mode.
-
-## Install
 
 ```bash
 npx skills add mayar-ariss/tufte-skill
 ```
 
-Works with any agent the [skills CLI](https://skills.sh) supports, including Claude Code, Cursor, Codex, GitHub Copilot and Gemini CLI. The original version is available with `npx skills add caylent/tufte-data-viz`.
+Works with Claude Code, Cursor, Codex, GitHub Copilot, Gemini CLI and any agent the [skills CLI](https://skills.sh) supports. Covers matplotlib, seaborn, Plotly, ggplot2, plotnine, Vega-Lite, Altair, Observable Plot, Recharts, ECharts, Chart.js and D3/SVG, plus maps and flowcharts, with accessibility, dark mode and responsive layout built in.
 
-> **About this fork.** An enhanced fork of [caylent/tufte-data-viz](https://github.com/caylent/tufte-data-viz), maintained by [@mayar-ariss](https://github.com/mayar-ariss), with bug fixes, an accessible palette and closer fidelity to Tufte. All credit for the original skill goes to its authors. See [what's different in this fork](#whats-different-in-this-fork).
+**[Live demo](https://mayar-ariss.github.io/tufte-skill/)**: toggle default and Tufte styling in ECharts, Chart.js, Plotly and D3, light and dark · [Examples](#examples) · [What it does](#what-it-does)
 
 ## Try it
 
@@ -28,9 +24,13 @@ Once installed, ask your agent for a chart the way you normally would. The skill
 
 ## Fair warning
 
-This skill is **opinionated by design**. It will remove your gridlines, delete your legends, reject your pie charts, and insist on serif fonts. It enforces a specific visual philosophy — Tufte's — not a neutral one. If you want total creative freedom over your chart styling, this is not the skill for you. If you want every chart to come out clean, honest, and readable without thinking about it, read on.
+This skill is **opinionated by design**. It will remove your gridlines, replace your legends with direct labels, reject your pie charts, and default to serif type. It enforces a specific visual philosophy — Tufte's — not a neutral one. If you want total creative freedom over your chart styling, this is not the skill for you. If you want every chart to come out clean, honest, and readable without thinking about it, read on.
 
 ## Examples
+
+Gridlines fade, legends become direct labels, chartjunk dissolves:
+
+<img src="_docs/before-after-animated.gif" width="640" alt="Animated transition from default chart styling to Tufte principles: gridlines fade, the legend becomes direct labels">
 
 <table>
   <tr>
@@ -62,14 +62,6 @@ This skill is **opinionated by design**. It will remove your gridlines, delete y
 Every text and data color meets the skill's own contrast rule: 4.5:1 for text, 3:1 for data marks. `scripts/check_contrast.py` checks the documented palette so it can't drift.
 
 <img src="_docs/tufte-palette-contrast.png" alt="Dot plot of each palette color's contrast ratio before and after the fix, in light and dark mode; every color now sits at or beyond its 3:1 or 4.5:1 line">
-
-### See it in motion
-
-Gridlines fade, legends become direct labels, chartjunk dissolves:
-
-<img src="_docs/before-after-animated.gif" width="640" alt="Animated transition from default chart styling to Tufte principles">
-
-The [live demo](https://mayar-ariss.github.io/tufte-skill/) shows these transitions in each library. ([Caylent's original demo](https://caylent.github.io/tufte-data-viz/) uses the earlier palette.)
 
 ## What it does
 
@@ -148,18 +140,6 @@ Then 22 universal rules in three tiers, plus guidance on chart types and diagram
 | `scripts/check_contrast.py` | Checks the documented palette against the contrast minimums |
 | `_docs/` | Showcase figures and the script that generates them |
 
-## What's different in this fork
-
-The improvements are being offered back upstream ([PR #1](https://github.com/caylent/tufte-data-viz/pull/1), [issue #2](https://github.com/caylent/tufte-data-viz/issues/2)).
-
-- **Bug fixes:** Chart.js elements no longer render invisible, sparkline examples are no longer upside down, deprecated ECharts options are replaced, and broken seaborn and Recharts snippets are fixed.
-- **Accessible palette:** every text and data color now meets the skill's own contrast rule (4.5:1 text, 3:1 data), with a dark-mode categorical palette and a checker script (`scripts/check_contrast.py`).
-- **Accessibility and motion in every library guide:** text alternatives and no load-in animation by default, so charts follow rules 16 and 18 out of the box.
-- **Titles that state the finding** in every example (rule 20), plus a few accuracy corrections.
-- **Showcase figures regenerated** with the new palette; three figure titles that contradicted their own data are corrected.
-- **Showcase figures audited against the skill:** every figure now carries a source line and its units, range-frame axes drop ticks outside the data, the slopegraph's shares sum to 100%, the small multiples share a January = 100 reference line, and a data map (John Snow's cholera deaths) shows `rules/maps.md` at work.
-- **Faithful to Tufte:** every rule names its source (Tufte, convention or extension), his six graphical integrity principles are added, and misattributed rules and misquotations are corrected. Two rules that were stricter than Tufte are brought back to his text and practice: a key stays for an encoding that cannot be labeled in place (his own redrawn cancer maps carry one), and serif type is the default rather than a ban on sans serif (he set tables in Gill Sans).
-
 ## Contributing
 
 Issues and pull requests are welcome. Before opening a PR:
@@ -167,6 +147,10 @@ Issues and pull requests are welcome. Before opening a PR:
 - **Changed a color?** Update `rules/typography-and-color.md`, then run `python3 scripts/check_contrast.py`. It exits non-zero if any text or data color misses its minimum.
 - **Changed the showcase figures?** Run `python3 _docs/generate_showcase.py` to regenerate every image in `_docs/`.
 - **Changed a chart title?** Check it against the data. Rule 20 asks titles to state the finding, so a title that misstates the data is a bug.
+
+## Credits
+
+tufte-skill began as a fork of [caylent/tufte-data-viz](https://github.com/caylent/tufte-data-viz) by Caylent, and all credit for the original skill goes to its authors (`npx skills add caylent/tufte-data-viz`). Since then it has added rules for data maps (`rules/maps.md`) and analytical diagrams (`rules/diagrams-flowcharts.md`), an accessible palette with a contrast checker, bug fixes across the library guides, audited showcase figures, and a source label on every rule, with misattributions corrected and two rules that were stricter than Tufte brought back to his text.
 
 ## Based on
 
@@ -177,4 +161,4 @@ Issues and pull requests are welcome. Before opening a PR:
 
 ## License
 
-MIT. Original work © 2026 Caylent; see [LICENSE](LICENSE). Fork changes are released under the same license.
+MIT; see [LICENSE](LICENSE). Original work © 2026 Caylent; additions and changes in this repository © 2026 Mayar Ariss, under the same license.
