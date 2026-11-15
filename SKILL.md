@@ -1,5 +1,5 @@
 ---
-name: tufte-data-viz
+name: tufte-skill
 description: >-
   Use when creating, reviewing, or styling charts, graphs, dashboards,
   sparklines, maps, flowcharts, diagrams, or any data visualization. Applies to Recharts, ECharts,
