@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>tufte-data-viz - Edward Tufte's Data Visualization Principles for Every Charting Library</title>
+<title>tufte-skill - Edward Tufte's Data Visualization Principles for Every Charting Library</title>
 <meta name="description" content="Interactive demo of Tufte data visualization principles applied across ECharts, Chart.js, Plotly, and D3.js. See before/after transformations live.">
 
 <!-- ET Book font -->
@@ -516,10 +516,10 @@ body {
   <header class="site-header">
     <div class="header-row">
       <div>
-        <h1 class="site-title">tufte-data-viz</h1>
+        <h1 class="site-title">tufte-skill</h1>
         <p class="site-subtitle">Edward Tufte's data visualization principles, applied across every major charting library.</p>
-        <code class="install-cmd" role="button" tabindex="0" aria-label="Copy install command: npx skills add mayar-ariss/tufte-data-viz" onclick="copyInstall(this)" onkeydown="if(event.key==='Enter')copyInstall(this)">
-          npx skills add mayar-ariss/tufte-data-viz
+        <code class="install-cmd" role="button" tabindex="0" aria-label="Copy install command: npx skills add mayar-ariss/tufte-skill" onclick="copyInstall(this)" onkeydown="if(event.key==='Enter')copyInstall(this)">
+          npx skills add mayar-ariss/tufte-skill
           <span class="copy-hint">Click to copy</span>
         </code>
       </div>
@@ -645,7 +645,7 @@ body {
        ============================================================ -->
   <footer class="site-footer">
     <span>Built with Tufte's principles. No chartjunk was harmed.</span>
-    <a href="https://github.com/mayar-ariss/tufte-data-viz" target="_blank" rel="noopener noreferrer">View on GitHub</a> · enhanced fork of <a href="https://github.com/caylent/tufte-data-viz" target="_blank" rel="noopener noreferrer">caylent/tufte-data-viz</a>
+    <a href="https://github.com/mayar-ariss/tufte-skill" target="_blank" rel="noopener noreferrer">View on GitHub</a> · based on <a href="https://github.com/caylent/tufte-data-viz" target="_blank" rel="noopener noreferrer">caylent/tufte-data-viz</a>
   </footer>
 
 </div><!-- /.page-wrapper -->
@@ -703,7 +703,7 @@ const baState = { echarts: false, chartjs: false, plotly: false, d3: false };
 
 /* Copy install command */
 function copyInstall(el) {
-  navigator.clipboard.writeText('npx skills add mayar-ariss/tufte-data-viz').then(() => {
+  navigator.clipboard.writeText('npx skills add mayar-ariss/tufte-skill').then(() => {
     el.querySelector('.copy-hint').textContent = 'Copied!';
     el.classList.add('copied');
     setTimeout(() => {
