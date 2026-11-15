@@ -1,15 +1,15 @@
-# tufte-data-viz
+# tufte-skill
 
 An agent skill that applies [Edward Tufte's](https://www.edwardtufte.com/) data visualization principles when generating charts, plots, and graphs. Produces clean, honest, high-data-ink-ratio visualizations across the main charting libraries for JavaScript, Python and R — extended with modern screen-first standards for accessibility, responsiveness, and interactivity.
 
 ![The same data twice: a default chart with gridlines, a legend and markers on every point, and the Tufte version with direct labels and no chartjunk](_docs/before-after.png)
 
-**[Try the live demo](https://mayar-ariss.github.io/tufte-data-viz/)**: toggle between default and Tufte styling across ECharts, Chart.js, Plotly and D3.js, in light and dark mode.
+**[Try the live demo](https://mayar-ariss.github.io/tufte-skill/)**: toggle between default and Tufte styling across ECharts, Chart.js, Plotly and D3.js, in light and dark mode.
 
 ## Install
 
 ```bash
-npx skills add mayar-ariss/tufte-data-viz
+npx skills add mayar-ariss/tufte-skill
 ```
 
 Works with any agent the [skills CLI](https://skills.sh) supports, including Claude Code, Cursor, Codex, GitHub Copilot and Gemini CLI. The original version is available with `npx skills add caylent/tufte-data-viz`.
@@ -69,7 +69,7 @@ Gridlines fade, legends become direct labels, chartjunk dissolves:
 
 <img src="_docs/before-after-animated.gif" width="640" alt="Animated transition from default chart styling to Tufte principles">
 
-The [live demo](https://mayar-ariss.github.io/tufte-data-viz/) shows these transitions in each library. ([Caylent's original demo](https://caylent.github.io/tufte-data-viz/) uses the earlier palette.)
+The [live demo](https://mayar-ariss.github.io/tufte-skill/) shows these transitions in each library. ([Caylent's original demo](https://caylent.github.io/tufte-data-viz/) uses the earlier palette.)
 
 ## What it does
 
