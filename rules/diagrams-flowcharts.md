@@ -4,7 +4,7 @@ Load this file for flowcharts, process maps, organization charts, network diagra
 
 These draw on different parts of Tufte's work than statistical charts do. *Visual Explanations* (VE) is about "pictures of verbs": mechanism, process, cause and effect. *Envisioning Information* (EI) covers layering and separation, and micro/macro reading. *Beautiful Evidence* (BE), ch. 3, "Links and Causal Arrows: Ambiguity in Action", is about connectors; its list of practices for analytical diagrams (pp. 78–79) is followed by rules 1–3 and 10–12 below. Every rule below is Tufte's and names its source. Where Tufte gives no rule, this file says so instead of supplying one.
 
-**What carries over from SKILL.md:** data-ink and chartjunk (no 3D, shadows or gradients on shapes; VDQI ch. 4–5); direct labels instead of legends (rule 7: the meaning of a link style goes on the link; a key only if the styles are too many to label in place, unframed); explanations written on the diagram (rule 6); layering and separation (rule 11); muted color with strong color only in small areas (rule 12); type (rules 13 and 21: upper-and-lower case, words spelled out, running horizontally, in Helvetica at the journal's sizes); the final width in millimeters (rule 20); and vector export with embedded fonts (rule 25). Diagram tools often default to all-caps, abbreviated or rotated labels; the rule still applies.
+**What carries over from SKILL.md:** data-ink and chartjunk (no 3D, shadows or gradients on shapes; VDQI ch. 4–5); direct labels instead of key boxes, in black (rule 7: name each element on the diagram; a key only if the styles are too many to label in place, unframed); labels on the diagram, explanations in the figure legend (rule 6, Nature); layering and separation (rule 11); muted color with strong color only in small areas (rule 12); type (rules 13 and 21: upper-and-lower case, words spelled out, running horizontally, in Helvetica or Arial at 5–7 pt); the final width in millimeters (rule 20); and vector export with embedded fonts (rule 25). Diagram tools often default to all-caps, abbreviated or rotated labels; the rule still applies.
 
 **What does not apply:** the rules about axes, baselines, range frames, aspect ratio and the lie factor as a ratio of plotted effects. Those concern quantities plotted against scales. Where a diagram does carry a quantity, rule 13 applies.
 
@@ -53,7 +53,7 @@ A process diagram should explain how one step produces the next, not only show t
 
 *Source: Tufte, BE ch. 4, "Words, Numbers, Images — Together"; BE ch. 1 (mapped pictures: labels belong on the image); VDQI ch. 9 (pp. 180–181).*
 
-Place the explanation of an element beside that element on the diagram, so the reader is not sent to a legend or to a paragraph elsewhere to decode it. What belongs below the diagram is its documentation (rule 15) and notes that would crowd the drawing; Tufte's own pages carry sources and asides in the margin, next to the image they concern, not on a separate page.
+Name each element on the diagram itself, with text labels rather than decorative icons (Journal, Nature figure guide), so the reader never decodes a key. Explanations, notes and the documentation (rule 15) go in the figure legend, which Nature asks for in place of text on the figure (SKILL.md rule 6). This departs from Tufte, whose own pages carry asides beside the image they concern.
 
 ### 8. Fix clutter by design, not by removing content; design for two readings
 
@@ -118,7 +118,7 @@ The first principle of analytical design is comparison, and "at the heart of qua
 
 Tufte's fifth principle of analytical design is documentation: provide a detailed title, indicate the authors and sponsors, document the data sources, show complete measurement scales, point out relevant issues (BE p. 133). A diagram is a presentation of evidence like any other, and his questions for a causal diagram include whether its links are "documented" (p. 79).
 
-- In a paper, the caption carries the title and the documentation (SKILL.md rule 22): what process or system is shown and its scope; the source of the description (the document, data or people it came from); known gaps or open questions, stated. On the diagram itself: the scale of any quantity shown (rule 13) and the labels on each element and link.
+- In a paper, the figure legend carries the title and the documentation (SKILL.md rule 22): what process or system is shown and its scope; the source of the description (the document, data or people it came from); known gaps or open questions, stated. On the diagram itself: the scale of any quantity shown (rule 13) and the labels on each element and link.
 
 ## Where Tufte gives no rule
 
@@ -181,6 +181,6 @@ Colors and fonts come from `rules/typography-and-color.md`. Export to PDF or SVG
 - [ ] Explanations sit on the diagram, next to what they explain (BE ch. 4)
 - [ ] A flow that stands for a quantity has a width proportional to it, labeled with the number (VDQI ch. 2; BE ch. 5)
 - [ ] Alternatives or before-and-after are drawn as parallel multiples on one layout (BE ch. 5; EI ch. 4; VE ch. 5)
-- [ ] Title, scope and source in the caption; scale of any quantity on the diagram (BE ch. 5; SKILL.md rule 22)
+- [ ] Title, scope and source in the figure legend; scale of any quantity on the diagram (BE ch. 5; SKILL.md rule 22)
 - [ ] A large diagram reads at a distance and up close (EI ch. 2)
 - [ ] The diagram explains a mechanism or relationship, not only that things connect (VE; Tufte's test)

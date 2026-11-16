@@ -2,9 +2,9 @@
 
 The setup and helpers are read from rules/matplotlib.md and executed here, so the
 figures are drawn by the same code the skill gives an agent. Every figure is
-drawn at a journal width in millimeters, carries no title (the README caption
-does that job, as a journal caption would), and is saved as a 600 dpi PNG for
-the README. Claims in the README captions are checked against the data below.
+drawn at Nature's widths in millimeters, carries labels only (the README legend,
+in Nature's form, carries the title, values and n), and is saved as a 600 dpi PNG
+for the README. Numbers in the README legends are checked against the data below.
 
 Usage: python3 _docs/generate_showcase.py
 """
@@ -69,23 +69,18 @@ with plt.rc_context(matplotlib.rcParamsDefault):
 
 # b: the same data, drawn by this skill
 ax_b = fig.add_axes([0.60, 0.17, 0.37, 0.62])
-summary = strip_with_ci(ax_b, groups, colors={"Drug A": HIGHLIGHT}, write_means=True)
+summary = strip_with_ci(ax_b, groups, colors={"Drug A": HIGHLIGHT})
 range_frame(ax_b, y=np.concatenate(list(groups.values())), label_ends=True, fmt="{:.2f}")
-horizontal_ylabel(ax_b, "Response (a.u.)")
-ax_b.text(1, 1.04, "n = 8 cultures per group", transform=ax_b.transAxes, ha="right",
-          va="bottom", color=GRAY)
-# Explanations on the graphic, beside what they explain (SKILL.md rule 6)
-drug_a = np.sort(groups["Drug A"])
-note(ax_b, 0.86, drug_a[4:].mean(), "4 responded", dx=-6, dy=0, ha="right")
-note(ax_b, 1.0, drug_a[:4].min(), "4 did not", dx=0, dy=-9, ha="center")
+horizontal_ylabel(ax_b, "Response (a.u.)")   # labels only; values and n in the legend (rule 6)
 
 fig.text(0.015, 0.92, "a", fontsize=8, fontweight="bold")
 fig.text(0.535, 0.92, "b", fontsize=8, fontweight="bold")
 
-# Caption check: the two Drug A clusters do not overlap, and its mean falls
+# Legend check: the two Drug A clusters do not overlap, and its mean falls
 # between them, where no culture lies
 low, high = np.sort(groups["Drug A"])[:4], np.sort(groups["Drug A"])[4:]
 assert low.max() < summary["Drug A"][0] < high.min()
+assert [f"{summary[k][0]:.2f}" for k in groups] == ["0.96", "1.30", "1.33"]   # README legend
 save(fig, "before-after.png")
 
 
@@ -132,7 +127,6 @@ for ax, (diet, (m, h)) in zip(axes, stats_by_diet.items()):
         ax.plot(weeks, mouse, color=LIGHT, lw=0.3, zorder=2)
     ax.plot(weeks, m, color=HIGHLIGHT if diet == "High fat" else "black", lw=1.0, zorder=3)
     ax.text(0, 1.06, diet, transform=ax.transAxes, ha="left", va="bottom")
-    direct_label(ax, weeks[-1], m[-1], f"{m[-1]:.1f}", dx=3)
     range_frame(ax, x=weeks, y=[lo, hi])
     ax.set_xticks([0, 4, 8, 12])
     ax.set_ylim(lo - 0.5, hi + 0.5)
@@ -144,12 +138,10 @@ for ax in axes[1:]:
 axes[0].text(0, 1.22, "Body mass (g)", transform=axes[0].transAxes, ha="left", va="bottom")
 fig.text(0.5, 0.02, "Week", ha="center")
 fig.subplots_adjust(left=0.05, right=0.975, bottom=0.2, top=0.72, wspace=0.18)
-axes[0].text(12, band[0] - 0.3, "Week-0 range", ha="right", va="top", fontsize=5, color=GRAY)
-axes[-1].text(1, 1.06, "n = 8 mice per diet", transform=axes[-1].transAxes, ha="right",
-              va="bottom", color=GRAY)
 
 final = {d: m[-1] for d, (m, _) in stats_by_diet.items()}
 assert max(final, key=final.get) == "High fat" and min(final, key=final.get) == "Restricted"
+assert [f"{v:.1f}" for v in final.values()] == ["26.3", "31.7", "29.2", "24.0"]   # README legend
 save(fig, "small-multiples.png")
 
 
@@ -173,20 +165,17 @@ ax_b = fig.add_axes([0.58, 0.15, 0.40, 0.68])
 paired_plot(ax_a, before, after, labels=("Before", "After"), highlight=~fell)
 range_frame(ax_a, y=np.concatenate([before, after]), label_ends=True, fmt="{:.0f}")
 horizontal_ylabel(ax_a, "Systolic pressure (mmHg)")
-note(ax_a, 1.02, after[~fell].max(), "2 rose", dx=6, dy=0, color=HIGHLIGHT)
-note(ax_a, 1.02, np.median(after[fell]), "10 fell", dx=6, dy=0)
+direct_label(ax_a, 1, after[~fell].max(), "Rose", dx=6)       # labels, black (rule 7)
+direct_label(ax_a, 1, np.median(after[fell]), "Fell", dx=6)
 
 quartile_plot(ax_b, dist)
-for i, values in enumerate(dist.values()):           # the medians, written in (rule 6)
-    ax_b.text(i + 0.1, np.median(values), f"{np.median(values):.1f}", va="center", fontsize=5.5)
 range_frame(ax_b, y=np.concatenate(list(dist.values())), label_ends=True, fmt="{:.1f}")
 horizontal_ylabel(ax_b, "Concentration (µg/L)")
-ax_b.text(1, 1.04, "n = 40 per site", transform=ax_b.transAxes, ha="right",
-          va="bottom", color=GRAY)
 ax_b.set_xlim(-0.4, len(dist) - 0.45)
 
 panel_letters(fig, [ax_a, ax_b], dx=-0.08, dy=0.08)
 assert fell.sum() == 10 and (~fell).sum() == 2, (fell.sum(), (~fell).sum())  # README: 10 of 12
+assert [f"{np.median(v):.1f}" for v in dist.values()] == ["9.7", "10.9", "11.9", "13.6"]   # README legend
 save(fig, "tufte-designs.png")
 
 
@@ -214,21 +203,25 @@ segs = {}
 for r in streets:
     segs.setdefault(r["street"], []).append((float(r["x"]), float(r["y"])))
 
-# The README caption's numbers, computed: deaths nearest each pump (straight line)
+# The README legend's numbers, computed: deaths nearest each pump (straight line)
 xs = [p[0] for s in segs.values() for p in s]
 ys = [p[1] for s in segs.values() for p in s]
 nearest = np.hypot(dx[:, None] - px, dy[:, None] - py).argmin(axis=1)
 counts = np.bincount(nearest, minlength=len(pumps))
 broad = plabels.index("Broad St")
 assert counts.argmax() == broad
+assert dict(zip(plabels, counts.tolist())) == {   # README legend
+    "Broad St": 359, "So Soho": 64, "Crown Chapel": 61, "Briddle St": 27, "Oxford St #2": 24,
+    "Warwick": 16, "Oxford St #1": 12, "Gt Marlborough": 6, "Vigo St": 4, "Dean St": 2,
+    "Coventry St": 2, "Castle St E": 1, "Oxford Market": 0}, dict(zip(plabels, counts.tolist()))
 print(f"cholera: {counts[broad]} of {len(deaths)} nearest Broad St; next {np.sort(counts)[-2]}")
 
 fig = plt.figure(figsize=(120 * MM, 116 * MM))
 ax = fig.add_axes([0.01, 0.01, 0.98, 0.98])
 ax.add_collection(LineCollection(list(segs.values()), colors="#c4c4c4", linewidths=0.4, zorder=1))
 ax.scatter(dx, dy, s=1.6, color="black", linewidths=0, zorder=3)
-# Each pump labeled with its count of nearest deaths, zeros included (rules 4 and 6)
-plabels_n = [f"{lab}: {n}" for lab, n in zip(plabels, counts)]
+# Each pump named on the map, in black; the counts go in the legend (rules 6, 7)
+plabels_n = plabels
 for i, (x0, y0, lab) in enumerate(zip(px, py, plabels_n)):
     if i == broad:
         continue
@@ -236,34 +229,34 @@ for i, (x0, y0, lab) in enumerate(zip(px, py, plabels_n)):
     xmax = max(float(r["x"]) for r in streets)
     off = -3 if lab.startswith("Gt Marlborough") or x0 + 0.14 * len(lab) > xmax else 3
     ax.annotate(lab, xy=(x0, y0), xytext=(off, 2), textcoords="offset points",
-                ha="right" if off < 0 else "left", fontsize=5, color=GRAY, zorder=5)
+                ha="right" if off < 0 else "left", fontsize=5, color="black", zorder=5)
 ax.scatter(px[broad], py[broad], marker="+", s=45, color=HIGHLIGHT, linewidths=1.2, zorder=6)
-# Label in the nearest clear space (SKILL.md rule 6): the closest offset whose text
-# box, about 3.1 by 0.7 map units, stays on the map and covers no death, pump or pump label
+# Label in the nearest clear space: the closest offset whose text box, about
+# 2.4 by 0.7 map units, stays on the map and covers no death, pump or pump label
 bx, by = px[broad], py[broad]
 obstacles = [(x0 - 0.2, x0 + 0.25 + 0.14 * len(lab), y0 - 0.25, y0 + 0.45)
              for x0, y0, lab in zip(px, py, plabels_n)]
 
 
 def clear(x0, y0):
-    if x0 + 3.0 > max(xs) or x0 < min(xs):          # stay inside the map
+    if x0 + 2.4 > max(xs) or x0 < min(xs):          # stay inside the map
         return False
-    if ((dx > x0 - 0.1) & (dx < x0 + 3.0) & (abs(dy - y0) < 0.35)).any():
+    if ((dx > x0 - 0.1) & (dx < x0 + 2.4) & (abs(dy - y0) < 0.35)).any():
         return False
-    return not any(a < x0 + 3.0 and x0 - 0.1 < b and c < y0 + 0.35 and y0 - 0.35 < d
+    return not any(a < x0 + 2.4 and x0 - 0.1 < b and c < y0 + 0.35 and y0 - 0.35 < d
                    for a, b, c, d in obstacles)
 
 
 spots = [(np.hypot(ox, oy), ox, oy) for ox in np.arange(-4, 4.1, 0.25)
          for oy in np.arange(-4, 4.1, 0.25) if np.hypot(ox, oy) >= 1 and clear(bx + ox, by + oy)]
 _, ox, oy = min(spots)
-ax.annotate(f"Broad St pump: {counts[broad]}", xy=(bx, by), xytext=(bx + ox, by + oy), textcoords="data",
-            fontsize=6, color=HIGHLIGHT, va="center", zorder=6,
-            arrowprops=dict(arrowstyle="-", color=HIGHLIGHT, lw=0.4, shrinkA=1, shrinkB=3))
+ax.annotate("Broad St pump", xy=(bx, by), xytext=(bx + ox, by + oy), textcoords="data",
+            fontsize=6, color="black", va="center", zorder=6,
+            arrowprops=dict(arrowstyle="-", color="black", lw=0.4, shrinkA=1, shrinkB=3))
 xn, yn = max(xs) - 0.5, max(ys) - 1.6
 ax.annotate("", xy=(xn, yn + 0.9), xytext=(xn, yn),
             arrowprops=dict(arrowstyle="-|>", color=GRAY, lw=0.5))
-ax.text(xn, yn + 1.0, "N (approx.)", ha="center", va="bottom", fontsize=5, color=GRAY)
+ax.text(xn, yn + 1.0, "N (approx.)", ha="center", va="bottom", fontsize=5, color="black")
 ax.set_xlim(min(xs) - 0.2, max(xs) + 0.2)
 ax.set_ylim(min(ys) - 0.2, max(ys) + 0.2)
 ax.set_aspect("equal")
