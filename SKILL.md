@@ -2,7 +2,8 @@
 name: tufte-skill
 description: >-
   Use when creating, reviewing, or styling charts, graphs, dashboards,
-  sparklines, maps, flowcharts, diagrams, or any data visualization. Applies to Recharts, ECharts,
+  sparklines, maps, flowcharts, diagrams, or any data visualization, including
+  figures for scientific articles, journals, preprints and theses. Applies to Recharts, ECharts,
   Chart.js, matplotlib, seaborn, Plotly, ggplot2, plotnine, Vega-Lite, Altair,
   Observable Plot, D3.js, and SVG. Enforces Tufte
   principles (data-ink ratio, direct labeling, range-frame axes) plus
@@ -17,6 +18,8 @@ Apply Edward Tufte's principles whenever generating or reviewing code that rende
 **Flowcharts and diagrams:** read `rules/diagrams-flowcharts.md` instead of applying the chart rules below. Rules about axes, baselines, range frames, aspect ratio and the lie factor concern quantities on scales and do not apply to diagrams.
 
 **Maps:** for any display on geographic space (choropleth, dot, symbol, flow or small-multiple maps), also read `rules/maps.md`. Its rules are drawn only from Tufte's writing on data maps.
+
+**Scientific articles:** for a figure in a journal article, preprint, thesis or conference paper, also read `rules/scientific-articles.md`. This file's defaults are written for screens. That file keeps Tufte's integrity, data-ink and analytical-design principles and replaces the screen defaults with journal practice: a white page, Helvetica, widths in millimeters, the title and documentation in the caption, uncertainty shown and defined, and vector export. Where it departs from Tufte (Helvetica instead of serif type), it says so and why. Rules 7, 9, 10, 14, 15 and 17–21 below give way to it.
 
 ## Workflow
 
@@ -50,6 +53,8 @@ Every rule below names its source, so Tufte's principles are never confused with
 - **Tufte** — stated in Tufte's books, cited by book and chapter: *VDQI* = *The Visual Display of Quantitative Information* (1983; 2nd ed. 2001), *EI* = *Envisioning Information* (1990), *VE* = *Visual Explanations* (1997), *BE* = *Beautiful Evidence* (2006). Tufte's fifth book, *Seeing with Fresh Eyes* (2020), is not yet drawn on here.
 - **Convention** — common practice in Tufte-style work, but not stated by Tufte. Specific values (hex colors, sizes, opacities, counts) are always this skill's defaults.
 - **Extension** — added by this skill's authors for screens and content. Not from Tufte.
+
+`rules/scientific-articles.md` adds two labels for figures in papers: **Journal** (a journal's author guidelines) and **Literature** (published statistics and visualization research, cited by author and year).
 
 ---
 
@@ -318,7 +323,7 @@ For the full table with per-library detection patterns and one-liner fixes, see 
 
 ## Validation checklist
 
-Before presenting any chart, verify:
+Before presenting any chart, verify the items below. For a figure in a scientific article, use the checklist in `rules/scientific-articles.md` for background, title, type, size and screen behaviour, and keep the rest.
 
 - [ ] Lengths and areas are proportional to the values (lie factor ≈ 1); bars and areas start at zero
 - [ ] Money over time is shown in deflated, standardized units, or the nominal units are stated
@@ -360,5 +365,6 @@ Before presenting any chart, verify:
 - `rules/small-multiples-sparklines.md` — layout patterns for small multiples, sparklines, slopegraphs
 - `rules/diagrams-flowcharts.md` — flowcharts, process maps, org charts and networks, from Tufte's writing on connectors and layering
 - `rules/maps.md` — choropleth, dot, flow and small-multiple maps, from Tufte's writing on data maps (Snow, Minard, the Tokyo mesh maps, Imhof's color rules)
+- `rules/scientific-articles.md` — figures for journal articles: Helvetica, millimeter widths, captions, error bars and intervals, log scales, color-blind-safe palettes, vector export; each rule cited to Tufte, journal guidelines or the literature
 
-**Working examples** in `examples/` — for Recharts, ECharts, Chart.js, matplotlib and Plotly, plus an inline SVG sparkline. The other libraries' rule files contain complete examples.
+**Working examples** in `examples/` — for Recharts, ECharts, Chart.js, matplotlib and Plotly, plus an inline SVG sparkline and a journal figure (`examples/matplotlib-publication.py`). The other libraries' rule files contain complete examples.
