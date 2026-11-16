@@ -1,60 +1,51 @@
 ---
-name: tufte-skill
+name: tufte
 description: >-
-  Use when creating, reviewing, or styling charts, graphs, dashboards,
-  sparklines, maps, flowcharts, diagrams, or any data visualization, including
-  figures for scientific articles, journals, preprints and theses. Applies to Recharts, ECharts,
-  Chart.js, matplotlib, seaborn, Plotly, ggplot2, plotnine, Vega-Lite, Altair,
-  Observable Plot, D3.js, and SVG. Enforces Tufte
-  principles (data-ink ratio, direct labeling, range-frame axes) plus
-  modern screen-first standards (accessibility, responsive, dark mode).
+  Use when creating, reviewing or styling figures for scientific articles,
+  preprints, theses, conference papers and their supplementary material:
+  plots, multi-panel figures, small multiples, maps and schematic diagrams.
+  Applies Edward Tufte's principles (graphical integrity, data-ink, analytical
+  design) together with journal requirements (Nature, Science, PLOS) and the
+  statistics literature on showing data and uncertainty. Covers matplotlib,
+  seaborn, ggplot2 and plotnine. Helvetica, widths in millimeters, captions,
+  error bars and confidence intervals, log scales, color-blind-safe palettes,
+  vector export with embedded fonts.
 allowed-tools: Read, Glob, Grep
 ---
 
-# Tufte Data Visualization
+# Tufte: figures for scientific articles
 
-Apply Edward Tufte's principles whenever generating or reviewing code that renders data visually. This skill covers charts of data, and flowcharts and other box-and-arrow diagrams; it does not cover slide/presentation design.
+Apply these rules whenever you generate or review code that draws a figure for a scientific article, preprint, thesis, conference paper or supplementary material. The page is printed or read as a PDF, set in narrow columns, and the journal sets the type, the sizes and the file format. Tufte wrote about printed graphics, and many of his central examples are scientific (Snow's cholera map, Minard's map of the Russian campaign, the Challenger O-ring data), so his principles carry over directly. This skill adds what a journal page requires and what the statistics literature asks of figures that carry evidence.
 
-**Flowcharts and diagrams:** read `rules/diagrams-flowcharts.md` instead of applying the chart rules below. Rules about axes, baselines, range frames, aspect ratio and the lie factor concern quantities on scales and do not apply to diagrams.
+This skill is not for dashboards, web pages or slides.
 
-**Maps:** for any display on geographic space (choropleth, dot, symbol, flow or small-multiple maps), also read `rules/maps.md`. Its rules are drawn only from Tufte's writing on data maps.
+**Diagrams and schematics:** read `rules/diagrams-flowcharts.md`. Rules about axes, baselines and the lie factor concern quantities on scales and do not apply to diagrams.
 
-**Scientific articles:** for a figure in a journal article, preprint, thesis or conference paper, also read `rules/scientific-articles.md`. This file's defaults are written for screens. That file keeps Tufte's integrity, data-ink and analytical-design principles and replaces the screen defaults with journal practice: a white page, Helvetica, widths in millimeters, the title and documentation in the caption, uncertainty shown and defined, and vector export. Where it departs from Tufte (Helvetica instead of serif type), it says so and why. Rules 7, 9, 10, 14, 15 and 17–21 below give way to it.
+**Maps:** for any display on geographic space, also read `rules/maps.md`.
 
 ## Workflow
 
-Follow these steps in order when creating any chart:
+Follow these steps in order.
 
-### Step 1: Identify the message
-
-Before writing code, determine:
-1. The key finding or trend the chart must make visible.
-2. The comparison context — a baseline, prior period, target, or peer group. A number without context is meaningless.
-3. The chart type that best fits the data structure (see Chart type guidance below).
-
-### Step 2: Apply graphical integrity, then the universal rules
-
-Check the chart against Tufte's graphical integrity principles below, then his data-ink principles, then apply the universal rules. Every universal rule is a default — deviate only when the user explicitly requests otherwise.
-
-### Step 3: Apply library-specific config
-
-Use the Library quick reference table to find the essential overrides for the target library. For complete code examples and helper functions, read ONE rule file from `rules/` matching the library.
-
-### Step 4: Validate
-
-Run through the validation checklist at the bottom of this file before presenting the chart.
-
----
+1. **Identify the finding and the comparison.** What must the reader see, and compared with what? Use only comparisons that exist in the data or that the user supplies; never invent a target, baseline or reference value.
+2. **Identify the target journal.** If the user names one, its current author guide overrides the defaults here (`rules/journals.md`). If none is named, draw at 89 mm (single column) or 183 mm (double column) in 5–7 pt Helvetica, which suits most journals.
+3. **Respect an existing figure style.** If the user's project already has one (a matplotlibrc, a ggplot2 theme, a lab template, earlier figures in the same paper), keep its look and apply the rules on integrity, uncertainty and documentation. Apply the full style only when asked or when there is none.
+4. **Choose the form.** See Chart types below. A sentence or a table is sometimes better (rule 20).
+5. **Apply graphical integrity, data-ink and the rules below,** then the library setup: read ONE of `rules/matplotlib.md` or `rules/ggplot2-plotnine.md`.
+6. **Write the caption** (rule 15) and check every claim in it against the data.
+7. **Validate** with the checklist at the end of this file.
 
 ## Sources
 
-Every rule below names its source, so Tufte's principles are never confused with this skill's own choices:
+Every rule names its source, so Tufte's principles are never confused with anyone else's:
 
-- **Tufte** — stated in Tufte's books, cited by book and chapter: *VDQI* = *The Visual Display of Quantitative Information* (1983; 2nd ed. 2001), *EI* = *Envisioning Information* (1990), *VE* = *Visual Explanations* (1997), *BE* = *Beautiful Evidence* (2006). Tufte's fifth book, *Seeing with Fresh Eyes* (2020), is not yet drawn on here.
-- **Convention** — common practice in Tufte-style work, but not stated by Tufte. Specific values (hex colors, sizes, opacities, counts) are always this skill's defaults.
-- **Extension** — added by this skill's authors for screens and content. Not from Tufte.
+- **Tufte** — stated in Tufte's books, cited by book and chapter: *VDQI* = *The Visual Display of Quantitative Information* (1983; 2nd ed. 2001), *EI* = *Envisioning Information* (1990), *VE* = *Visual Explanations* (1997), *BE* = *Beautiful Evidence* (2006). His fifth book, *Seeing with Fresh Eyes* (2020), is not drawn on here.
+- **Journal** — a requirement in a journal's author guidelines, quoted with its date in `rules/journals.md`. Journals revise these pages; the target journal's current guide wins.
+- **Literature** — a published recommendation from statistics or visualization research, cited by author and year; full references in `rules/references.md`.
+- **Convention** — common practice in Tufte-style or scientific figures, stated by none of the above. Specific values (hex colors, point sizes, opacities) are this skill's defaults.
+- **Extension** — added by this skill's authors (for example the contrast minimums). Not from Tufte.
 
-`rules/scientific-articles.md` adds two labels for figures in papers: **Journal** (a journal's author guidelines) and **Literature** (published statistics and visualization research, cited by author and year).
+Where none of these gives a rule, the rule says so instead of supplying one.
 
 ---
 
@@ -69,9 +60,7 @@ Every rule below names its source, so Tufte's principles are never confused with
 5. **Dimensions.** The number of information-carrying dimensions depicted should not exceed the number of dimensions in the data.
 6. **Context.** Graphics must not quote data out of context.
 
-**Baselines.** Tufte prescribes no zero baseline: *VDQI* "never recommends showing zero-points" (Tufte, edwardtufte.com forum, 2003, citing VDQI pp. 74–75, where context comes from showing more data rather than reaching down to zero). For time series he advises a baseline that shows the data (Tufte, edwardtufte.com forum, "baseline for amount scale"). *This skill's application of principle 1 (convention):* a bar's length, or an area's size, is proportional to its value only when it starts at zero, so bars and areas start at zero; lines and dots encode by position and take a baseline that shows the data.
-
----
+**Baselines.** Tufte prescribes no zero baseline: *VDQI* "never recommends showing zero-points" (Tufte, edwardtufte.com forum, 2003, citing VDQI pp. 74–75, where context comes from showing more data rather than reaching down to zero). *This skill's application of principle 1 (convention):* a bar's length, or an area's size, is proportional to its value only when it starts at zero, so bars and areas start at zero; lines and dots encode by position and take a baseline that shows the data.
 
 ## Data-ink
 
@@ -85,286 +74,251 @@ Tufte's five principles, in his order:
 4. **Erase redundant data-ink.**
 5. **Revise and edit.**
 
-"Within reason" is his qualifier: the principles guide editing; they are not a quota. Rules 1–4 below apply them.
+"Within reason" is his qualifier: the principles guide editing; they are not a quota.
 
-**Chartjunk** (VDQI ch. 5) has three forms: unintentional optical art (moiré vibration from hatching and dense patterns), the dark grid, and the "duck" (a graphic whose decoration takes over the data). None belongs in a chart.
+**Chartjunk** (VDQI ch. 5) has three forms: unintentional optical art (moiré vibration from hatching and dense patterns), the dark grid, and the "duck" (a graphic whose decoration takes over the data). None belongs in a figure.
 
-**Beyond erasing**, Tufte asks for more data, not less:
-- **Data density** (VDQI ch. 8): maximize data density and the size of the data matrix, within reason. Many graphics can be shrunk well below their usual size (his shrink principle).
-- **Multifunctioning graphical elements** (VDQI ch. 7): let one element carry data and structure at once, such as labels that also mark the ends of the data range.
-- **Micro/macro readings** (EI ch. 2): a good display reads as an overall pattern and, on close inspection, as detail. "To clarify, add detail."
-
-Graphical excellence, in his words, gives the viewer the greatest number of ideas in the shortest time with the least ink in the smallest space (VDQI ch. 1).
-
----
+**Beyond erasing**, Tufte asks for more data, not less: high data density (VDQI ch. 8), multifunctioning elements (VDQI ch. 7) and displays that read at two levels, the overall pattern and the detail (EI ch. 2). A journal page rewards all three: space is scarce. Science asks authors to "maximize the space given to presentation of the data" and to avoid wasted white space and clutter (Journal, Science).
 
 ## Analytical design
 
 *Source: Tufte, BE ch. 5, "The Fundamental Principles of Analytical Design".*
 
-1. **Show comparisons**, contrasts, differences (rule 13).
-2. **Show causality**, mechanism, explanation, systematic structure (annotations, rule 12; diagrams, `rules/diagrams-flowcharts.md`).
-3. **Show multivariate data** — more than one or two variables (small multiples, layering).
-4. **Integrate evidence** — words, numbers and images together (rule 2).
-5. **Document the evidence** — a detailed title, the authors and sponsors, the data sources, complete measurement scales, and the relevant issues. Give every chart a source line and state its units.
+1. **Show comparisons**, contrasts, differences (rule 14).
+2. **Show causality**, mechanism, explanation, systematic structure (rule 13; `rules/diagrams-flowcharts.md`).
+3. **Show multivariate data** — more than one or two variables (rule 17).
+4. **Integrate evidence** — words, numbers and images together (rule 5).
+5. **Document the evidence** — sources, measurement scales, what was measured and how. In a paper this goes in the caption and Methods (rule 15).
 6. **Content counts most of all** — no design rescues weak, irrelevant or untrustworthy data.
 
 ---
 
-## Universal rules
+## Rules
 
-Rules 1–14 cover static principles; 15–19 extend them for screens; 20–22 address content and formatting. Each rule names its source (see Sources above).
+Every rule is a default; the target journal's guide, the user's explicit request, or an existing figure style in the project (Workflow step 3) can override the parts it concerns.
 
-### 1. Remove top and right borders
+### 1. Draw at the final printed size, in millimeters
 
-*Source: Tufte — erasing the frame around the data, VDQI ch. 6.*
+*Source: Journal (Nature, Science, PLOS). Aspect ratio: Tufte, VDQI ch. 9.*
 
-No chart should have top or right axis lines, borders, or spines. The bottom and left axes are sufficient. Top and right lines are non-data-ink.
+Set the figure width to the column it will occupy before drawing anything, so type and lines come out at their printed size. Never scale an exported figure to fit. Nature: 89 mm (single column), 120–136 mm (1.5 columns), 183 mm (double column), at most 170 mm tall. Science: 5.7, 12.1 or 18.4 cm. PLOS: 6.68–19.05 cm wide, at most 22.23 cm tall. A single panel keeps Tufte's shape, about 1.5 times wider than tall, unless the data suggest another (VDQI ch. 9).
 
-### 2. Direct labels, not legends
+### 2. Helvetica, in sentence case, at the journal's sizes
 
-*Source: Tufte — in the friendly data graphic "labels are placed on the graphic itself; no legend is required", while the unfriendly one has "obscure codings [that] require going back and forth between legend and graphic", VDQI ch. 9 (p. 183); words and pictures belong together, VDQI ch. 9 (pp. 180–181). Tufte does not ban keys: the six cancer maps he redrew with Lawrence Fahey carry a five-class key for their shading (VDQI pp. 16–20), the GEBCO ocean chart he praises carries its depth scale (EI ch. 5, p. 91), and "complete measurement scales" are part of documenting a graphic (BE ch. 5).*
+*Source: Journal for typeface and sizes (Science prefers Helvetica; Nature asks for Helvetica or Arial; PLOS lists Arial). Tufte for case, spelling and orientation (VDQI ch. 9, p. 183).*
 
-Label each data series directly — at the endpoint of a line, on or beside a bar, next to a cluster — and turn the library's legend off; the library guides do this by default. If there is only one series, the chart title provides that context; no label is needed.
+- Helvetica, with Arial as the fallback (Arial for PLOS). One font and one size scale across every figure in the paper.
+- Nature: 5–7 pt, panel letters 8 pt bold. Science: about 7 pt, never below 5 pt. PLOS: 8–12 pt.
+- Upper-and-lower case: sentence case for labels, never all caps. Words spelled out where space allows. Type runs horizontally: set the y-axis label horizontally at the top of the axis, and rotate it only when the panel is too narrow.
+- Axis labels give the quantity, then its units in parentheses: "Concentration (µM)". Very large or small numbers as powers of 10 (Journal, Science). True minus sign (−), × and µ.
 
-A key stays only for an encoding that cannot carry its own label: a color or shading scale that stands for a quantity (choropleth classes, a heat map, a continuous colorbar), or categories too many or too crowded to label in place. Then show the scale beside the data it decodes, with no frame or background of its own (a box around a key is non-data-ink, VDQI ch. 4). Tufte's objection is the shuttle between legend and graphic, not the presence of a scale.
+This departs from Tufte's stated preference for serif type in data graphics (VDQI p. 183), not from what he asks of type: that it be clear, precise and modest. His own books set tables in a sans serif, Gill Sans. See `rules/typography-and-color.md`.
 
-### 3. No gridlines by default
+### 3. Erase the frame
 
-*Source: Tufte — dark grids are chartjunk; a grid should be muted or suppressed, VDQI ch. 5. His alternative for bars is white grid lines drawn through them (VDQI ch. 6). The opacity values and the horizontal-only default are this skill's (convention).*
+*Source: Tufte, VDQI ch. 6.*
 
-The default is zero gridlines. Where readers need to read values precisely, add a muted grid: horizontal-only at very low opacity (0.08–0.12) by default. A muted vertical grid is fine when it eases reading along x, as in the timetables Tufte shows approvingly. For interactive charts, a contextual crosshair on hover can stand in for a grid (see rule 15).
+No top or right spines, no box around the plot, no background fill. The bottom and left axes are enough. White page (Journal: the figure sits on a white page, where an off-white box would show).
 
 ### 4. Range-frame axes
 
-*Source: Tufte — the range-frame, VDQI ch. 6.*
+*Source: Tufte, the range-frame, VDQI ch. 6.*
 
-Axis lines should span only the range of the data, not from zero to some arbitrary maximum. The axis starts at (or near) the minimum data value and ends at the maximum.
+Axis lines span only the range of the data. Bars still start at zero (graphical integrity, above), so for bars the value axis runs from zero to the maximum.
 
-### 5. No 3D effects
+### 5. Direct labels, not legends
 
-*Source: Tufte — graphical integrity principle 5 (dimensions), VDQI ch. 2; chartjunk, VDQI ch. 5.*
+*Source: Tufte — in the friendly data graphic "labels are placed on the graphic itself; no legend is required", VDQI ch. 9 (p. 183); words and pictures belong together, VDQI ch. 9 (pp. 180–181).*
 
-No perspective, no depth, no shadows on chart elements. Two-dimensional data gets two-dimensional representation.
+Label each series where it is, at the end of a line or beside a cluster, and turn the legend off. A key stays only for an encoding that cannot carry its own label, such as a color scale for a quantity; show it beside the data, unframed. Tufte does not ban keys: his redrawn cancer maps carry one (VDQI pp. 16–20).
 
-### 6. No pie charts
+### 6. No gridlines by default
 
-*Source: Tufte — given their low data density and their failure to order numbers along a visual dimension, pie charts should never be used, VDQI ch. 9.*
+*Source: Tufte — dark grids are chartjunk; a grid should be muted or suppressed, VDQI ch. 5.*
 
-Use a horizontal bar chart sorted by value, or a table. If the user still asks for a pie chart after this is explained, follow the request; that is a choice of the person asking, not a Tufte rule.
+No gridlines. Where readers must read values precisely, add a light gray grid (convention: 0.25 pt, `#dddddd`), or give the values in a table.
 
-### 7. Aspect ratio ~1.5:1
+### 7. No 3D, no pie charts, no dual y-axes
 
-*Source: Tufte — horizontal graphics about 50 percent wider than tall, unless the data suggest another shape, VDQI ch. 9. The standard sizes are this skill's defaults (convention).*
+*Source: Tufte — integrity principle 5 and chartjunk (3D), VDQI ch. 2 and 5; pie charts, VDQI ch. 9. Dual axes: convention; the alternative, small multiples, is Tufte's (EI ch. 4).*
 
-Charts should be approximately 50% wider than tall. Standard sizes: 600x400, 750x500, 900x600. Exception: sparklines and small multiples may be more compact.
+No perspective, depth or shadows. Instead of a pie, a dot plot or bar chart sorted by value, or a table. Instead of two y-axes, two panels stacked on a shared x-axis. If the user still asks for a pie chart after this is explained, follow the request.
 
-### 8. Gray first, highlight selectively
+### 8. Gray first; Okabe–Ito for categories; perceptually uniform maps for quantities
 
-*Source: Tufte — muted fields with strong color only in small areas (after Imhof), EI ch. 5; the smallest effective difference, VE ch. 4. The four-color limit, the palette types and the hex values are this skill's defaults (convention).*
+*Source: Tufte, EI ch. 5 (muted fields, strong color in small areas); Literature (Okabe and Ito 2008; Wong 2011; Crameri et al. 2020); Journal (Science: avoid red with green, avoid colored type; Nature: RGB).*
 
-The default data series color is medium gray (`#666`). Use a single accent color to highlight the most important series or data point. Never use more than 4 distinct colors. Choose the right palette type: **categorical** (4-color muted) for unordered groups, **sequential** (single-hue ramp) for ordered magnitude, **diverging** (two-hue from center) for deviation from a midpoint. See `rules/typography-and-color.md` for hex values.
+- Draw context and reference series in gray (`#666666`); give color only to what the reader must find. Highlight: blue `#0072B2`.
+- For categories, the Okabe–Ito colors that clear 3:1 on white: blue `#0072B2`, vermillion `#D55E00`, bluish green `#009E73`, reddish purple `#CC79A7`, and black. Orange, sky blue and yellow fall below 3:1; use them only for filled areas with a dark outline.
+- For quantities, a perceptually uniform, color-blind-safe map: viridis, cividis, or Crameri's batlow (sequential) and vik (diverging). Never rainbow or jet.
+- Text and axes in black. Never red against green for a contrast that matters. Same condition, same color in every figure of the paper (integrity principle 3). The figure must still read in grayscale.
 
-### 9. Off-white background
+Hex values and contrast ratios: `rules/typography-and-color.md`.
 
-*Source: convention — the `#fffff8` background comes from Tufte CSS (a web style for Tufte-like documents), not from Tufte's books, which are printed on white paper.*
+### 9. Show the data, then the summary
 
-Light mode: `#fffff8`. Dark mode: `#151515`. Never use pure white (`#ffffff`) or pure black (`#000000`).
+*Source: Tufte, VDQI ch. 4 ("Above all else show the data"); Literature (Weissgerber et al. 2015; Krzywinski and Altman 2014).*
 
-### 10. Serif type, upper-and-lower case, words spelled out
+For continuous data in small samples, plot every observation (a strip, jittered or beeswarm plot) with the summary on top. Never a bar of the mean with an error bar ("dynamite plot"): many different distributions give the same bar (Weissgerber et al. 2015). Bars are for counts and proportions. For larger samples, Tufte's quartile plot (VDQI ch. 6) or a box plot with the points behind it; box plots need at least five observations (Krzywinski and Altman 2014). For paired or repeated measures, connect each subject's values.
 
-*Source: Tufte — the friendly data graphic sets type "upper-and-lower case, with serifs", clear, precise and modest, with words spelled out and running left to right, VDQI ch. 9 (p. 183). Tufte's own practice admits a clear sans serif for tables and dense numeric displays: his books set some tables in Gill Sans (the redesigned timetables, EI p. 105; the mutual-fund table in the sparklines chapter of BE), and he wrote that he uses "Gill Sans and ETBembo for everything in print" and finds Gill Sans "very good for tables" (edwardtufte.com: "Tufte book fonts", 2003; "Typefaces for official correspondence", 2005; "What's your font?", 2006). The font stack is this skill's (convention), after Tufte's books, set in Monotype Bembo (ET Book is its digital revival).*
+### 10. Show uncertainty, and say which uncertainty
 
-Default to serif type for labels, annotations, ticks and titles: `"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif`. A clear humanist sans serif (Gill Sans or a close equivalent) is within Tufte's practice for tables and dense numeric displays. The firm parts of the rule are the rest of p. 183: upper-and-lower case (no all-caps labels or headers), words spelled out, type running horizontally, and type that is clear, precise and modest.
+*Source: Literature (Cumming et al. 2007; Vaux 2012; Krzywinski and Altman 2013). Tufte gives no rule for error bars.*
 
-### 11. No dual y-axes
+- State in the caption what every bar or band shows: SD, SEM or a 95% confidence interval. The same bar means different things in each case.
+- SD to describe spread; a 95% confidence interval to support a comparison; label SEM as SEM.
+- With two or three independent observations, plot the points instead of error bars or p-values (Vaux 2012).
+- Error bars belong to independent replicates, not technical replicates.
+- Draw intervals as thin lines (0.5 pt) without caps; bands around curves at low opacity (about 0.2). Caps are non-data-ink (convention, after VDQI ch. 4).
 
-*Source: convention — not stated as a rule in Tufte's books. The alternative given here, small multiples, is Tufte's (EI ch. 4).*
+### 11. Estimates first; define every significance mark
 
-Two y-axes on one chart create false implied correlations. Use small multiples instead — two charts stacked vertically with shared x-axis.
+*Source: Literature (Wasserstein and Lazar 2016); convention for the marks.*
 
-### 12. Annotate the notable
+A p-value does not measure the size of an effect. Show the effect and its interval; give exact p-values in the caption or text. If asterisks or brackets are used, define each in the caption and draw brackets thin and gray.
 
-*Source: Tufte — graphical integrity principle 2 (label important events in the data), VDQI ch. 2. The placement details are this skill's defaults (convention).*
+### 12. Log scales for multiplicative data
 
-If the data contains a peak, trough, inflection point, or event boundary, add a text annotation pointing to it directly on the chart. Place annotations in the nearest clear space — offset from the data point with a short leader line if needed. When multiple annotations compete for space, keep only the most important; move others to a footnote or tooltip.
+*Source: Literature (Cleveland 1994, ch. 3); Journal (Science, powers of 10). Tufte gives no general rule.*
 
-### 13. Show comparison context
+Use a log axis when values span orders of magnitude, or when ratios, fold changes or growth rates are the point. Base 2 for fold changes, base 10 for wide ranges. Label ticks with values (1, 10, 100 or 10⁰, 10¹, 10²), not logarithms. No bars on a log axis.
 
-*Source: Tufte — "Compared to what?", EI p. 67; graphical integrity principle 6 (context), VDQI ch. 2.*
+### 13. Annotate the notable
 
-Include at least one reference element: a reference line (average, target, prior period), a shaded band, or a second series. A chart showing one line with no context fails the "Compared to what?" test.
+*Source: Tufte — integrity principle 2 (label important events in the data), VDQI ch. 2.*
 
-### 14. Minimal tooltips
+Mark a peak, threshold, intervention or event on the plot itself, in the nearest clear space, with a short leader line if needed. Keep only the annotations the finding needs.
 
-*Source: extension — Tufte did not write about tooltips.*
+### 14. Show comparison context — from the data
 
-Tooltips should be plain text with the data value and label. No colored background, no border, no arrow pointer, no shadow.
+*Source: Tufte — "Compared to what?", EI p. 67; integrity principle 6, VDQI ch. 2.*
 
-### 15. Progressive disclosure over static density
+Include the comparison the finding depends on: a control group, a reference condition, a baseline period, a published value the user supplies. Never add a reference line, target or "expected" value that is not in the data or given by the user.
 
-*Source: extension. This rule pulls against Tufte, who asks for high data density (VDQI ch. 8) and for evidence shown adjacent in space, where it can be compared at a glance (Tufte, 2010 lecture, reported in *Eye* magazine). Apply it only on top of a static view that already carries the data and its comparisons.*
+### 15. Title, finding and documentation go in the caption
 
-Default to the Tufte-clean overview — high data-ink, minimal chrome. Layer details through hover, tap, and click (values, annotations, comparisons). Disclosure adds detail; it never hides the comparison the chart exists to show. A contextual crosshair on hover replaces permanent gridlines.
+*Source: Tufte, BE ch. 5 (document the evidence); Literature (Rougier et al. 2014, rule 4; Cumming et al. 2007); Journal (Freshwater Science: no title duplicating the caption).*
 
-### 16. Accessible by default
+- Nothing above the plot: no title, figure number, source line or logo.
+- The caption's first sentence states the finding, and only what the data show ("Drug B lowers the half-maximal dose about ninefold", not "Dose–response curves"). Check every number in it against the data.
+- Then each panel, every encoding not labeled on the plot, what the marks and error bars show, *n* and what it counts (cells, animals, independent experiments), and the test used.
+- Sources, code and data availability go in Methods.
 
-*Source: extension (WCAG), except that choosing colors color-deficient viewers can tell apart is Tufte's (friendly data graphic, VDQI ch. 9, p. 183).*
+### 16. Lines and marks that survive reduction
 
-3:1 contrast ratio minimum for chart elements against their background; 4.5:1 for text in charts. Never use color as the sole differentiator — pair it with shape, dash, or a direct label. Not hatching or pattern fills: Tufte counts them as chartjunk (moiré vibration, VDQI ch. 5). Provide a text alternative for every chart (`aria-label` with key finding, or companion data table). Interactive charts must be keyboard-navigable.
+*Source: Journal (Nature: line weights 0.25–1 pt at final size); convention for the defaults.*
 
-### 17. Responsive, not just resized
+Axes and ticks 0.5 pt, data lines 1 pt, error bars 0.5 pt, markers about 3 pt. Nothing thinner than 0.25 pt.
 
-*Source: extension.*
+### 17. Multi-panel figures and small multiples
 
-Charts must have a responsive strategy — fluid (percentage width + viewBox), adaptive (breakpoint-based layout changes), or hybrid. At narrow viewports, change chart type or layout (horizontal bars for categories, fewer ticks, wrapped labels), don't just shrink. Keep words spelled out (VDQI ch. 9).
+*Source: Tufte, EI ch. 4 (small multiples); Journal (Nature, Science) for panel letters and layout.*
 
-### 18. Animate to explain, not to decorate
+- Panels comparing the same quantity share the axis and its range; say so in the caption if they cannot.
+- Panel letters in the journal's style: Nature bold lowercase (a, b, c) at 8 pt; Science bold capitals (A, B, C) at 10 pt, top left. Align them on one grid.
+- Set panels close together and label common axes once, on the outer edge (Journal, Science).
 
-*Source: extension.*
+See `rules/small-multiples-and-panels.md`.
 
-Transitions for data changes (sorting, filtering, time progression) are good — they help the viewer track transformations. Gratuitous entrance animations, bouncing, and decorative motion are chartjunk. Duration: 200–500ms, ease-out. Always respect `prefers-reduced-motion`.
+### 18. Export vector graphics with embedded, editable fonts
 
-### 19. Dark mode as first-class citizen
+*Source: Journal (Nature: AI, PostScript, vector EPS or PDF for graphs; "Please do not rasterize line art or text"; photographs at 300 dpi or more. PLOS: TIFF or EPS at 300–600 dpi).*
 
-*Source: extension.*
+PDF or EPS with fonts embedded as TrueType and kept as text. Raster only when the journal asks (TIFF at 600 dpi at final width). Check with `pdffonts figure.pdf`: every font `emb yes`.
 
-Design both light and dark palettes intentionally. Never invert colors. Reduce saturation in dark mode (bright colors "vibrate" on dark backgrounds). Respect `prefers-color-scheme`. Use semantic color tokens (`--tufte-bg`, `--tufte-text`, `--tufte-series-default`) so charts adapt automatically.
+### 19. Each figure stands alone and agrees with the text
 
-### 20. Titles assert findings
+*Source: Tufte, BE ch. 5 ("content counts most of all"); convention.*
 
-*Source: extension.*
+Every number on a figure matches the text and tables. A reader with only the figure and its caption can tell what was measured, in what units, on how many samples, and what the authors conclude.
 
-The chart title states the key insight, not the axis description. "Revenue Surged 23% in Q3" not "Revenue by Quarter, 2024". The subtitle can provide context ("vs. prior year, USD millions"). If the data has no clear finding, the chart may not be needed (see rule 22).
-
-### 21. Format numbers for humans
-
-*Source: extension.*
-
-Abbreviate large numbers: $1.2M not $1,200,000. Use thousand separators for mid-range numbers (12,450 not 12450). Match decimal precision to significance (don't show $4.2391M when $4.2M suffices). Right-align numbers in tables. Use consistent units and state them once (in the axis label or title), not on every data point.
-
-### 22. Don't chart what a sentence or table can say
+### 20. Don't chart what a sentence or table can say
 
 *Source: Tufte — the choice among sentences, tables and graphics, VDQI ch. 9.*
 
-A sentence is a poor way to show more than two numbers, because it prevents comparisons within the data. For one or two numbers, write a sentence with inline context ("Revenue was $4.2M, up 23% from Q2"). Tables are preferable to graphics for many small data sets, and are the best way to show exact values. Graphics earn their space for larger data sets, where they reveal patterns, trends and distributions.
+One or two numbers belong in a sentence. Tables suit many small data sets and exact values. Graphics earn their space for larger data sets, where they reveal patterns, trends and distributions.
 
 ---
 
-## Library quick reference
+## Chart types
 
-The universal rules above are sufficient for most charts. For complete code examples and library-specific helpers, read the appropriate rule file from the `rules/` directory in this skill's folder. Only read ONE rule file per task; each covers the accessibility and motion basics for its library (`rules/interactive-and-accessible.md` goes deeper).
-
-| Library | Rule file to read | Essential config (apply even without reading the file) |
-|---------|-------------------|--------------------------------------------------------|
-| Recharts | `rules/recharts.md` | `<CartesianGrid stroke="none" />`, remove `<Legend />`, `<YAxis axisLine={false} tickLine={false} />`, `<Line dot={false} strokeWidth={1.5} isAnimationActive={false} />`, wrapper `<figure aria-label="…">` (not `role="img"`, which hides Recharts 3's keyboard layer) |
-| ECharts | `rules/echarts.md` | `splitLine: { show: false }`, `legend: { show: false }`, `grid: { show: false }`, use `endLabel` on series, `animation: false`, `aria: { enabled: true }` |
-| Chart.js | `rules/chartjs.md` | `grid: { display: false }`, `border: { display: false }`, `plugins.legend.display: false`, use `chartjs-plugin-datalabels`, `options.animation: false`, `<canvas role="img" aria-label="…">` |
-| matplotlib | `rules/matplotlib.md` | `spines['top'].set_visible(False)`, `spines['right'].set_visible(False)`, `spines['bottom'].set_bounds(min, max)`, `font.family: serif` |
-| Plotly | `rules/plotly.md` | `showgrid=False`, `showlegend=False`, `plot_bgcolor='#fffff8'`, `zeroline=False` |
-| ggplot2 / plotnine | `rules/ggplot2-plotnine.md` | `theme_minimal()` + `panel.grid = element_blank()`, `legend.position = "none"`, `annotate("text", …)` at the last point, `labs(alt = "…")` |
-| Vega-Lite / Altair | `rules/vega-lite-altair.md` | config `view.stroke: null`, `axis.grid: false`, `legend.disable: true`, `background: "#fffff8"`; `scale.zero: false` for time series; top-level `description` |
-| Observable Plot | `rules/observable-plot.md` | `style: { background: "#fffff8", fontFamily: serif }`, `Plot.text(…, Plot.selectLast(…))` for direct labels, `Plot.frame({ anchor })` for range frames, `ariaLabel` |
-| D3/SVG/HTML | `rules/svg-html.md` | `.domain { display: none }`, no `<rect>` backgrounds, `stroke-opacity: 0.1` for any gridlines, `<svg role="img">` with `<title>` + `<desc>` |
-
----
-
-## Chart type guidance
-
-These settings are this skill's defaults (convention), except where a cell names Tufte.
+These settings are this skill's defaults (convention), except where a cell names another source.
 
 | Type | Key settings |
 |---|---|
-| **Line** | 1.5–2px stroke, `dot={false}` unless <7 points (then r=2), direct label at rightmost point |
-| **Bar** | Zero baseline (this skill's application of integrity principle 1), prefer horizontal for categories, sort by value, not alphabetically (Tufte, VDQI ch. 9, p. 178), direct value labels, `#7a7a7a` default fill |
-| **Scatter** | Gray dots `#8c8c8c` r=3, highlight key cluster/outlier with accent, regression line if meaningful (dashed, thin) |
-| **Time series** | Label events on chart ("Recession", "Launch"), range-frame x-axis, YoY via opacity (current solid, prior 30%) |
-| **Small multiples** | Same scale ALL panels, shared axis labels (x on bottom row, y on left column), no panel borders |
-| **Sparklines** | Word-sized, no axes or gridlines, embedded in text or table cells. Tufte (BE ch. 2): the beginning and ending values as numbers beside the line; red marks for first and last values, blue for low and high (BE pp. 50–51); a gray band for the normal range where one exists; aspect ratio chosen so slopes average about 45° (after Cleveland). Dots r=1.5 (convention) |
-| **Data tables** | No zebra striping, whitespace + thin rules every 3–5 rows, right-align numbers, `font-feature-settings: 'onum' 1` |
-| **Slopegraph** | Tufte's design (VDQI pp. 158–159, where he calls it a table-graphic). Before/after categories, label both endpoints (value + name), gray default + highlight key slopes |
-| **Box plot** | Tufte's quartile plot (VDQI ch. 6): drop the box; a dot for the median, a gap or offset for the middle half, lines out to the extremes |
-| **Area** | Prefer lines. If area: fillOpacity 0.03–0.08, no gradient, direct labels at endpoints |
-| **Stacked bar** | Avoid — use small multiples instead. If forced: sort by total, direct labels per segment, max 4 segments |
-| **Heatmap** | Sequential or diverging palette only, value labels in cells, companion data table for accessibility |
+| **Strip / dot plot** | Every observation, jittered; mean or median with 95% CI beside the points (rule 9, 10) |
+| **Line** | 1 pt; markers only where measurements were taken; direct label at the end; CI band at 0.2 opacity |
+| **Scatter** | Gray dots about 3 pt; highlight the group that matters; fitted line thin, with its band; rug marks for marginals (Tufte's dot-dash plot, VDQI ch. 6) |
+| **Bar** | Counts and proportions only; zero baseline; sorted by value, not alphabetically (Tufte, VDQI ch. 9, p. 178); horizontal for long category names |
+| **Quartile plot** | Tufte's redesign of the box plot (VDQI ch. 6): no box; a dot at the median, a gap for the middle half, lines to the extremes; say in the caption that it shows the five-number summary |
+| **Paired data** | One line per subject between conditions (slopegraph: Tufte, VDQI pp. 158–159) |
+| **Small multiples** | One design, one scale, panels close together (Tufte, EI ch. 4) |
+| **Heatmap** | Perceptually uniform map; values in cells when few; colorbar beside, unframed |
+| **Dose–response, growth, concentration** | Log axis labeled with values (rule 12) |
+| **Sparklines** | In tables only: word-sized, beginning and ending values beside the line; first and last values in red, low and high in blue (Tufte, BE pp. 50–51) |
 
-For small multiples, sparklines, and slopegraph implementation patterns, see `rules/small-multiples-sparklines.md`.
+Avoid: dynamite plots, stacked bars (use small multiples), area charts for anything but cumulative totals, pie charts, 3D.
 
----
+## Journal quick reference
 
-## Color quick reference
+| | Nature | Science | PLOS |
+|---|---|---|---|
+| Widths | 89 / 120–136 / 183 mm | 5.7 / 12.1 / 18.4 cm | 6.68–19.05 cm |
+| Typeface | Helvetica or Arial | Helvetica preferred | Arial |
+| Text size | 5–7 pt | about 7 pt, ≥ 5 pt | 8–12 pt |
+| Panel letters | 8 pt bold **a, b, c** | 10 pt bold **A, B, C** | journal style |
+| Graphs | vector AI, EPS or PDF | vector preferred | TIFF or EPS, 300–600 dpi |
 
-| Token | Light | Dark |
+Quotes, sources and dates: `rules/journals.md`. Other journals: read their current guide.
+
+## Library quick reference
+
+| Library | Rule file | Essentials (apply even without reading the file) |
 |---|---|---|
-| Background | `#fffff8` | `#151515` |
-| Text | `#111` | `#ddd` |
-| Text secondary | `#666` | `#999` |
-| Text tertiary (ticks, source) | `#767676` | `#808080` |
-| Axis/rule | `#ccc` | `#444` |
-| Grid (if used) | `#eee` (8-12% opacity) | `#333` |
-| Default series | `#666` | `#999` |
-| Highlight | `#e41a1c` | `#fc8d62` |
-
-**Categorical (max 4):** `#4e79a7` steel blue · `#db730d` tangerine · `#e15759` coral · `#539e73` sage
-
-**Categorical, dark mode:** `#6a9fd8` · `#f2a860` · `#e87a7c` · `#8accc7`
-
-Font stacks in rule 10. For full palettes (sequential, diverging), font loading, and old-style figures, see `rules/typography-and-color.md`.
-
----
+| matplotlib, seaborn | `rules/matplotlib.md` | `figsize` in mm/25.4; `font.sans-serif: ["Helvetica", "Arial", …]`; `font.size: 7`; spines top/right off; `axes.grid: False`; `pdf.fonttype: 42`; `savefig.bbox: "standard"` |
+| ggplot2 (R) | `rules/ggplot2-plotnine.md` | `theme_classic(base_size = 7, base_family = "Helvetica")`; `legend.position = "none"`; `ggsave(width = 89, units = "mm", device = cairo_pdf)` |
+| plotnine (Python) | `rules/ggplot2-plotnine.md` | `theme_classic(base_size=7, base_family="Helvetica")`; `legend_position="none"`; `p.save(width=89, units="mm")` |
 
 ## Anti-pattern detection
 
-When reviewing existing chart code, check for: legends (→ direct labels), pie charts (→ horizontal bars), 3D effects (→ flat 2D), dual y-axes (→ small multiples), heavy gridlines (→ remove or 0.1 opacity), rainbow palettes (→ gray + accent), gauge widgets (→ number + sparkline), gradient fills (→ solid color), rotated labels (→ horizontal text; flip axes), pure white/black backgrounds (→ `#fffff8`/`#151515`), hover-only information (→ tap/focus fallback), missing text alternatives (→ `aria-label`), color-only encoding (→ add shape, dash or direct label), hatching or pattern fills (→ direct labels), all-caps labels (→ upper-and-lower case), missing source line (→ add one).
+When reviewing figure code or a figure, check for: bar of means with error bars for continuous data (→ points plus CI), error bars not defined in the caption (→ state SD, SEM or CI and *n*), SEM on few observations (→ plot the points), rainbow or jet colormap (→ viridis, cividis, batlow), red and green as the only contrast (→ Okabe–Ito), legend box (→ direct labels), gridlines (→ remove), title inside the figure (→ caption), all-caps labels (→ sentence case), text below 5 pt or sizes that vary across figures (→ one scale), figure drawn at screen size and scaled down (→ final width in mm), rasterized text or unembedded fonts (→ vector PDF, TrueType), bars on a log axis or a truncated bar axis (→ dots, or zero baseline), dual y-axes (→ stacked panels), pie or 3D (→ dot or bar plot), panels that compare one quantity on different scales (→ shared axis), an invented reference line (→ remove).
 
-For the full table with per-library detection patterns and one-liner fixes, see `rules/anti-patterns.md`.
-
----
+Per-library detection and fixes: `rules/anti-patterns.md`.
 
 ## Validation checklist
 
-Before presenting any chart, verify the items below. For a figure in a scientific article, use the checklist in `rules/scientific-articles.md` for background, title, type, size and screen behaviour, and keep the rest.
+Before presenting any figure, verify:
 
-- [ ] Lengths and areas are proportional to the values (lie factor ≈ 1); bars and areas start at zero
-- [ ] Money over time is shown in deflated, standardized units, or the nominal units are stated
-- [ ] Information-carrying dimensions do not exceed the data's dimensions
-- [ ] The data is shown in context, not quoted out of it
-- [ ] Every remaining element shows data or is needed to read it (data-ink); no hatching, heavy grid or decoration (chartjunk)
-- [ ] Source and units are stated on or under the chart (documentation)
-- [ ] No top or right borders/spines
-- [ ] Series labeled directly on the chart; a key only for an encoding that cannot be labeled in place (a color scale for quantity), unframed
-- [ ] Gridlines removed, or muted (opacity <= 0.12)
-- [ ] Aspect ratio approximately 1.5:1
-- [ ] Background is `#fffff8` (light) or `#151515` (dark), not pure white/black
-- [ ] Upper-and-lower case type, words spelled out and horizontal; serif by default
-- [ ] Default series color is gray (`#666`); color used only for emphasis
-- [ ] No 3D effects, no pie chart (unless explicitly requested)
-- [ ] Axis lines span only the data range (range-frame)
-- [ ] Notable data features annotated directly on chart
-- [ ] Comparison context present (reference line, band, or second series)
-- [ ] Tooltips are plain text with no decorative styling
-- [ ] Interactive elements have tap/click/focus alternatives (no hover-only)
-- [ ] Contrast ratios meet 3:1 (elements) / 4.5:1 (text) minimums
-- [ ] Chart has a text alternative (aria-label, description, or data table)
-- [ ] Animations respect `prefers-reduced-motion`
-- [ ] Charts render usably at 320px and 1440px+ widths
-- [ ] Title states the finding, not the axis description
-- [ ] Numbers are formatted for readability (abbreviations, separators, consistent precision)
-- [ ] A chart is warranted — the data couldn't be communicated as a sentence or table (more than two numbers; too many for a table)
-
----
+- [ ] Lengths and areas are proportional to the values (lie factor ≈ 1); bars start at zero
+- [ ] The data are shown in context; every comparison comes from the data or the user
+- [ ] Width set in millimeters to the target column; nothing rescaled after export
+- [ ] Helvetica (Arial for PLOS); text within the journal's range; one size scale across the paper
+- [ ] Sentence case, horizontal type where space allows; units in every axis label
+- [ ] White page; black text and axes; no top or right spines, no box, no gridlines
+- [ ] Axis lines span the data (range frame)
+- [ ] Series labeled directly; a key only for a color scale, unframed
+- [ ] Individual observations shown for small samples; no dynamite plots
+- [ ] Every error bar and band defined; *n* and what it counts stated
+- [ ] Gray first; Okabe–Ito or a perceptually uniform map; same condition, same color; grayscale test passed
+- [ ] Log axes labeled with values; no bars on log axes
+- [ ] No title, figure number or source line in the artwork
+- [ ] Caption: finding first, checked against the data; each panel; encodings; statistics
+- [ ] Lines between 0.25 pt and 1 pt; panel letters in the journal's style
+- [ ] Vector PDF or EPS with embedded TrueType fonts (`pdffonts`: `emb yes`)
+- [ ] Every number on the figure matches the text
+- [ ] A figure is warranted: the data could not be given as a sentence or table
 
 ## Additional resources
 
-**Library rules** (read ONE per task): `rules/recharts.md`, `rules/echarts.md`, `rules/chartjs.md`, `rules/matplotlib.md`, `rules/plotly.md`, `rules/ggplot2-plotnine.md`, `rules/vega-lite-altair.md`, `rules/observable-plot.md`, `rules/svg-html.md` — complete code examples, helpers, and theme registrations. Each states the library version it was written for.
+**Library rules** (read ONE per task): `rules/matplotlib.md`, `rules/ggplot2-plotnine.md` — setup, helpers, complete examples, export.
 
-**Cross-cutting** (read when specifically needed):
-- `rules/interactive-and-accessible.md` — progressive disclosure, WCAG, responsive, animation, dark mode
-- `rules/typography-and-color.md` — font loading, full palette tables, old-style figures
-- `rules/anti-patterns.md` — per-library detection heuristics and fixes
-- `rules/small-multiples-sparklines.md` — layout patterns for small multiples, sparklines, slopegraphs
-- `rules/diagrams-flowcharts.md` — flowcharts, process maps, org charts and networks, from Tufte's writing on connectors and layering
-- `rules/maps.md` — choropleth, dot, flow and small-multiple maps, from Tufte's writing on data maps (Snow, Minard, the Tokyo mesh maps, Imhof's color rules)
-- `rules/scientific-articles.md` — figures for journal articles: Helvetica, millimeter widths, captions, error bars and intervals, log scales, color-blind-safe palettes, vector export; each rule cited to Tufte, journal guidelines or the literature
+**Cross-cutting** (read when needed):
+- `rules/typography-and-color.md` — Helvetica, sizes, Okabe–Ito, color maps, contrast on white
+- `rules/small-multiples-and-panels.md` — multi-panel layout, small multiples, slopegraphs, quartile plots, dot-dash plots, sparklines in tables
+- `rules/anti-patterns.md` — per-library detection and fixes
+- `rules/journals.md` — journal requirements, quoted and dated
+- `rules/references.md` — full references for Tufte, the literature and the journal guides
+- `rules/diagrams-flowcharts.md` — schematics, process and mechanism diagrams, from Tufte's writing on connectors and layering
+- `rules/maps.md` — maps, from Tufte's writing on data maps
 
-**Working examples** in `examples/` — for Recharts, ECharts, Chart.js, matplotlib and Plotly, plus an inline SVG sparkline and a journal figure (`examples/matplotlib-publication.py`). The other libraries' rule files contain complete examples.
+**Working example:** `examples/matplotlib-publication.py` — a two-panel, 89 mm figure with every observation, 95% confidence intervals, a log axis, direct labels, panel letters and vector export; it checks its caption against the data.

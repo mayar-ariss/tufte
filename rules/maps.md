@@ -4,7 +4,7 @@ Load this file for any display drawn on geographic space: shaded-area maps (chor
 
 Maps run through all four of Tufte's books. *The Visual Display of Quantitative Information* (VDQI) opens its history of data graphics with data maps and closes it with Minard's map of Napoleon's campaign. *Envisioning Information* (EI) draws most of its principles from maps: the Tokyo mesh maps, Nolli's Rome, the Swiss topographic sheets, the GEBCO ocean chart. *Visual Explanations* (VE), ch. 2, is a statistical critique of John Snow's cholera map. *Beautiful Evidence* (BE), ch. 5, derives the fundamental principles of analytical design from Minard. Every rule below is Tufte's and names its source. Where Tufte gives no rule, this file says so instead of supplying one.
 
-**What carries over from SKILL.md:** graphical integrity (VDQI ch. 2), data-ink and chartjunk (VDQI ch. 4–5), the analytical-design principles (BE ch. 5), direct labels (rule 2), muted color with strong color only in small areas (rule 8; that rule was itself taken from Tufte's writing on maps), small multiples, and the smallest effective difference (VE ch. 4).
+**What carries over from SKILL.md:** graphical integrity (VDQI ch. 2), data-ink and chartjunk (VDQI ch. 4–5), the analytical-design principles (BE ch. 5), direct labels (rule 5), muted color with strong color only in small areas (rule 8; that rule was itself taken from Tufte's writing on maps), small multiples, and the smallest effective difference (VE ch. 4).
 
 **What does not apply:** the rules about axes, baselines, range frames and aspect ratio. A map's frame is set by its projection and extent, not by a data scale.
 
@@ -152,7 +152,7 @@ Anderson's map of midtown Manhattan carries individual windows and some 1,686 na
 Small multiples let the eye compare; a constant design keeps attention on changes in the data rather than in the frames (EI p. 67). The twelve Los Angeles smog maps, one per hour, index the same map on time and add up the day's pollution (EI pp. 28–29). The four maps of China's poets by dynasty show birthplaces shifting south-east, a pattern visible only across the series (pp. 74–75). A map of Matsu temples on a separate page cannot be compared with them; comparisons must fall within one eyespan (p. 76). The six cancer maps in VDQI are a small multiple by cancer type and sex.
 
 - Same projection, extent, scale and class breaks on every panel; one legend for all.
-- Panels on one page or screen, never one per page.
+- Panels on one page, never one per page.
 
 ### 17. Change over space and time: map plus time-series
 
@@ -166,7 +166,7 @@ Small multiples let the eye compare; a constant design keeps attention on change
 
 Minard's sheet has a title naming the method and the subject, the author and his credential, a text block explaining the color code and the three scales, and five acknowledged sources (BE pp. 126, 133). Of Minard's Hannibal map Tufte says the north arrow "should appear on every map" (p. 134). Excellent maps, "the heart and soul of good practices in analytical graphics," routinely integrate words, numbers, line art, grids and measurement scales (p. 131). In BE ch. 1 the map is Tufte's model for all evidence images: labels belong on the image, external grids give it scale, and data are more credible in context (p. 21). Snow annotated his map and table with notes on possible errors and gaps in the data, and that annotation is part of the map's credibility (VE p. 34). Tufte's redrawn cancer maps separate "in highest decile, statistically significant" from rates not significantly different from the national figure, and his text flags that death-certificate data follow "diagnostic fashions" (VDQI pp. 16–20).
 
-- On the map: title stating method and subject, author, data sources, measurement scale, north arrow, units, date of the data.
+- In a paper, the caption carries the title, method, data sources and date of the data (SKILL.md rule 15). On the map itself: measurement scale, north arrow, units, and labels on the features.
 - Mark uncertainty and significance in the classes themselves; note known data problems next to the map.
 - Labels on the map, beside the features; no letter codes keyed to a separate list.
 
@@ -181,11 +181,11 @@ Tufte applies the lie factor even to Minard: the widths of the two flows at the 
 
 ## Where Tufte gives no rule
 
-Tufte writes no cartography manual. He gives no rule on map projection, on north-up orientation, on the form of a scale bar, on legend design or placement, on how many classes to use or how to set class breaks (he notes only that cutpoints and the data's distribution matter, EI ch. 5 n. 13), on cartograms, hexagonal binning, kernel density surfaces, basemap imagery, label-placement algorithms, or interactive zoom. This skill adds none. Use what the user asks for or the library's default, and apply the rules above to it. The screen-first rules 15–19 in SKILL.md are extensions, labeled as such there; they are not Tufte's and are not repeated here.
+Tufte writes no cartography manual. He gives no rule on map projection, on north-up orientation, on the form of a scale bar, on legend design or placement, on how many classes to use or how to set class breaks (he notes only that cutpoints and the data's distribution matter, EI ch. 5 n. 13), on cartograms, hexagonal binning, kernel density surfaces, basemap imagery, label-placement algorithms, or interactive zoom. This skill adds none. Use what the user asks for or the library's default, and apply the rules above to it.
 
 ## Library notes
 
-Colors and fonts come from `rules/typography-and-color.md`. The specific values below (colormap names, line widths, opacities) are this skill's defaults, not Tufte's.
+Colors and fonts come from `rules/typography-and-color.md`; setup from `rules/matplotlib.md` or `rules/ggplot2-plotnine.md`. The specific values below (color maps, line widths) are this skill's defaults, not Tufte's.
 
 **geopandas + matplotlib (choropleth of a rate)**
 
@@ -193,46 +193,44 @@ Colors and fonts come from `rules/typography-and-color.md`. The specific values 
 import geopandas as gpd
 import matplotlib.pyplot as plt
 
+MM = 1 / 25.4
 counties = gpd.read_file("counties.gpkg")
 states = gpd.read_file("states.gpkg")
 counties["rate"] = counties["deaths"] / counties["population"] * 1e5   # rule 3: a rate, not a count
 
-fig, ax = plt.subplots(figsize=(9, 6))
+fig, ax = plt.subplots(figsize=(89 * MM, 60 * MM))                       # SKILL.md rule 1
 counties.plot(column="rate", cmap="Greys", scheme="quantiles", k=5,     # rule 9: value ramp, dark = more
-              edgecolor="#bbbbbb", linewidth=0.3, ax=ax,                # rule 14: thin low-contrast edges
+              edgecolor="#bbbbbb", linewidth=0.2, ax=ax,                # rule 14: thin low-contrast edges
               legend=True, legend_kwds={"frameon": False, "title": "Deaths per 100,000"})
-states.boundary.plot(ax=ax, color="#888888", linewidth=0.6)             # rule 12: muted base layer
+states.boundary.plot(ax=ax, color="#888888", linewidth=0.4)             # rule 12: muted base layer
 ax.set_axis_off()                                                        # rule 13: no graticule by default
-ax.set_title("…finding stated as a sentence…")                           # SKILL.md rule 20
-ax.annotate("Source: …; units; year of data; author. North is up.",     # rule 18
-            xy=(0, 0), xycoords="axes fraction", fontsize=8, color="#666666")
+fig.savefig("figure2.pdf")                                               # title and sources in the caption
 ```
 
-- `scheme`/`k` are left to the user; Tufte gives no classification rule.
+- `scheme`/`k` are left to the user; Tufte gives no classification rule. `scheme=` needs the `mapclassify` package.
 - geopandas draws no north arrow; add one (rule 18) with an annotation or a small arrow patch.
 - For a dot map alongside (rule 3), plot the point layer with `markersize` small and constant, not scaled.
 
-**Plotly (choropleth)**
+**sf + ggplot2 (R)**
 
-```python
-import plotly.express as px
+```r
+library(sf); library(ggplot2)
 
-fig = px.choropleth(df, geojson=geo, locations="fips", color="rate",
-                    color_continuous_scale="Greys",                   # rule 9
-                    scope="usa", labels={"rate": "Deaths per 100,000"})
-fig.update_traces(marker_line_width=0.3, marker_line_color="#bbbbbb")  # rule 14
-fig.update_geos(showlakes=False, showcountries=False, showcoastlines=False,
-                showframe=False, landcolor="#f4f4f0")                 # rule 12
-fig.update_layout(title="…finding stated as a sentence…",
-                  coloraxis_colorbar=dict(outlinewidth=0, thickness=10))
+p <- ggplot(counties) +
+  geom_sf(aes(fill = rate), colour = "#bbbbbb", linewidth = 0.1) +       # rule 14
+  geom_sf(data = states, fill = NA, colour = "#888888", linewidth = 0.2) + # rule 12
+  scale_fill_distiller(palette = "Greys", direction = 1,                 # rule 9: light to dark
+                       name = "Deaths per 100,000") +
+  theme_void(base_size = 7, base_family = "Helvetica")                   # rule 13: no graticule
+ggsave("figure2.pdf", p, width = 89, height = 60, units = "mm", device = cairo_pdf)
 ```
 
-- Avoid `color_continuous_scale="Rainbow"`, `"Jet"`, `"Turbo"` and any spectral scale for quantity (rule 9).
+- Avoid rainbow, jet and turbo for a quantity (rule 9). For a diverging rate (above and below a reference), use `scico::scale_fill_scico(palette = "vik", midpoint = …)`.
 
 **Small multiples of maps (either library)**
 
 - One shared color scale and class breaks across all panels; one colorbar or legend for the whole figure (rule 16).
-- Same extent and projection on every panel; one title per panel stating what changes.
+- Same extent and projection on every panel; one label per panel stating what changes.
 
 ## Validation checklist
 
@@ -247,5 +245,5 @@ fig.update_layout(title="…finding stated as a sentence…",
 - [ ] Base map thinner and grayer than the data layer; no graticule unless needed for look-up (rules 12–13)
 - [ ] Boundaries thin and low-contrast (rule 14)
 - [ ] Small multiples share projection, extent, scale and breaks, on one page (rule 16)
-- [ ] Title, author, sources, scale, north arrow, units, date and data caveats are on the map (rule 18)
+- [ ] Title, sources, date and data caveats in the caption; scale, north arrow and units on the map (rule 18)
 - [ ] Symbol sizes and flow widths proportional to the data; no 3D (rule 19)
