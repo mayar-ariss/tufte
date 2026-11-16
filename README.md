@@ -1,8 +1,8 @@
 # Tufte
 
-**An agent skill for figures in scientific articles. Edward Tufte's vision governs their style: show the data, make the comparison and the cause visible, carry as much information as the reader can use. Nature's guidance governs their structure: size, panels, what is written on the figure and what in its legend, type and file format. Every rule names its source: Tufte's books, the statistics literature, or Nature's author guidelines.**
+**An agent skill for figures in scientific articles. Edward Tufte's vision governs their style: show the data, make the comparison and the cause visible, carry as much information as the reader can use. Nature's guidance governs their structure: size, panels, what is written on the figure and what in its caption, type and file format. Every rule names its source: Tufte's books, the statistics literature, or Nature's author guidelines.**
 
-![The same data twice. Left, matplotlib's defaults: a bar of each group's mean with SEM bars, a legend, a grid and a title. Right, the same data drawn by this skill: every culture as a dot, with the mean and its 95% confidence interval beside each group, labels only; one group splits into two clusters that the bar hid.](_docs/before-after.png)
+![The same data twice. Left, matplotlib's defaults: a bar of each group's mean with SEM bars, a key, a grid and a title. Right, the same data drawn by this skill: every culture as a dot, with the mean and its 95% confidence interval beside each group, labels only; one group splits into two clusters that the bar hid.](_docs/before-after.png)
 
 **The same data twice: the bar hides that half the Drug A cultures responded and half did not.** **a**, matplotlib's defaults: bars of the means with SEM error bars suggest Drug A and Drug B work equally well. **b**, drawn by this skill. Dots, individual cultures (Drug A in red); horizontal lines, means; vertical lines, 95% confidence intervals of the mean; *n* = 8 independent cultures per group. Four Drug A cultures responded and four did not; the Drug A mean (1.30 a.u.) lies between the two clusters, where no culture lies. Means: control 0.96, Drug B 1.33 a.u. Synthetic data.
 
@@ -22,20 +22,20 @@ Ask your agent for a figure as you normally would. The skill applies itself:
 - *"Review this figure script before submission."*
 - *"Draw the signalling pathway as a schematic for the paper."*
 
-The skill has three parts. **Tufte governs style; Nature governs structure.**
+The skill has three parts. **Tufte governs style; Nature governs structure.** It says **caption** for the text under a figure (Nature's "figure legend") and **key** for the element inside it that explains symbols or colors (what plotting libraries call the legend).
 
 **1. Tufte's principles govern the figure's style** (rules 1–14):
 
 - **Show the data**, not only summaries of it, and keep graphical integrity (the lie factor, bars from zero, the same design across panels).
 - **Show the comparison and the cause**: "Compared to what?" answered on the page; the explanatory variable on an axis; every case included, zeros and non-responders too (the lesson of the Challenger O-ring data).
 - **Carry information**: small multiples for multivariate data; high data density; multifunctioning elements such as range frames that report the data's range.
-- **Label directly**: each series named where it is, in black; no key box. Every question a reader would ask is answered — by a label on the graphic, or in the figure legend.
+- **Label directly**: each series named where it is, in black; no key box. Every question a reader would ask is answered — by a label on the graphic, or in the caption.
 - **Stay clear by design, not by omission**: erase what carries no information; layer the rest from dark data to light references, so the figure reads at a glance and up close.
 - **Tufte's colors: black and grays, one red accent, muted fields**; color last, strong color only in small areas, Okabe–Ito only when several categories must be colored; type that is clear, precise and modest, running horizontally.
 
 **2. The statistics literature adds the evidence Tufte left open** (rules 15–19): every observation for small samples instead of dynamite plots, error bars defined as SD, SEM or 95% confidence intervals, *n* stated, effect sizes before p-values, log axes for multiplicative data.
 
-**3. Nature's guidance governs the structure** (rules 20–25), superseding Tufte and other journals wherever they differ: 89 or 183 mm wide and at most 170 mm tall; Helvetica or Arial at 5–7 pt, black text; labels only on the figure, with values, notes, *n* and symbol definitions in the figure legend; a legend that opens with a brief title and stays under 300 words; 8 pt bold panel letters; line weights from 0.25 to 1 pt; vector AI, EPS or PDF with embedded fonts.
+**3. Nature's guidance governs the structure** (rules 20–25), superseding Tufte and other journals wherever they differ: 89 or 183 mm wide and at most 170 mm tall; Helvetica or Arial at 5–7 pt, black text; labels only on the figure, with values, notes, *n* and symbol definitions in the caption; a caption that opens with a brief title and stays under 300 words; 8 pt bold panel letters; line weights from 0.25 to 1 pt; vector AI, EPS or PDF with embedded fonts.
 
 Nothing is invented: no target line, comparison or explanatory variable that is not in the data.
 
@@ -49,9 +49,9 @@ Where the skill departs from him, it says so in the rule and lists the departure
 
 | Departure | Why |
 |---|---|
-| **Explanations, values and symbol keys in the figure legend** | Tufte writes explanations on the graphic itself. Nature asks for text, including keys to symbols, in the legend where possible. The skill keeps only labels on the graphic and moves the rest to the legend, so nothing is lost. |
+| **Explanations, values and symbol keys in the caption** | Tufte writes explanations on the graphic itself. Nature asks for text, including keys to symbols, in the caption where possible. The skill keeps only labels on the graphic and moves the rest to the caption, so nothing is lost. |
 | **Labels in black** | Nature recolours colored text; a label's position, not its color, ties it to its series. |
-| **The title in the figure legend** | Tufte puts a detailed title on the graphic; Nature's legends begin with it. |
+| **The title in the caption** | Tufte puts a detailed title on the graphic; Nature's captions begin with it. |
 | **Helvetica instead of serif type** | Tufte sets data graphics in serif type (*The Visual Display of Quantitative Information*, p. 183). Nature asks for Helvetica or Arial. Only the typeface changes: everything else he asks of type holds, and his own books set tables in a sans serif. |
 | **Bold panel letters; lower case with an initial capital** | Nature's style. The case rule is a narrower form of Tufte's upper-and-lower case. |
 | **Error bars, p-values, log scales** | Tufte gives no rule; the skill takes them from the literature: Cumming et al. (2007), Vaux (2012) and Krzywinski and Altman (2013) on error bars, Weissgerber et al. (2015) on showing the data, Wasserstein and Lazar (2016) on p-values, Cleveland (1994) on log scales, Wong (2011) and Crameri et al. (2020) on color. These extend Tufte; none contradicts him. |
@@ -60,13 +60,13 @@ Each rule is labeled **Tufte** (book and chapter), **Literature** (author and ye
 
 ## Examples
 
-All figures are drawn at Nature's widths by `_docs/generate_showcase.py`, which runs the same code the skill gives an agent. Each carries labels only; its legend, in Nature's form, carries the values. Data are synthetic except for the cholera map.
+All figures are drawn at Nature's widths by `_docs/generate_showcase.py`, which runs the same code the skill gives an agent. Each carries labels only; its caption, in Nature's form, carries the values. Data are synthetic except for the cholera map.
 
 <img src="_docs/tufte-scientific-figure.png" width="520" alt="A two-panel figure, 89 mm wide. Panel a: each culture as a dot for three groups, Drug B in red, with a black mean and 95% confidence interval beside each group. Panel b: dose-response curves for Drug B (red) and the control (gray) on a log dose axis with light confidence bands, each labeled in black; open circles mark each curve's half-maximal dose.">
 
 **Drug B raises the response and lowers the half-maximal dose about 9-fold.** **a**, Response of each culture (dots); horizontal lines, means; vertical lines, 95% confidence intervals of the mean; *n* = 8 independent cultures per group. Means: control 0.99, Drug A 1.11, Drug B 1.41 a.u. **b**, Response against dose (log scale); points, means of *n* = 4 cultures per dose; bands, 95% confidence intervals; open circles, half-maximal doses (EC50), interpolated between doses: control 2.65 µM, Drug B 0.30 µM (8.7-fold). Synthetic data.
 
-*Nature single column, 89 mm; range frames whose ends report the data's range; 8 pt bold panel letters. From `examples/matplotlib-publication.py`, which checks this legend against the data.*
+*Nature single column, 89 mm; range frames whose ends report the data's range; 8 pt bold panel letters. From `examples/matplotlib-publication.py`, which checks this caption against the data.*
 
 <img src="_docs/small-multiples.png" alt="Four panels of body mass over 12 weeks, one per diet, on one shared scale. Each panel shows every mouse as a thin gray line and the diet's mean as a heavier line, over a light gray band showing the week-0 range of all mice; the high-fat mean is red and ends highest; the restricted mean ends below its start.">
 
@@ -84,7 +84,7 @@ All figures are drawn at Nature's widths by `_docs/generate_showcase.py`, which 
 
 **Cholera deaths in Soho, 1854, cluster around the Broad Street pump.** Dots, deaths (one per death, 578 in all); crosses, water pumps (Broad Street in red). Deaths nearest each pump by straight-line distance: Broad St 359, So Soho 64, Crown Chapel 61, Briddle St 27, Oxford St #2 24, Warwick 16, Oxford St #1 12, Gt Marlborough 6, Vigo St 4, Dean St 2, Coventry St 2, Castle St E 1, Oxford Market 0. The population at risk is not shown (Tufte, *Visual Explanations*, p. 35). Data: Snow (1855), digitized by Dodson and Tobler, via the R package HistData.
 
-*Drawn by `rules/maps.md`, 120 mm. Every pump's count is in the legend, zeros included, so the comparison is complete.*
+*Drawn by `rules/maps.md`, 120 mm. Every pump's count is in the caption, zeros included, so the comparison is complete.*
 
 ### The palette
 
@@ -95,7 +95,7 @@ A palette belongs in a table, not a chart (Tufte, *The Visual Display of Quantit
 | Black | `#000000` | 21 | Data, text, axes |
 | Gray | `#666666` | 5.7 | Context |
 | Light gray | `#8c8c8c` | 3.4 | Individual observations, references |
-| Accent red | `#CC0000` | 5.9 | The finding; its value in the legend, its label in black |
+| Accent red | `#CC0000` | 5.9 | The finding; its value in the caption, its label in black |
 | Second accent blue | `#0072B2` | 5.2 | A second kind of highlight, only when needed |
 | Field gray | `#e5e5e5` | — | Normal ranges, bands, large areas |
 | Field blue | `#dce9f5` | — | Water, a second large area |
@@ -117,16 +117,16 @@ Black, grays, a red accent with blue as its pair, and muted fields are Tufte's o
 | Path | What it holds |
 |---|---|
 | `SKILL.md` | The workflow and 25 rules in three parts — Tufte's principles (style), scientific evidence, Nature's structure — with chart types, quick references, anti-patterns, a checklist and the list of departures from Tufte. The agent always reads this. |
-| `rules/matplotlib.md` | Setup, layers, helpers (range frames with labeled ends, black direct labels, Nature panel letters, confidence intervals, quartile and paired plots, log axes), complete examples with Nature-style legends, export |
+| `rules/matplotlib.md` | Setup, layers, helpers (range frames with labeled ends, black direct labels, Nature panel letters, confidence intervals, quartile and paired plots, log axes), complete examples with Nature-style captions, export |
 | `rules/ggplot2-plotnine.md` | A journal theme, the same figures in ggplot2 and plotnine, patchwork panels, export with embedded fonts |
 | `rules/typography-and-color.md` | Helvetica or Arial at Nature's sizes, Tufte's palette (Okabe–Ito as the fallback), color maps, contrast on white |
 | `rules/small-multiples-and-panels.md` | Multi-panel layout, small multiples, slopegraphs, quartile and dot-dash plots, sparklines in tables |
 | `rules/anti-patterns.md` | Common faults in scientific figures, with per-library detection and fixes |
-| `rules/journals.md` | Nature's requirements for figures and legends, quoted and dated; other journals for reference |
+| `rules/journals.md` | Nature's requirements for figures and captions, quoted and dated; other journals for reference |
 | `rules/references.md` | Full references for Tufte, the literature and the journal guides |
 | `rules/maps.md` | Maps, drawn only from Tufte's writing on data maps |
 | `rules/diagrams-flowcharts.md` | Schematics and mechanism diagrams, drawn only from Tufte's writing on connectors, layering and explanation |
-| `examples/matplotlib-publication.py` | A complete two-panel Nature figure that prints and checks its own legend |
+| `examples/matplotlib-publication.py` | A complete two-panel Nature figure that prints and checks its own caption |
 | `scripts/check_contrast.py` | Checks the documented palette against the contrast minimums |
 | `scripts/check_code.py` | Runs every Python code block in `rules/matplotlib.md` and the example |
 | `_docs/` | The README figures and the script that draws them |
@@ -137,14 +137,14 @@ Issues and pull requests are welcome. Before opening a PR:
 
 - **Changed a color?** Update `rules/typography-and-color.md`, then run `python3 scripts/check_contrast.py`.
 - **Changed Python code in `rules/matplotlib.md` or `examples/`?** Run `python3 scripts/check_code.py`; it exits non-zero if any block fails.
-- **Changed the README figures?** Run `python3 _docs/generate_showcase.py`. It checks each legend's claims against the data; update the README legend if the data change.
+- **Changed the README figures?** Run `python3 _docs/generate_showcase.py`. It checks each caption's claims against the data; update the README caption if the data change.
 - **Changed a Nature requirement?** Quote Nature's current guide in `rules/journals.md` and update the date.
 
 The figures in `_docs/` were rendered with TeX Gyre Heros, a free metric clone of Helvetica; on a machine with Helvetica installed, the scripts use Helvetica.
 
 ## Credits
 
-This skill began as a fork of [caylent/tufte-data-viz](https://github.com/caylent/tufte-data-viz) by Caylent, a general Tufte skill for charts and dashboards, and all credit for the original goes to its authors. It has since been rewritten for scientific articles: Nature's structure for figures and legends, the statistics of uncertainty, print typography and color, rules for data maps and analytical diagrams, and a source label on every rule.
+This skill began as a fork of [caylent/tufte-data-viz](https://github.com/caylent/tufte-data-viz) by Caylent, a general Tufte skill for charts and dashboards, and all credit for the original goes to its authors. It has since been rewritten for scientific articles: Nature's structure for figures and captions, the statistics of uncertainty, print typography and color, rules for data maps and analytical diagrams, and a source label on every rule.
 
 ## Based on
 

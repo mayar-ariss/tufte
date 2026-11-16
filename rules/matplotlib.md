@@ -116,7 +116,7 @@ def horizontal_ylabel(ax, text):
 def direct_label(ax, x, y, text, dx=4, dy=0, ha="left"):
     """Name a series where it is (rule 7), in black: Nature recolours colored text,
     and position ties the label to its series. dx, dy are offsets in points.
-    Values and notes go in the figure legend, not here (rule 6)."""
+    Values and notes go in the caption, not here (rule 6)."""
     ax.annotate(text, xy=(x, y), xytext=(dx, dy), textcoords="offset points",
                 ha=ha, va="center", color="black")
 
@@ -141,7 +141,7 @@ def mean_ci(values, level=0.95):
 def strip_with_ci(ax, groups, colors=None, jitter=0.12, seed=0):
     """Every observation as a dot, with the mean and 95% CI beside it (rules 1, 15, 16).
     groups: dict of name -> values. Returns the dict of (mean, half-width), for the
-    figure legend (rules 6, 22)."""
+    caption (rules 6, 22)."""
     rng = np.random.default_rng(seed)
     summary = {}
     for i, (name, values) in enumerate(groups.items()):
@@ -200,7 +200,7 @@ def log_axis(ax, axis="x", ticks=(0.01, 0.1, 1, 10, 100)):
     target.set_ticklabels([f"{t:g}" for t in ticks])
 ```
 
-`mean_ci` uses the t distribution, which suits small samples of roughly normal data. For skewed data, show medians with a bootstrap interval and say so in the figure legend.
+`mean_ci` uses the t distribution, which suits small samples of roughly normal data. For skewed data, show medians with a bootstrap interval and say so in the caption.
 
 ## Complete example: individual observations with 95% CIs
 
@@ -216,17 +216,17 @@ summary = strip_with_ci(ax, groups, colors={"Drug B": HIGHLIGHT})
 horizontal_ylabel(ax, "Response (a.u.)")      # on the graphic: labels only (rule 6)
 fig.savefig("figure1.pdf")
 
-# The figure legend, in Nature's form (rule 22), checked against the data
+# The caption, in Nature's form (rule 22), checked against the data
 assert summary["Drug B"][0] - summary["Drug B"][1] > summary["Control"][0] + summary["Control"][1]
 means = ", ".join(f"{name} {m:.2f}" for name, (m, _) in summary.items())
-legend = ("Drug B raises the response. Dots, individual cultures; horizontal lines, means; "
+caption = ("Drug B raises the response. Dots, individual cultures; horizontal lines, means; "
           "vertical lines, 95% confidence intervals of the mean (t distribution); "
           f"n = 8 independent cultures per group. Means: {means} a.u.")
-assert len(legend.split()) < 300
-print(legend)
+assert len(caption.split()) < 300   # Nature's limit
+print(caption)
 ```
 
-On the graphic: the group names and the axis label. In the legend: the title (here also the finding), what each mark means, the interval, *n* and the means, the values Tufte would have written on the graphic (rule 6). Nature's legends never name a series by its color.
+On the graphic: the group names and the axis label. In the caption: the title (here also the finding), what each mark means, the interval, *n* and the means, the values Tufte would have written on the graphic (rule 6). Nature's captions never name a series by its color.
 
 For a two-panel version with a log dose axis and the half-maximal doses marked on the curves, see `examples/matplotlib-publication.py`.
 
@@ -249,7 +249,7 @@ for ax in axes[1:]:
 fig.subplots_adjust(left=0.06, right=0.99, bottom=0.18, top=0.82, wspace=0.12)
 ```
 
-`sharey=True` keeps every panel on one scale (rule 5); the panel names sit where a title would, in the same 7 pt type. Ending values, if they matter, go in the figure legend (rule 6). When each panel summarizes several subjects, draw each subject as a thin light line under the mean, so the figure reads as a pattern at a glance and as individuals up close (rule 11); `_docs/generate_showcase.py` does this for the README's small multiples.
+`sharey=True` keeps every panel on one scale (rule 5); the panel names sit where a title would, in the same 7 pt type. Ending values, if they matter, go in the caption (rule 6). When each panel summarizes several subjects, draw each subject as a thin light line under the mean, so the figure reads as a pattern at a glance and as individuals up close (rule 11); `_docs/generate_showcase.py` does this for the README's small multiples.
 
 ## Export and check
 
@@ -277,12 +277,12 @@ fig, ax = plt.subplots(figsize=(60 * MM, 50 * MM))
 sns.stripplot(data=df, x="group", y="response", color=GRAY, size=2.5, jitter=0.12, ax=ax)
 sns.pointplot(data=df, x="group", y="response", errorbar=("ci", 95), color="black",
               markers="_", markersize=6, linestyle="none", err_kws={"linewidth": 0.5}, ax=ax)
-if ax.get_legend() is not None:   # seaborn adds a legend when hue= is used
+if ax.get_legend() is not None:   # seaborn adds a key (legend) when hue= is used
     ax.get_legend().remove()
 ax.set_xlabel("")
 horizontal_ylabel(ax, "Response (a.u.)")
 ```
 
-- seaborn's `errorbar=("ci", 95)` is a bootstrap interval; say so in the figure legend, or compute the interval yourself with `mean_ci`.
+- seaborn's `errorbar=("ci", 95)` is a bootstrap interval; say so in the caption, or compute the interval yourself with `mean_ci`.
 - Never `sns.barplot` for continuous data (rule 15); use `stripplot` or `swarmplot` with `pointplot`.
 - Prefer a single gray with `HIGHLIGHT` on the finding; `OKABE_ITO` values only when several categories must be colored; never the default palette.
