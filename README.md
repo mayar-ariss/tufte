@@ -68,17 +68,31 @@ All figures are drawn at a journal width by `_docs/generate_showcase.py`, which 
 
 *Small multiples with two readings, 183 mm. Mice on the high-fat diet gained the most mass by week 12 (31.7 g); those on the restricted diet lost mass. At a glance, the four means; up close, every mouse as a thin light line under its diet's mean (*n* = 8 per diet). One scale in every panel; the week-0 mean as the shared reference; the ending values written in.*
 
-<img src="_docs/tufte-designs.png" width="640" alt="Two panels. Panel a: systolic pressure before and after treatment, one line per subject; ten lines fall, labeled 10 fell; two rise, drawn in blue and labeled 2 rose. Panel b: Tufte's quartile plots for four sites, each a dot at the median with its value written beside it, a gap for the middle half and lines to the extremes.">
+<img src="_docs/tufte-designs.png" width="640" alt="Two panels. Panel a: systolic pressure before and after treatment, one line per subject; ten lines fall, labeled 10 fell; two rise, drawn in blue and labeled 2 rose. Panel b: Tufte's quartile plots for four sites, ordered by median from 9.7 to 13.6, each a dot at the median with its value written beside it, a gap for the middle half and lines to the extremes.">
 
-*Tufte's designs for distributions, 120 mm. **a**, paired measurements as a slopegraph, one line per subject: pressure fell in 10 of 12 subjects; the two who rose are in blue, and both counts are written on the graphic. **b**, Tufte's quartile plot (no box: a dot at the median, a gap for the middle half, lines to the extremes), with each median's value, *n* = 40 per site.*
+*Tufte's designs for distributions, 120 mm. **a**, paired measurements as a slopegraph, one line per subject: pressure fell in 10 of 12 subjects; the two who rose are in blue, and both counts are written on the graphic. **b**, Tufte's quartile plot (no box: a dot at the median, a gap for the middle half, lines to the extremes), sites ordered by median rather than by name, each median's value written in, *n* = 40 per site.*
 
-<img src="_docs/tufte-cholera-map.png" width="560" alt="John Snow's 1854 cholera map redrawn: one black dot per death on a pale street plan, the 13 water pumps as gray crosses with labels, and the Broad Street pump as a blue cross at the center of the cluster.">
+<img src="_docs/tufte-cholera-map.png" width="560" alt="John Snow's 1854 cholera map redrawn: one black dot per death on a pale street plan, the 13 water pumps as gray crosses, each labeled with its name and its count of nearest deaths, from 0 to 64, and the Broad Street pump as a blue cross at the center of the cluster, labeled Broad St pump: 359.">
 
-*John Snow's 1854 cholera data, drawn by `rules/maps.md`, 120 mm. 359 of the 578 deaths lay nearer the Broad Street pump (blue) than any other; the next pump, South Soho, has 64. One dot per death; straight-line distances; the population at risk is not shown (Tufte, Visual Explanations, p. 35). Data: Snow (1855), digitized by Dodson and Tobler, via the R package HistData.*
+*John Snow's 1854 cholera data, drawn by `rules/maps.md`, 120 mm. 359 of the 578 deaths lay nearer the Broad Street pump (blue) than any other; the next pump, South Soho, has 64. Every pump carries its count on the map, zeros included, so the comparison is on the page, as Snow annotated his own map. One dot per death; straight-line distances; the population at risk is not shown (Tufte, Visual Explanations, p. 35). Data: Snow (1855), digitized by Dodson and Tobler, via the R package HistData.*
 
-<img src="_docs/tufte-palette-contrast.png" width="420" alt="Dot plot of contrast ratios against white for the palette: gray 5.7, blue 5.2, vermillion 3.9, bluish green 3.4, light gray 3.4, reddish purple 3.1, sky blue 2.3, orange 2.3, yellow 1.3, with dotted lines at 3:1 and 4.5:1.">
+### The palette
 
-*The palette's contrast against a white page. Blue, vermillion, bluish green and reddish purple clear 3:1 for marks; only blue and the default gray clear 4.5:1 for text. `scripts/check_contrast.py` keeps the documented palette from drifting.*
+Nine numbers belong in a table, not a chart (Tufte, *The Visual Display of Quantitative Information*, ch. 9). Contrast against a white page; the skill asks 3:1 for marks and 4.5:1 for text.
+
+| Color | Hex | Contrast | Use |
+|---|---|---:|---|
+| Gray (default) | `#666666` | 5.7 | Data, context, text |
+| Blue | `#0072B2` | 5.2 | Highlight; its label may share its color |
+| Vermillion | `#D55E00` | 3.9 | Second category; label in black |
+| Bluish green | `#009E73` | 3.4 | Third category; label in black |
+| Light gray | `#8c8c8c` | 3.4 | Individual observations, references |
+| Reddish purple | `#CC79A7` | 3.1 | Fourth category; label in black |
+| Sky blue | `#56B4E9` | 2.3 | Filled areas with a dark outline only |
+| Orange | `#E69F00` | 2.3 | Filled areas with a dark outline only |
+| Yellow | `#F0E442` | 1.3 | Avoid |
+
+`scripts/check_contrast.py` checks the palette documented in `rules/typography-and-color.md`, so it cannot drift.
 
 ## Supported libraries
 

@@ -88,7 +88,8 @@ from scipy import stats
 def range_frame(ax, x=None, y=None, label_ends=False, fmt="{:g}"):
     """Tufte's range frame (rule 10): each axis line spans only its data.
     label_ends=True also labels the frame's ends with the data's minimum and maximum,
-    so the axis reports the range (a multifunctioning element, rule 8)."""
+    so the axis reports the range (a multifunctioning element, rule 8). Call it after
+    the axis limits and ticks are final; fmt applies to every axis given."""
     for data, spine, axis in ((x, "bottom", ax.xaxis), (y, "left", ax.yaxis)):
         if data is None:
             continue

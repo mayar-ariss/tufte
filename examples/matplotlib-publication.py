@@ -198,6 +198,8 @@ def main(outdir):
     all_b = np.concatenate([c.mean(axis=1) for c in curves.values()])
     range_frame(ax_b, "x", dose[0], dose[-1])
     range_frame(ax_b, "y", all_b.min(), all_b.max())
+    ends_b = [all_b.min(), 0.2, 0.4, 0.6, 0.8, all_b.max()]   # the frame's ends report the range
+    ax_b.set_yticks(ends_b, [f"{v:.2f}" if v in (all_b.min(), all_b.max()) else f"{v:.1f}" for v in ends_b])
     horizontal_ylabel(ax_b, "Response (fraction of maximum)")
 
     panel_letter(fig, ax_a, "a")
