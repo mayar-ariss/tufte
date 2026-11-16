@@ -27,7 +27,7 @@ The skill is in three parts:
 
 **Tufte governs style; Nature governs structure.** Where they differ on structure, Nature's guidance supersedes Tufte and every other journal's guidance. Every departure from Tufte is named where it occurs, with its reason, and listed under "Departures from Tufte" at the end.
 
-**Diagrams and schematics:** read `rules/diagrams-flowcharts.md`. **Maps:** also read `rules/maps.md`.
+**Diagrams, flowcharts and schematics:** read `rules/diagrams-flowcharts.md`. Nature holds them to the same rules as every other figure. **Maps:** also read `rules/maps.md`.
 
 ## Workflow
 
@@ -115,10 +115,11 @@ Words and data still belong together; Nature decides where the words go.
 
 ### 7. Label directly, in black; a key only for a scale
 
-*Source: Tufte — in the friendly data graphic "labels are placed on the graphic itself; no legend is required", VDQI ch. 9 (p. 183). Journal (Nature figure guide: keys or keylines in the figure wherever possible, rather than colour descriptions in the caption; avoid coloured text, which Nature recolours black or white).*
+*Source: Tufte — in the friendly data graphic "labels are placed on the graphic itself; no legend is required", VDQI ch. 9 (p. 183). Journal (Nature figure guide: keys or keylines in the figure wherever possible, rather than colour descriptions in the caption; avoid coloured text, which Nature recolours black or white; keylines to black labels; coloured boxes with black text to refer to colour).*
 
 - Label each series where it is, at the end of a line or beside a cluster, and turn the key off. The direct label is Nature's in-figure key.
-- **Labels in black.** Position, not color, ties a label to its series. Never identify a series in the legend by its color ("the red line"); name it as it is labeled.
+- **Labels in black.** Position, not color, ties a label to its series. Where a label cannot sit beside its series, a thin keyline runs from the black label to it (Nature: "keylines pointing to black text labels").
+- **Never colored text, in the figure or the legend.** Name a series in the legend as it is labeled. Where a key or the legend must refer to a color, put a small solid colored box, or a sample of the line or marker, beside black text (Nature figure guide).
 - A key stays only for an encoding that cannot carry its own label, such as a color scale for a quantity: in the figure, beside the data, unframed. Tufte does not ban keys: his redrawn cancer maps carry one (VDQI pp. 16–20).
 - Symbols that are not series (open circles, bands, bars) are defined in the figure legend (rule 6).
 
@@ -132,9 +133,9 @@ Words and data still belong together; Nature decides where the words go.
 
 ### 9. Erase non-data-ink and redundant ink, within reason
 
-*Source: Tufte, VDQI ch. 4 (data-ink), ch. 5 (chartjunk), ch. 6 (erasing the frame).*
+*Source: Tufte, VDQI ch. 4 (data-ink), ch. 5 (chartjunk), ch. 6 (erasing the frame). Journal (Nature figure guide: avoid background gridlines, superfluous icons and other decorative elements, drop shadows and patterns; axis lines and tick marks required).*
 
-No box around the plot, no top or right spines, no background fill, no heavy grid, no hatching, no decoration. Where readers must read values precisely, a light grid is acceptable (Tufte: "muted or suppressed", VDQI ch. 5); a table may serve better. Erase what carries no information about the data, never what does: erasing is subordinate to rule 1, and information taken off the graphic goes to the legend (rule 6).
+No box around the plot, no top or right spines, no background fill, no gridlines, no drop shadows, no hatching or pattern fills (solid fills instead), no decorative icons. Keep the axis lines and tick marks: Nature requires them, and the range frame (rule 10) keeps both. Where readers must read values precisely, give the values in a table or the legend rather than adding a grid (Tufte would allow a muted grid, VDQI ch. 5; Nature avoids it). Erase what carries no information about the data, never what does: erasing is subordinate to rule 1, and information taken off the graphic goes to the legend (rule 6).
 
 ### 10. Range-frame axes that report the data
 
@@ -272,7 +273,7 @@ Data lines 1 pt; axes, ticks, error bars and leader lines 0.5 pt or lighter; mar
 
 *Source: Journal (Nature figure guide; final submission: "Please do not rasterize line art or text").*
 
-- Main figures: vector `.ai`, `.eps` or `.pdf`, text editable, fonts embedded (TrueType, Type 42), never outlined or rasterized. Nature does not accept JPEG, TIFF or PNG for main figures. Keep files under 50 MB, everything embedded, not linked.
+- Main figures: vector `.ai`, `.eps` or `.pdf`, text editable, fonts embedded (TrueType, Type 42), never outlined or rasterized. Photographic images at 300 dpi or more (450 dpi gives the best online proof), with scale bars and their text on a separate, editable layer. Nature does not accept JPEG, TIFF or PNG for main figures. Keep files under 50 MB, everything embedded, not linked.
 - Extended Data figures: RGB, JPEG preferred (TIFF or EPS accepted), at most 300 dpi and 10 MB, sized to fit one page with room for the legend.
 - Check with `pdffonts figure.pdf`: every font `emb yes`.
 
@@ -323,7 +324,7 @@ Quotes, sources and dates: `rules/journals.md`, which also keeps other journals'
 
 When reviewing a figure or its code, check for:
 
-- **Against Tufte:** summaries without the data (→ show the observations); a comparison the reader must assemble across figures (→ side by side, same scale); the explanatory variable hidden in a legend or panel order (→ on an axis); missing zeros or non-responders (→ include them); categories in alphabetical order (→ order by value or cause); unlabeled series (→ direct labels, in black); a key box (→ direct labels; symbols defined in the legend); a heavy frame, grid or decoration (→ erase); every element the same weight (→ layer); a sparse figure that could carry more of the data (→ add detail); color over large areas or rainbow maps (→ gray first, light to dark); all-caps or rotated labels (→ upper-and-lower case, horizontal); pie, 3D or dual axes.
+- **Against Tufte:** summaries without the data (→ show the observations); a comparison the reader must assemble across figures (→ side by side, same scale); the explanatory variable hidden in a legend or panel order (→ on an axis); missing zeros or non-responders (→ include them); categories in alphabetical order (→ order by value or cause); unlabeled series (→ direct labels, in black); a key box (→ direct labels; symbols defined in the legend); a frame, grid, drop shadow, pattern or decorative icon (→ erase); every element the same weight (→ layer); a sparse figure that could carry more of the data (→ add detail); color over large areas or rainbow maps (→ gray first, light to dark); all-caps or rotated labels (→ upper-and-lower case, horizontal); pie, 3D or dual axes.
 - **Against the evidence:** dynamite plots; undefined error bars or *n*; statistics on two or three points; technical replicates as *n*; undefined asterisks; bars on a log axis.
 - **Against Nature's structure:** a figure drawn at screen size and scaled down; text outside 5–7 pt or sizes that vary across figures; a title, notes or values written inside the figure; colored text; series identified by color in the legend; a legend of 300 words or more, or one with methods; rasterized text or unembedded fonts.
 
@@ -339,9 +340,9 @@ Before presenting any figure, verify:
 - [ ] The comparison is on the page, side by side, on one scale, and comes from the data (rule 3)
 - [ ] The explanatory variable is on an axis; every case is included, zeros too; categories ordered meaningfully (rule 4)
 - [ ] Multivariate evidence shown, by small multiples where needed (rule 5)
-- [ ] Labels only on the graphic; values, notes and symbol definitions in the legend (rule 6); series labeled directly, in black (rule 7)
+- [ ] Labels only on the graphic; values, notes and symbol definitions in the legend (rule 6); series labeled directly in black, with keylines where needed; no colored text anywhere (rule 7)
 - [ ] The figure carries as much of the data as the reader can use (rule 8)
-- [ ] No frame, box, heavy grid or decoration (rule 9); range-frame axes (rule 10)
+- [ ] No frame, box, gridlines, drop shadows, patterns or decorative icons (rule 9); range-frame axes with tick marks (rule 10)
 - [ ] Layers ordered: data darkest, references lighter, axes lightest; readable at a glance and up close (rule 11)
 - [ ] Color last; black and grays first; one red accent, blue only as a second; large areas in muted fields; Okabe–Ito only for several colored categories; a uniform map for quantities; grayscale test passed (rule 12)
 - [ ] Upper-and-lower case, horizontal type, words spelled out (rule 13)
@@ -365,7 +366,7 @@ Each is named in its rule; all are here so none is hidden.
 | Departure | Why | Rule |
 |---|---|---|
 | Helvetica instead of serif type | Nature asks for a sans serif, preferably Helvetica or Arial. Only the typeface changes; Tufte's other requirements for type hold | 21 |
-| Explanations, values and symbol keys in the figure legend; only labels on the graphic | Nature: text, including keys to symbols, in the legend rather than on the figure where possible. Tufte writes them on the graphic | 6, 22 |
+| Explanations, values and symbol keys in the figure legend; only labels on the graphic | Nature: text, including keys to symbols, in the legend rather than on the figure where possible. Tufte writes them on the graphic, and puts link strengths on the links of diagrams | 6, 22 |
 | Labels in black, not in their series' color | Nature recolours colored text. Position ties a label to its series | 7, 21 |
 | Title in the legend, not on the graphic | Nature's legends begin with the figure's title | 22 |
 | Bold panel letters | Nature requires them | 24 |

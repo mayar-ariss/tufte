@@ -9,7 +9,7 @@ The values in this file (point sizes, hex colors, opacities) are this skill's de
 | Use | Font stack |
 |---|---|
 | Default | `Helvetica, Arial, "TeX Gyre Heros", "Nimbus Sans", "Liberation Sans", sans-serif` |
-| Greek and math symbols | the same face where it has them |
+| Greek letters and glyphs | Symbol (Journal, Nature figure guide) |
 | Amino-acid sequences | Courier (or another monospaced face), one-letter code (Journal, Nature) |
 
 - Arial has the same character widths as Helvetica, so a figure laid out in one does not shift in the other.
@@ -53,7 +53,6 @@ The values in this file (point sizes, hex colors, opacities) are this skill's de
 | Text, axes, ticks | `#000000` | 21:1 |
 | Default data series and context | `#666666` | 5.7:1 |
 | Light context (reference curves, rug marks) | `#8c8c8c` | 3.4:1 (marks only, never text) |
-| Gridlines, if any | `#dddddd` | — |
 
 *Source: Journal (Nature: "Avoid coloured text"; black or white text, contrast above 4.5:1); convention.* All text black, including direct labels: Nature recolours colored text, and small gray text prints as a halftone screen and loses sharpness.
 
