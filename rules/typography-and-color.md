@@ -63,17 +63,20 @@ The values in this file (point sizes, hex colors, opacities) are this skill's de
 
 | Name | Hex | Contrast on white | Use |
 |---|---|---|---|
-| Blue | `#0072B2` | 5.2:1 | Highlight; its label may share its color |
-| Vermillion | `#D55E00` | 3.9:1 | Second category; label in black |
-| Bluish green | `#009E73` | 3.4:1 | Third category; label in black |
-| Reddish purple | `#CC79A7` | 3.1:1 | Fourth category; label in black |
+| Blue | `#0072B2` | 5.2:1 | Default highlight; its label may share its color |
+| Vermillion | `#D55E00` | 3.9:1 | Second highlight, only when needed; label in black |
+| Bluish green | `#009E73` | 3.4:1 | Third, only when needed; label in black |
+| Reddish purple | `#CC79A7` | 3.1:1 | Fourth, only when needed; label in black |
 | Black | `#000000` | 21:1 | Reference or fifth category |
-| Orange | `#E69F00` | 2.3:1 | Filled areas with a dark outline only |
-| Sky blue | `#56B4E9` | 2.3:1 | Filled areas with a dark outline only |
+| Orange | `#E69F00` | 2.3:1 | Not for marks (below 3:1); never over large areas |
+| Sky blue | `#56B4E9` | 2.3:1 | Not for marks (below 3:1); never over large areas |
 | Yellow | `#F0E442` | 1.3:1 | Avoid |
 
+- **Color last.** Position, direct labels and small multiples separate categories before color does (Tufte, EI ch. 4–5).
 - **Gray first.** Draw everything in gray (`#666666`) and give color only to what the reader must find (Tufte, EI ch. 5).
-- **At most four colors** in one figure; more categories go to small multiples (convention; Tufte, EI ch. 4).
+- **One highlight by default**, blue. Add the next colors in table order only when the reader must tell highlighted things apart; at most four in one figure, more categories go to small multiples (convention; Tufte, EI ch. 4).
+- **Small areas only.** These colors are for lines, dots, labels and small marks. Tufte's color rules, taken from the cartographer Eduard Imhof, keep strong color to small areas on a muted field and warn against bright colors side by side over large areas (EI ch. 5; see `rules/maps.md`, rule 11). Large areas (fills, wide bars, map regions, backgrounds) take light gray (`#e5e5e5`) or a pale tint of one hue, stepped light to dark when they encode a quantity.
+- **The hexes stay as published.** Muting them would undo the color-vision design that Tufte himself asks for (VDQI p. 183); the rules above limit where they go instead.
 - **Same condition, same color** in every figure of the paper (Tufte, integrity principle 3).
 - **Never red against green** for a contrast that matters (Journal, Science; Wong 2011).
 
@@ -105,4 +108,4 @@ The minimums are an extension (WCAG): 4.5:1 for text and 3:1 for data marks agai
 python3 scripts/check_contrast.py
 ```
 
-It reads the tables in this file and exits non-zero if any text or data color misses its minimum. Rows marked "never text", "filled areas" or "Avoid" are reported but not failed.
+It reads the tables in this file and exits non-zero if any text or data color misses its minimum. Rows marked "never text", "Not for marks" or "Avoid" are reported but not failed.
