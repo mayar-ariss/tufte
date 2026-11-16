@@ -5,10 +5,11 @@ description: >-
   preprints, theses, conference papers and their supplementary material:
   plots, multi-panel figures, small multiples, maps and schematic diagrams.
   Applies Edward Tufte's principles (show the data, graphical integrity,
-  comparison, causality, data density, layering, direct annotation) to
-  scientific figures, together with the statistics literature on showing
-  uncertainty and the production requirements of journals (Nature, Science,
-  PLOS). Covers matplotlib, seaborn, ggplot2 and plotnine.
+  comparison, causality, data density, layering, direct labeling) to the
+  style of scientific figures, the statistics literature on showing
+  uncertainty, and Nature's guidance to their structure (size, panels, text
+  placement, figure legends, file formats). Covers matplotlib, seaborn,
+  ggplot2 and plotnine.
 allowed-tools: Read, Glob, Grep
 ---
 
@@ -18,13 +19,13 @@ Apply these rules whenever you generate or review code that draws a figure for a
 
 Tufte wrote about printed evidence, and many of his central examples are scientific: Snow's cholera map, Minard's map of the Russian campaign, the Challenger O-ring data. His vision is the core of this skill. A scientific figure is a display of evidence: it shows the data, makes the comparison and the cause visible, carries as much information as the reader can use, and explains itself on the page.
 
-The skill is in three parts, in order of authority:
+The skill is in three parts:
 
-1. **Tufte's principles** (rules 1–14). The design of the figure.
+1. **Tufte's principles** (rules 1–14) govern the figure's **style**: what is drawn and how — the data, the comparison, the cause, data-ink, color, layering, labels.
 2. **Scientific evidence** (rules 15–19). What the statistics literature adds where Tufte gives no rule: distributions, uncertainty, p-values, log scales. These extend Tufte; none contradicts him.
-3. **Journal production** (rules 20–25). Size, typeface, caption, line weights, panel letters, file format. These change how a figure is produced, not how it is designed.
+3. **Nature's structure** (rules 20–25) governs the figure's **structure**: size, panel layout, which text goes on the figure and which in the figure legend, type sizes, line weights, file format.
 
-When a production requirement and a Tufte principle seem to conflict, meet the requirement in the way that loses the least of the principle. Every departure from Tufte is named where it occurs, with its reason, and listed under "Departures from Tufte" at the end.
+**Tufte governs style; Nature governs structure.** Where they differ on structure, Nature's guidance supersedes Tufte and every other journal's guidance. Every departure from Tufte is named where it occurs, with its reason, and listed under "Departures from Tufte" at the end.
 
 **Diagrams and schematics:** read `rules/diagrams-flowcharts.md`. **Maps:** also read `rules/maps.md`.
 
@@ -33,10 +34,10 @@ When a production requirement and a Tufte principle seem to conflict, meet the r
 1. **Find the evidence.** What must the reader see, compared with what, and caused by what? Use only comparisons and explanatory variables that exist in the data or that the user supplies; never invent a target, baseline or reference value.
 2. **Design by Part I.** Choose the form that shows the data, the comparison and the cause, with as much detail as the reader can use, layered so it stays readable.
 3. **Add the evidence Part II asks for**: every observation where feasible, uncertainty defined, *n* stated.
-4. **Produce by Part III** for the target journal (`rules/journals.md`). If none is named, 89 mm (single column) or 183 mm (double column) in 5–7 pt Helvetica suits most journals.
+4. **Structure by Part III**, to Nature's guidance: 89 mm (single column) or 183 mm (double column), 5–7 pt Helvetica or Arial, labels on the figure, everything else in the figure legend (`rules/journals.md`).
 5. **Respect an existing figure style.** If the user's project already has one (a matplotlibrc, a ggplot2 theme, a lab template, earlier figures in the paper), keep its look and apply Parts I and II to the content. Apply the full style only when asked or when there is none.
 6. **Library setup:** read ONE of `rules/matplotlib.md` or `rules/ggplot2-plotnine.md`.
-7. **Write the caption** (rule 22) and check every claim in it against the data. **Validate** with the checklist at the end.
+7. **Write the figure legend** (rule 22) and check every number in it against the data. **Validate** with the checklist at the end.
 
 ## Sources
 
@@ -44,7 +45,7 @@ Every rule names its source:
 
 - **Tufte** — stated in Tufte's books, cited by book and chapter: *VDQI* = *The Visual Display of Quantitative Information* (1983; 2nd ed. 2001), *EI* = *Envisioning Information* (1990), *VE* = *Visual Explanations* (1997), *BE* = *Beautiful Evidence* (2006). His fifth book, *Seeing with Fresh Eyes* (2020), is not drawn on here.
 - **Literature** — a published recommendation from statistics or visualization research, cited by author and year; full references in `rules/references.md`.
-- **Journal** — a requirement in a journal's author guidelines, quoted with its date in `rules/journals.md`. The target journal's current guide wins.
+- **Journal** — a requirement in Nature's author guidelines, quoted with its date in `rules/journals.md`; Nature's guidance governs structure. Other journals' requirements are kept in that file for reference only.
 - **Convention** — common practice stated by none of the above. Specific values (hex colors, point sizes, opacities) are this skill's defaults.
 - **Extension** — added by this skill's authors (for example the contrast minimums).
 
@@ -102,31 +103,38 @@ The lesson of VE ch. 2: the evidence about the Challenger's O-rings was displaye
 
 Show more than one or two variables when the evidence has them. Small multiples are Tufte's main device: one design repeated, one scale in every panel, panels close together and ordered by something meaningful, so the eye compares the data rather than the graphics. Prefer small multiples to stacked bars, dual axes or more than four colors in one panel. See `rules/small-multiples-and-panels.md`.
 
-### 6. Put the explanation on the graphic, generously
+### 6. Labels on the graphic; explanations in the figure legend
 
-*Source: Tufte, VDQI ch. 2 (principle 2: "write out explanations of the data on the graphic itself; label important events in the data"); VDQI ch. 9 (words and pictures together); BE ch. 5 (fourth principle); EI ch. 2 ("to clarify, add detail").*
+*Source: Tufte, VDQI ch. 2 (principle 2: clear, detailed labeling defeats distortion); VDQI ch. 9 (words and pictures together); BE ch. 5 (fourth and fifth principles). Journal (Nature formatting guide: "Where possible, text, including keys to symbols, should be provided in the legend rather than on the figure itself"; Nature figure guide: keys in the figure rather than colour descriptions in the caption). **Departure from Tufte** on structure: Tufte writes explanations on the graphic itself; Nature puts them in the figure legend.*
 
-Words, numbers and data belong together. Write onto the figure what the reader needs to read it without the caption: the name of each group and series, the values that matter (an EC₅₀, a peak, a difference, *n*), events and interventions, thresholds, the meaning of an unusual mark. Place each annotation beside what it explains, in the nearest clear space, with a short thin leader line if needed. Do not ration annotation for the sake of a clean look; keep the figure readable by layering (rule 11), not by leaving information out. "Confusion and clutter are failures of design, not attributes of information" (EI p. 51).
+Words and data still belong together; Nature decides where the words go.
 
-### 7. Label directly; a key only for a scale
+- **On the graphic, labels only:** axis labels with units, tick labels, the name of each group and series as a direct label (rule 7), panel letters, scale bars, and labels that name a feature (a pump, a gene, a region).
+- **In the figure legend** (rule 22): what each symbol, line, band and bar means; the values that matter (an EC₅₀, a mean, a fold change); *n* and what it counts; events, thresholds and notes; statistics; unusual units and abbreviations.
+- Keep Tufte's standard for explanation: every question a reader would ask of the figure is answered, on the graphic if it is a label and in the legend if not. Nothing is left out for a clean look; it moves to the legend.
 
-*Source: Tufte — in the friendly data graphic "labels are placed on the graphic itself; no legend is required", VDQI ch. 9 (p. 183).*
+### 7. Label directly, in black; a key only for a scale
 
-Label each series where it is, at the end of a line or beside a cluster, and turn the legend off. A key stays only for an encoding that cannot carry its own label, such as a color scale for a quantity; show it beside the data, unframed. Tufte does not ban keys: his redrawn cancer maps carry one (VDQI pp. 16–20).
+*Source: Tufte — in the friendly data graphic "labels are placed on the graphic itself; no legend is required", VDQI ch. 9 (p. 183). Journal (Nature figure guide: keys or keylines in the figure wherever possible, rather than colour descriptions in the caption; avoid coloured text, which Nature recolours black or white).*
+
+- Label each series where it is, at the end of a line or beside a cluster, and turn the key off. The direct label is Nature's in-figure key.
+- **Labels in black.** Position, not color, ties a label to its series. Never identify a series in the legend by its color ("the red line"); name it as it is labeled.
+- A key stays only for an encoding that cannot carry its own label, such as a color scale for a quantity: in the figure, beside the data, unframed. Tufte does not ban keys: his redrawn cancer maps carry one (VDQI pp. 16–20).
+- Symbols that are not series (open circles, bands, bars) are defined in the figure legend (rule 6).
 
 ### 8. Maximize data density, within reason
 
 *Source: Tufte, VDQI ch. 8 (data density, the shrink principle); VDQI ch. 7 (multifunctioning graphical elements).*
 
 - Carry as much data per square centimeter as the reader can use. Tufte's shrink principle — most graphics can be shrunk well below their usual size — suits a journal column.
-- Let one element do several jobs: an axis that reports the data's range (rule 10), a label that is also a value, a reference line that is also the comparison.
-- Use space for data, not for margins, boxes and repeated labels. Science asks the same: "maximize the space given to presentation of the data" (Journal, Science).
+- Let one element do several jobs: an axis that reports the data's range (rule 10), a reference line that is also the comparison, small multiples that share one set of labels.
+- Use space for data, not for margins, boxes and repeated labels. Nature asks the same: panels laid out "in a neat and space-efficient manner, minimizing white space" (Journal, Nature figure guide).
 
 ### 9. Erase non-data-ink and redundant ink, within reason
 
 *Source: Tufte, VDQI ch. 4 (data-ink), ch. 5 (chartjunk), ch. 6 (erasing the frame).*
 
-No box around the plot, no top or right spines, no background fill, no heavy grid, no hatching, no decoration. Where readers must read values precisely, a light grid is acceptable (Tufte: "muted or suppressed", VDQI ch. 5); a table may serve better. Erase what carries no information about the data, never what does: erasing is subordinate to rules 1 and 6.
+No box around the plot, no top or right spines, no background fill, no heavy grid, no hatching, no decoration. Where readers must read values precisely, a light grid is acceptable (Tufte: "muted or suppressed", VDQI ch. 5); a table may serve better. Erase what carries no information about the data, never what does: erasing is subordinate to rule 1, and information taken off the graphic goes to the legend (rule 6).
 
 ### 10. Range-frame axes that report the data
 
@@ -146,8 +154,8 @@ A dense figure stays clear when its layers are visually ordered: data darkest an
 
 - **Color last.** Separate things first by position, direct labels or small multiples (rules 5 and 7); use color only for what those cannot do.
 - **Black and grays carry the figure:** data in black, context in gray, individual observations and references in light gray. Make every difference as small as will still read clearly.
-- **One accent, red `#CC0000`,** on the finding, with its value written beside it, as in Tufte's sparklines. **Blue `#0072B2` only as a second accent,** for a second kind of highlight; Tufte pairs the two (red for first and last values, blue for low and high).
-- **Muted fields for large areas:** a light gray band for a normal range or reference interval; a pale tint of one hue for a large region, stepped light to dark when it encodes a quantity. Strong color only in small areas (lines, dots, labels, small marks); never strong or bright colors over large areas.
+- **One accent, red `#CC0000`,** on the finding, as in Tufte's sparklines; its value goes in the figure legend (rule 6). **Blue `#0072B2` only as a second accent,** for a second kind of highlight; Tufte pairs the two (red for first and last values, blue for low and high).
+- **Muted fields for large areas:** a light gray band for a normal range or reference interval; a pale tint of one hue for a large region, stepped light to dark when it encodes a quantity. Strong color only in small areas (lines, dots, small marks; text stays black, rule 7); never strong or bright colors over large areas.
 - **For quantities,** light to dark in one hue, or a perceptually uniform map (viridis, cividis, batlow; vik for diverging data). Never rainbow or jet.
 - **Several categories that must be colored** (three or more, when position, labels and small multiples cannot separate them): the Okabe–Ito palette, as a set in place of the accents, in small areas, at most four colors. Tufte gives no palette for this; Okabe–Ito meets his p. 183 requirement.
 - Never red against green for a contrast that matters. Same condition, same color in every figure of the paper. The figure must read in grayscale. The red and the blue were checked in simulations of color-vision deficiency and stay distinct from the grays and from each other.
@@ -195,11 +203,11 @@ For continuous data in small samples, plot every observation (a strip, jittered 
 
 *Source: Literature (Wasserstein and Lazar 2016); convention for the marks.*
 
-A p-value does not measure the size of an effect. Show the effect and its interval, and write the estimate on the figure where it helps (rule 6); give exact p-values in the caption or text. If asterisks or brackets are used, define each in the caption and draw brackets thin and gray.
+A p-value does not measure the size of an effect. Show the effect and its interval on the figure; give the estimate and exact p-values in the figure legend or text (rule 6). If asterisks or brackets are used, define each in the legend and draw brackets thin and gray.
 
 ### 18. Log scales for multiplicative data
 
-*Source: Literature (Cleveland 1994, ch. 3); Journal (Science, powers of 10).*
+*Source: Literature (Cleveland 1994, ch. 3).*
 
 Use a log axis when values span orders of magnitude, or when ratios, fold changes or growth rates are the point. Base 2 for fold changes, base 10 for wide ranges. Label ticks with values (1, 10, 100 or 10⁰, 10¹, 10²), not logarithms. No bars on a log axis.
 
@@ -207,36 +215,43 @@ Use a log axis when values span orders of magnitude, or when ratios, fold change
 
 *Source: Tufte, BE ch. 5 ("content counts most of all"); convention.*
 
-Every number on a figure matches the text and tables. A reader with only the figure and its caption can tell what was measured, in what units, on how many samples, and what the authors conclude.
+Every number on a figure matches the text and tables. A reader with only the figure and its legend can tell what was measured, in what units, on how many samples, and what the authors conclude.
 
 ---
 
-## Part III — Journal production
+## Part III — Nature's structure
 
-These rules come from journals' author guidelines. They govern how a figure is produced. Where one departs from Tufte, the rule says so.
+These rules follow Nature's author guidelines: the formatting guide, final submission and the research figure guide (quotes and dates in `rules/journals.md`). They govern a figure's structure and supersede Tufte and other journals' guidance wherever they differ. Where one departs from Tufte, the rule says so.
 
-### 20. Draw at the final printed size, in millimeters
+### 20. Nature's sizes, drawn at final size
 
-*Source: Journal (Nature, Science, PLOS).*
+*Source: Journal (Nature figure guide; final submission).*
 
-Set the figure width to the column it will occupy before drawing, so type and lines come out at their printed size; never scale an exported figure to fit. Nature: 89 mm (single column), 120–136 mm (1.5 columns), 183 mm (double column), at most 170 mm tall. Science: 5.7, 12.1 or 18.4 cm. PLOS: 6.68–19.05 cm wide, at most 22.23 cm tall.
+- Width: 89 mm (single column) or 183 mm (double column); 120–136 mm for 1.5 columns. Height at most 170 mm, to leave room for the legend beneath. (Nature's formatting guide rounds the widths to 90 and 180 mm; the figure guide's values are used here.)
+- Set the width before drawing, so type and lines come out at their printed size; never scale an exported figure to fit.
+- Submit at the smallest size that keeps every element legible; Nature may reduce figures further.
 
-### 21. Helvetica, at the journal's sizes
+### 21. Helvetica or Arial, 5–7 pt, black text
 
-*Source: Journal (Science prefers Helvetica; Nature asks for Helvetica or Arial; PLOS lists Arial). **Departure from Tufte**, who sets data graphics in serif type (VDQI ch. 9, p. 183).*
+*Source: Journal (Nature: sans-serif lettering, "preferably Helvetica or Arial"; text 5–7 pt; avoid coloured text; lettering in lower-case type with an initial capital and no full stop; a space between number and unit; thousands separated by commas; no type over shaded areas; amino-acid sequences in Courier). **Departure from Tufte**, who sets data graphics in serif type (VDQI ch. 9, p. 183).*
 
-Helvetica, with Arial as the fallback (Arial for PLOS); one font and one size scale across every figure in the paper. Nature: 5–7 pt, panel letters 8 pt bold. Science: about 7 pt, never below 5 pt. PLOS: 8–12 pt. Sentence case for labels (Journal, Science; a narrower form of Tufte's upper-and-lower case). Axis labels give the quantity, then its units in parentheses: "Concentration (µM)"; true minus sign (−), × and µ.
+- Helvetica, with Arial as the fallback; one font and one size scale across every figure in the paper. All text between 5 and 7 pt.
+- Text black (or white on a dark ground), contrast above 4.5:1. Nature recolours colored text unless the color carries scientific meaning.
+- Labels in lower case with an initial capital and no full stop: "Response (fraction of maximum)". Units in parentheses after the quantity; a space between number and unit (5 mm); thousands with commas (1,000); true minus sign (−), × and µ.
+- No type directly over shaded or textured areas; no reversed type where it can be avoided. Scale bars rather than magnification factors.
+- The departure is of typeface only: everything Tufte asks of type (rule 13) still holds, and his own books set tables in a sans serif, Gill Sans. See `rules/typography-and-color.md`.
 
-The departure is of typeface only: everything Tufte asks of type (rule 13) still holds, and his own books set tables in a sans serif, Gill Sans. See `rules/typography-and-color.md`.
+### 22. The figure legend, in Nature's form
 
-### 22. The caption carries the title and the documentation; explanations stay on the graphic
+*Source: Journal (Nature formatting guide); Tufte, BE ch. 5 (fifth principle: document the evidence). **Departure from Tufte**, who puts a detailed title and the explanations on the graphic itself.*
 
-*Source: Tufte, BE ch. 5 (fifth principle: document the evidence); Literature (Rougier et al. 2014, rule 4; Cumming et al. 2007); Journal (Freshwater Science: no title duplicating the caption). **Adaptation of Tufte**, who puts a detailed title on the graphic itself.*
-
-- Journals put a figure's title in its caption, so: no title, figure number or source line inside the artwork.
-- The caption's first sentence states the finding, and only what the data show. Check every number in it against the data.
-- The caption then documents what the graphic cannot: what was measured and how, what the error bars show, *n* and what it counts, the test used, data sources. Sources, code and data availability go in Methods.
-- The caption is not a substitute for annotation: labels, values, events and explanations belong on the graphic (rules 6 and 7).
+- No title, figure number, key box or source line inside the artwork.
+- Begin with a brief title for the whole figure; it may state the finding, and only what the data show.
+- Then a short description of each panel, by its letter, and of the symbols used.
+- Define every error bar and statistic, *n* and what it counts, and any unusual unit or abbreviation. Give the values and notes moved off the graphic (rule 6).
+- No details of methods when the paper has a Methods section.
+- Fewer than 300 words. Refer to series by their labels, never by their colors.
+- Check every number against the data. At final submission the legends go in the text document, one after another, not in the figure file.
 
 ### 23. Lines and marks that survive reduction
 
@@ -246,15 +261,20 @@ Data lines 1 pt; axes, ticks, error bars and leader lines 0.5 pt or lighter; mar
 
 ### 24. Panel letters and layout
 
-*Source: Journal (Nature, Science).*
+*Source: Journal (Nature final submission and figure guide); convention for shared axes.*
 
-Panel letters in the journal's style: Nature bold lowercase (a, b, c) at 8 pt; Science bold capitals (A, B, C) at 10 pt, top left, no sub-part labels. Set panels close together and label common axes once, on the outer edge (Journal, Science). Bold panel letters are a production mark, not a Tufte element.
+- Panel letters 8 pt bold, upright (not italic), lowercase: a, b, c, at the top left of each panel.
+- Panels in alphabetical order, laid out neatly and space-efficiently with little white space; size each panel by its content and legibility.
+- More than one panel only when the parts are logically connected.
+- Label common axes once, on the outer edge (convention). Bold panel letters are a production mark, not a Tufte element.
 
 ### 25. Export vector graphics with embedded, editable fonts
 
-*Source: Journal (Nature: AI, PostScript, vector EPS or PDF for graphs, "Please do not rasterize line art or text", photographs at 300 dpi or more; PLOS: TIFF or EPS at 300–600 dpi).*
+*Source: Journal (Nature figure guide; final submission: "Please do not rasterize line art or text").*
 
-PDF or EPS with fonts embedded as TrueType and kept as text. Raster only when the journal asks (TIFF at 600 dpi at final width). Check with `pdffonts figure.pdf`: every font `emb yes`.
+- Main figures: vector `.ai`, `.eps` or `.pdf`, text editable, fonts embedded (TrueType, Type 42), never outlined or rasterized. Nature does not accept JPEG, TIFF or PNG for main figures. Keep files under 50 MB, everything embedded, not linked.
+- Extended Data figures: RGB, JPEG preferred (TIFF or EPS accepted), at most 300 dpi and 10 MB, sized to fit one page with room for the legend.
+- Check with `pdffonts figure.pdf`: every font `emb yes`.
 
 ---
 
@@ -264,7 +284,7 @@ These settings are this skill's defaults (convention), except where a cell names
 
 | Type | Key settings |
 |---|---|
-| **Strip / dot plot** | Every observation, jittered; mean or median with 95% CI beside the points; the groups labeled and the key values written in (rules 1, 6, 15, 16) |
+| **Strip / dot plot** | Every observation, jittered; mean or median with 95% CI beside the points; the groups labeled; values and *n* in the legend (rules 1, 6, 15, 16) |
 | **Line** | 1 pt; markers where measurements were taken; direct labels; CI band light; individual trajectories as thin light lines under the mean when *n* is small enough (rule 11) |
 | **Scatter** | Every point; highlight the group that matters; fitted line thin, with its band; rug marks for marginals (Tufte's dot-dash plot, VDQI ch. 6) |
 | **Bar** | Counts and proportions only; zero baseline; sorted by value or by the explanatory variable (Tufte, VDQI ch. 9, p. 178) |
@@ -272,22 +292,24 @@ These settings are this skill's defaults (convention), except where a cell names
 | **Paired data** | One line per subject between conditions (slopegraph: Tufte, VDQI pp. 158–159) |
 | **Small multiples** | One design, one scale, panels close together and ordered meaningfully (Tufte, EI ch. 4) |
 | **Heatmap** | Light to dark, or a perceptually uniform map; values in the cells when few; colorbar beside, unframed |
-| **Dose–response, growth, concentration** | Explanatory variable on x, on a log axis labeled with values; key values (EC₅₀, plateau) marked and written on the curve |
+| **Dose–response, growth, concentration** | Explanatory variable on x, on a log axis labeled with values; key values (EC₅₀, plateau) marked on the curve and given in the legend |
 | **Sparklines** | Word-sized, in tables or text; beginning and ending values beside the line; first and last values in red, low and high in blue (Tufte, BE pp. 50–51) |
 
 Avoid: dynamite plots, pie charts, 3D, dual axes; stacked bars and area charts except for cumulative totals (convention: small multiples compare better).
 
-## Journal quick reference
+## Nature quick reference
 
-| | Nature | Science | PLOS |
-|---|---|---|---|
-| Widths | 89 / 120–136 / 183 mm | 5.7 / 12.1 / 18.4 cm | 6.68–19.05 cm |
-| Typeface | Helvetica or Arial | Helvetica preferred | Arial |
-| Text size | 5–7 pt | about 7 pt, ≥ 5 pt | 8–12 pt |
-| Panel letters | 8 pt bold **a, b, c** | 10 pt bold **A, B, C** | journal style |
-| Graphs | vector AI, EPS or PDF | vector preferred | TIFF or EPS, 300–600 dpi |
+| | Nature |
+|---|---|
+| Widths | 89 mm single, 183 mm double (120–136 mm for 1.5 columns); height ≤ 170 mm |
+| Typeface | Helvetica or Arial; black text |
+| Text size | 5–7 pt |
+| Panel letters | 8 pt bold, upright **a, b, c** |
+| On the figure | Labels only: axes, series names, panel letters, scale bars |
+| Figure legend | Brief title; each panel and its symbols; error bars, statistics, *n*; values and notes; < 300 words |
+| Main figures | Vector AI, EPS or PDF, editable text, fonts embedded |
 
-Quotes, sources and dates: `rules/journals.md`. Other journals: read their current guide.
+Quotes, sources and dates: `rules/journals.md`, which also keeps other journals' requirements for reference.
 
 ## Library quick reference
 
@@ -301,9 +323,9 @@ Quotes, sources and dates: `rules/journals.md`. Other journals: read their curre
 
 When reviewing a figure or its code, check for:
 
-- **Against Tufte:** summaries without the data (→ show the observations); a comparison the reader must assemble across figures (→ side by side, same scale); the explanatory variable hidden in a legend or panel order (→ on an axis); missing zeros or non-responders (→ include them); categories in alphabetical order (→ order by value or cause); unlabeled series or values the reader must look up (→ write them on the graphic); a legend box (→ direct labels); a heavy frame, grid or decoration (→ erase); every element the same weight (→ layer); a sparse figure that could carry more of the data (→ add detail); color over large areas or rainbow maps (→ gray first, light to dark); all-caps or rotated labels (→ upper-and-lower case, horizontal); pie, 3D or dual axes.
+- **Against Tufte:** summaries without the data (→ show the observations); a comparison the reader must assemble across figures (→ side by side, same scale); the explanatory variable hidden in a legend or panel order (→ on an axis); missing zeros or non-responders (→ include them); categories in alphabetical order (→ order by value or cause); unlabeled series (→ direct labels, in black); a key box (→ direct labels; symbols defined in the legend); a heavy frame, grid or decoration (→ erase); every element the same weight (→ layer); a sparse figure that could carry more of the data (→ add detail); color over large areas or rainbow maps (→ gray first, light to dark); all-caps or rotated labels (→ upper-and-lower case, horizontal); pie, 3D or dual axes.
 - **Against the evidence:** dynamite plots; undefined error bars or *n*; statistics on two or three points; technical replicates as *n*; undefined asterisks; bars on a log axis.
-- **Against production:** a figure drawn at screen size and scaled down; text below 5 pt or sizes that vary across figures; a title inside the figure; rasterized text or unembedded fonts.
+- **Against Nature's structure:** a figure drawn at screen size and scaled down; text outside 5–7 pt or sizes that vary across figures; a title, notes or values written inside the figure; colored text; series identified by color in the legend; a legend of 300 words or more, or one with methods; rasterized text or unembedded fonts.
 
 Per-library detection and fixes: `rules/anti-patterns.md`.
 
@@ -317,7 +339,7 @@ Before presenting any figure, verify:
 - [ ] The comparison is on the page, side by side, on one scale, and comes from the data (rule 3)
 - [ ] The explanatory variable is on an axis; every case is included, zeros too; categories ordered meaningfully (rule 4)
 - [ ] Multivariate evidence shown, by small multiples where needed (rule 5)
-- [ ] Names, key values and events written on the graphic (rule 6); series labeled directly (rule 7)
+- [ ] Labels only on the graphic; values, notes and symbol definitions in the legend (rule 6); series labeled directly, in black (rule 7)
 - [ ] The figure carries as much of the data as the reader can use (rule 8)
 - [ ] No frame, box, heavy grid or decoration (rule 9); range-frame axes (rule 10)
 - [ ] Layers ordered: data darkest, references lighter, axes lightest; readable at a glance and up close (rule 11)
@@ -330,11 +352,11 @@ Before presenting any figure, verify:
 - [ ] Effects and intervals shown; significance marks defined (rule 17); log axes labeled with values (rule 18)
 - [ ] Every number on the figure matches the text (rule 19)
 
-**Production**
-- [ ] Final width in millimeters; Helvetica at the journal's sizes (rules 20–21)
-- [ ] Caption: finding first, checked against the data; documentation; no title in the artwork (rule 22)
-- [ ] Lines 0.25–1 pt; panel letters in the journal's style (rules 23–24)
-- [ ] Vector PDF or EPS with embedded TrueType fonts (rule 25)
+**Nature's structure**
+- [ ] 89 or 183 mm wide, at most 170 mm tall; Helvetica or Arial, 5–7 pt, black (rules 20–21)
+- [ ] Legend: brief title; each panel and its symbols; error bars, statistics and *n* defined; values and notes; no methods; under 300 words; checked against the data (rule 22)
+- [ ] Lines 0.25–1 pt; 8 pt bold upright a, b, c; panels in order, logically connected (rules 23–24)
+- [ ] Vector AI, EPS or PDF with embedded TrueType fonts (rule 25)
 
 ## Departures from Tufte
 
@@ -342,10 +364,12 @@ Each is named in its rule; all are here so none is hidden.
 
 | Departure | Why | Rule |
 |---|---|---|
-| Helvetica instead of serif type | Journals require a sans serif (Science prefers Helvetica; Nature asks for Helvetica or Arial). Only the typeface changes; Tufte's other requirements for type hold | 21 |
-| Title in the caption, not on the graphic | Journals put the title in the caption. Explanations and labels stay on the graphic (rule 6) | 22 |
-| Bold panel letters | Journals require them | 24 |
-| Sentence case rather than any upper-and-lower case | Science's style; a narrower form of Tufte's rule | 21 |
+| Helvetica instead of serif type | Nature asks for a sans serif, preferably Helvetica or Arial. Only the typeface changes; Tufte's other requirements for type hold | 21 |
+| Explanations, values and symbol keys in the figure legend; only labels on the graphic | Nature: text, including keys to symbols, in the legend rather than on the figure where possible. Tufte writes them on the graphic | 6, 22 |
+| Labels in black, not in their series' color | Nature recolours colored text. Position ties a label to its series | 7, 21 |
+| Title in the legend, not on the graphic | Nature's legends begin with the figure's title | 22 |
+| Bold panel letters | Nature requires them | 24 |
+| Lower case with an initial capital, rather than any upper-and-lower case | Nature's style; a narrower form of Tufte's rule | 21 |
 | Error bars, p-values, log scales | Tufte gives no rule; the statistics literature does. These extend him | 15–18 |
 | Exact hexes for the red, the blue and the fields; Okabe–Ito when several categories must be colored | Tufte names colors, not values, and gives no palette for many categories. The values were chosen to pass contrast and color-vision checks; Okabe–Ito meets his own requirement that color-deficient readers can tell colors apart (VDQI p. 183), and is used only in small areas | 12 |
 
@@ -355,4 +379,4 @@ Each is named in its rule; all are here so none is hidden.
 
 **Cross-cutting** (read when needed): `rules/typography-and-color.md` (type, palette, maps, contrast), `rules/small-multiples-and-panels.md` (small multiples, panels, slopegraphs, quartile and dot-dash plots, sparklines), `rules/anti-patterns.md`, `rules/journals.md`, `rules/references.md`, `rules/diagrams-flowcharts.md`, `rules/maps.md`.
 
-**Working example:** `examples/matplotlib-publication.py` — a two-panel, 89 mm figure: every observation, 95% confidence intervals, a log dose axis with the half-maximal doses marked and written on the curves, direct labels, range frames, panel letters and vector export; it checks its caption against the data.
+**Working example:** `examples/matplotlib-publication.py` — a two-panel, 89 mm figure: every observation, 95% confidence intervals, a log dose axis with the half-maximal doses marked on the curves, black direct labels, range frames, panel letters and vector export; it prints a Nature-style legend and checks it against the data.

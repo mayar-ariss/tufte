@@ -1,24 +1,61 @@
 # Journal Requirements
 
-Requirements quoted from the journals' author guidelines, read on 16 November 2026. Journals revise these pages, and the target journal's current guide overrides this file and `SKILL.md`. For a journal not listed here, read its guide before drawing; when the journal is not yet chosen, 89 mm and 183 mm wide in 5–7 pt Helvetica suit most.
+Nature's guidance governs the structure of every figure this skill draws: size, panel layout, which text goes on the figure and which in the legend, type, line weights and file format. It supersedes Tufte and the other journals listed here wherever they differ (`SKILL.md`, Part III). Tufte still governs style.
+
+Requirements quoted from the journals' author guidelines, read on 16 November 2026. Journals revise these pages; when Nature's current guide differs from this file, Nature's guide wins.
 
 ## Nature
 
-Sources: Nature, "Final submission"; Nature Research figure guide, "Building and exporting figure panels" and "Extended Data formatting guidelines" (URLs in `rules/references.md`).
+Sources: Nature, "Formatting guide" and "Final submission"; Nature Research figure guide, "Building and exporting figure panels" and "Extended Data formatting guidelines" (URLs in `rules/references.md`).
+
+### Size, type and files
 
 | Requirement | Nature's words or values |
 |---|---|
-| Widths | "89 mm wide (single column) and 183 mm wide (double column)"; "a column-and-a-half where necessary (120–136 mm)" |
-| Height | "The full depth of a Nature page is 247 mm"; "The maximum height for a Nature figure is 170 mm, to allow space for the figure legend to fit underneath" |
+| Widths | "89 mm (single column)", "183 mm (double column)" (figure guide); "a column-and-a-half where necessary (120–136 mm)" (final submission). The formatting guide rounds these to 90 and 180 mm |
+| Height | "The maximum height for a Nature figure is 170 mm, to allow space for the figure legend to fit underneath" |
+| Size | submit "at the smallest appropriate size"; Nature may reduce figures further |
 | Typeface | "a sans-serif typeface, preferably Helvetica or Arial, the same font throughout all figures in the paper" |
-| Text size | "Maximum text size for all other text should be 7 pt; minimum text size should be 5 pt" |
+| Text size | "Maximum text size: 7pt"; "Minimum text size: 5pt" |
+| Text color | "Avoid coloured text"; contrast above 4.5:1; colored text is recoloured black or white unless color is necessary for clarity or scientific meaning |
+| Case | lettering "in lower-case type", first letter capitalized, no full stop |
+| Numbers and units | a single space between number and unit; thousands separated by commas (1,000) |
+| Text placement | avoid type over shaded or textured areas, and reversed type where possible |
+| Scale | "Scale bars should be used rather than magnification factors" |
 | Panel letters | "8 pt bold, upright (not italic) a, b, c" |
 | Line weights | "between 0.25 and 1 pt at the final size" |
-| Formats | "Adobe Illustrator (AI), Postscript, Vector EPS or PDF format for figures containing line drawings and graphs"; "Please do not rasterize line art or text in submitted figures" |
-| Photographs | "a minimum of 300 dpi at the maximum size they can be used" |
-| Color mode | "RGB (recommended) or CMYK" |
+| Main-figure formats | vector `.ai`, `.eps` or `.pdf` with editable layers; fonts embedded (TrueType 2 or 42), not outlined; "Please do not rasterize line art or text"; JPEG, TIFF and PNG not accepted; under 50 MB |
+| Extended Data formats | RGB; JPEG preferred, or TIFF or EPS; at most 300 dpi and 10 MB; sized to fit one page with room for the legend |
 
-## Science
+### Layout and content
+
+| Requirement | Nature's words |
+|---|---|
+| Simplicity | "as small and simple as is compatible with clarity"; avoid "unnecessary complexity, colouring and excessive detail" |
+| Panels | "Figures should not contain more than one panel unless the parts are logically connected"; panels in alphabetical order, laid out neatly and space-efficiently, minimizing white space, each sized by its content |
+| Keys | "Where possible, text, including keys to symbols, should be provided in the legend rather than on the figure itself" (formatting guide); keys or keylines in the figure "rather than having colour descriptions in the figure caption" (figure guide) |
+| Icons | text labels instead of decorative icons |
+| Color | avoid red/green combinations and rainbow scales |
+
+`SKILL.md` reconciles the two key rules: series are labeled directly on the figure, in black (the in-figure key); symbols, values and notes go in the legend (rules 6 and 7).
+
+### Figure legends
+
+| Requirement | Nature's words |
+|---|---|
+| Length | "Legends should be fewer than 300 words each" |
+| Opening | "Each figure legend should begin with a brief title for the whole figure" |
+| Content | then "a short description of each panel and the symbols used" |
+| Statistics | "All error bars and statistics must be defined in the figure legend" |
+| Units | unusual units or abbreviations defined in the legend |
+| Methods | no details of methods when the paper has a Methods section |
+| Placement | with the figure at initial submission; at final submission, listed one after another in the text document. Extended Data legends are prepared the same way |
+
+## Other journals (reference only)
+
+Nature's guidance governs this skill. These requirements are kept for authors who must also meet another journal's rules; where they differ from Nature's, the skill follows Nature.
+
+### Science
 
 Source: Science, "Instructions for preparing an initial manuscript", sections on preparing figures and on typefaces and labels.
 
@@ -34,7 +71,7 @@ Source: Science, "Instructions for preparing an initial manuscript", sections on
 | Color | "Avoid using red and green together"; "Do not use colors that are similar in hue to identify different parts of a figure"; "Avoid using colored type" |
 | Formats | vector files preferred; 300 dpi at initial submission, higher at revision |
 
-## PLOS journals
+### PLOS journals
 
 Source: PLOS, "Figures".
 
@@ -47,9 +84,9 @@ Source: PLOS, "Figures".
 | Resolution | 300–600 dpi |
 | File size | under 10 MB |
 
-PLOS lists Arial and not Helvetica: use Arial for PLOS journals.
+PLOS lists Arial and not Helvetica.
 
-## Other journals
+### Others
 
-- *Freshwater Science*: figures "should not contain a title or text that is duplicated in the figure caption"; sans serif only; sentence case. An example of a rule many journals share: the caption, not the artwork, carries the title.
+- *Freshwater Science*: figures "should not contain a title or text that is duplicated in the figure caption"; sans serif only; sentence case. A rule many journals share with Nature: the legend, not the artwork, carries the title.
 - Cell Press: read the current figure guidelines (URL in `rules/references.md`); not quoted here because the page could not be retrieved.

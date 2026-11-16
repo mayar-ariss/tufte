@@ -166,7 +166,7 @@ Small multiples let the eye compare; a constant design keeps attention on change
 
 Minard's sheet has a title naming the method and the subject, the author and his credential, a text block explaining the color code and the three scales, and five acknowledged sources (BE pp. 126, 133). Of Minard's Hannibal map Tufte says the north arrow "should appear on every map" (p. 134). Excellent maps, "the heart and soul of good practices in analytical graphics," routinely integrate words, numbers, line art, grids and measurement scales (p. 131). In BE ch. 1 the map is Tufte's model for all evidence images: labels belong on the image, external grids give it scale, and data are more credible in context (p. 21). Snow annotated his map and table with notes on possible errors and gaps in the data, and that annotation is part of the map's credibility (VE p. 34). Tufte's redrawn cancer maps separate "in highest decile, statistically significant" from rates not significantly different from the national figure, and his text flags that death-certificate data follow "diagnostic fashions" (VDQI pp. 16–20).
 
-- In a paper, the caption carries the title, method, data sources and date of the data (SKILL.md rule 22). On the map itself: measurement scale, north arrow, units, and labels on the features.
+- In a paper, the figure legend carries the title, method, data sources and date of the data (SKILL.md rule 22). On the map itself, labels only: a scale bar (Nature asks for scale bars, not magnification factors), north arrow, units, and the names of features, in black.
 - Mark uncertainty and significance in the classes themselves; note known data problems next to the map.
 - Labels on the map, beside the features; no letter codes keyed to a separate list.
 
@@ -204,7 +204,7 @@ counties.plot(column="rate", cmap="Greys", scheme="quantiles", k=5,     # rule 9
               legend=True, legend_kwds={"frameon": False, "title": "Deaths per 100,000"})
 states.boundary.plot(ax=ax, color="#888888", linewidth=0.4)             # rule 12: muted base layer
 ax.set_axis_off()                                                        # rule 13: no graticule by default
-fig.savefig("figure2.pdf")                                               # title and sources in the caption
+fig.savefig("figure2.pdf")                                               # title and sources in the figure legend
 ```
 
 - `scheme`/`k` are left to the user; Tufte gives no classification rule. `scheme=` needs the `mapclassify` package.
@@ -245,5 +245,5 @@ ggsave("figure2.pdf", p, width = 89, height = 60, units = "mm", device = cairo_p
 - [ ] Base map thinner and grayer than the data layer; no graticule unless needed for look-up (rules 12–13)
 - [ ] Boundaries thin and low-contrast (rule 14)
 - [ ] Small multiples share projection, extent, scale and breaks, on one page (rule 16)
-- [ ] Title, sources, date and data caveats in the caption; scale, north arrow and units on the map (rule 18)
+- [ ] Title, sources, date and data caveats in the figure legend; scale, north arrow and units on the map (rule 18)
 - [ ] Symbol sizes and flow widths proportional to the data; no 3D (rule 19)

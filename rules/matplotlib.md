@@ -113,30 +113,20 @@ def horizontal_ylabel(ax, text):
     ax.text(0, 1.04, text, transform=ax.transAxes, ha="left", va="bottom")
 
 
-def direct_label(ax, x, y, text, color="black", dx=4, dy=0, ha="left"):
-    """Label a series where it is (rule 7). dx, dy are offsets in points."""
+def direct_label(ax, x, y, text, dx=4, dy=0, ha="left"):
+    """Name a series where it is (rule 7), in black: Nature recolours colored text,
+    and position ties the label to its series. dx, dy are offsets in points.
+    Values and notes go in the figure legend, not here (rule 6)."""
     ax.annotate(text, xy=(x, y), xytext=(dx, dy), textcoords="offset points",
-                ha=ha, va="center", color=color)
+                ha=ha, va="center", color="black")
 
 
-def note(ax, x, y, text, dx=8, dy=8, ha="left", color="black"):
-    """Write an explanation or a value on the graphic beside what it explains
-    (rule 6), with a thin light leader line (rule 11). dx, dy are offsets in points."""
-    ax.annotate(text, xy=(x, y), xytext=(dx, dy), textcoords="offset points",
-                ha=ha, va="center", color=color,
-                arrowprops=dict(arrowstyle="-", color=LAYER["leader"], lw=0.4,
-                                shrinkA=1, shrinkB=2))
-
-
-def panel_letters(fig, axes, style="nature", dx=-0.07, dy=0.06):
-    """Bold panel letters at each panel's top left (rule 24).
-    style="nature": 8 pt lowercase a, b, c; style="science": 10 pt capitals A, B, C."""
-    letters = "abcdefghijklmnopqrstuvwxyz"
-    size = 8 if style == "nature" else 10
-    for i, ax in enumerate(axes):
-        letter = letters[i] if style == "nature" else letters[i].upper()
+def panel_letters(fig, axes, dx=-0.07, dy=0.06):
+    """Nature's panel letters (rule 24): 8 pt bold, upright, lowercase a, b, c,
+    at each panel's top left."""
+    for letter, ax in zip("abcdefghijklmnopqrstuvwxyz", axes):
         box = ax.get_position()
-        fig.text(box.x0 + dx, box.y1 + dy, letter, fontsize=size,
+        fig.text(box.x0 + dx, box.y1 + dy, letter, fontsize=8,
                  fontweight="bold", ha="left", va="bottom")
 
 
@@ -148,10 +138,10 @@ def mean_ci(values, level=0.95):
     return values.mean(), half
 
 
-def strip_with_ci(ax, groups, colors=None, jitter=0.12, seed=0, write_means=False, fmt="{:.2f}"):
+def strip_with_ci(ax, groups, colors=None, jitter=0.12, seed=0):
     """Every observation as a dot, with the mean and 95% CI beside it (rules 1, 15, 16).
-    write_means=True writes each mean's value beside it (rule 6).
-    groups: dict of name -> values. Returns the dict of (mean, half-width)."""
+    groups: dict of name -> values. Returns the dict of (mean, half-width), for the
+    figure legend (rules 6, 22)."""
     rng = np.random.default_rng(seed)
     summary = {}
     for i, (name, values) in enumerate(groups.items()):
@@ -162,8 +152,6 @@ def strip_with_ci(ax, groups, colors=None, jitter=0.12, seed=0, write_means=Fals
         m, h = mean_ci(values)
         ax.plot([i + 0.24] * 2, [m - h, m + h], color="black", lw=0.5)
         ax.plot([i + 0.17, i + 0.31], [m, m], color="black", lw=1.0)
-        if write_means:
-            ax.text(i + 0.34, m, fmt.format(m), ha="left", va="center")
         summary[name] = (m, h)
     ax.set_xticks(range(len(groups)), list(groups))
     ax.tick_params(axis="x", length=0)
@@ -212,7 +200,7 @@ def log_axis(ax, axis="x", ticks=(0.01, 0.1, 1, 10, 100)):
     target.set_ticklabels([f"{t:g}" for t in ticks])
 ```
 
-`mean_ci` uses the t distribution, which suits small samples of roughly normal data. For skewed data, show medians with a bootstrap interval and say so in the caption.
+`mean_ci` uses the t distribution, which suits small samples of roughly normal data. For skewed data, show medians with a bootstrap interval and say so in the figure legend.
 
 ## Complete example: individual observations with 95% CIs
 
@@ -224,21 +212,23 @@ groups = {"Control": rng.normal(1.00, 0.12, 8),
 
 fig = plt.figure(figsize=(60 * MM, 50 * MM))
 ax = fig.add_axes([0.2, 0.15, 0.75, 0.68])
-summary = strip_with_ci(ax, groups, colors={"Drug B": HIGHLIGHT}, write_means=True)
-horizontal_ylabel(ax, "Response (a.u.)")
-ax.text(1, 1.04, "n = 8 cultures per group", transform=ax.transAxes, ha="right",
-        va="bottom", color=GRAY)                       # evidence on the graphic (rule 6)
+summary = strip_with_ci(ax, groups, colors={"Drug B": HIGHLIGHT})
+horizontal_ylabel(ax, "Response (a.u.)")      # on the graphic: labels only (rule 6)
 fig.savefig("figure1.pdf")
 
-# Check the caption's claim before writing it (rule 22)
+# The figure legend, in Nature's form (rule 22), checked against the data
 assert summary["Drug B"][0] - summary["Drug B"][1] > summary["Control"][0] + summary["Control"][1]
+means = ", ".join(f"{name} {m:.2f}" for name, (m, _) in summary.items())
+legend = ("Drug B raises the response. Dots, individual cultures; horizontal lines, means; "
+          "vertical lines, 95% confidence intervals of the mean (t distribution); "
+          f"n = 8 independent cultures per group. Means: {means} a.u.")
+assert len(legend.split()) < 300
+print(legend)
 ```
 
-Caption: "Drug B raises the response. Dots are individual cultures (*n* = 8 independent cultures per group); black lines show the mean and its 95% confidence interval, with the mean's value beside it."
+On the graphic: the group names and the axis label. In the legend: the title (here also the finding), what each mark means, the interval, *n* and the means, the values Tufte would have written on the graphic (rule 6). Nature's legends never name a series by its color.
 
-The figure carries its own evidence: the groups, every culture, the means as numbers and *n* are all on the graphic (rule 6); the caption documents what the graphic cannot (rule 22).
-
-For a two-panel version with a log dose axis, the half-maximal doses marked on the curves and direct labels, see `examples/matplotlib-publication.py`.
+For a two-panel version with a log dose axis and the half-maximal doses marked on the curves, see `examples/matplotlib-publication.py`.
 
 ## Small multiples on one scale, with two readings
 
@@ -252,7 +242,6 @@ fig, axes = plt.subplots(1, 4, figsize=(183 * MM, 40 * MM), sharey=True)
 for ax, (name, values) in zip(axes, regions.items()):
     ax.plot(np.arange(1, 13), values, color=GRAY)
     ax.text(0, 1.04, name, transform=ax.transAxes, ha="left", va="bottom")
-    direct_label(ax, 12, values[-1], f"{values[-1]:.1f}")       # the ending value (rule 6)
     range_frame(ax, x=[1, 12], y=[lo, hi])
 for ax in axes[1:]:
     ax.spines["left"].set_visible(False)
@@ -260,16 +249,16 @@ for ax in axes[1:]:
 fig.subplots_adjust(left=0.06, right=0.99, bottom=0.18, top=0.82, wspace=0.12)
 ```
 
-`sharey=True` keeps every panel on one scale (rule 5); the panel names sit where a title would, in the same 7 pt type. When each panel summarizes several subjects, draw each subject as a thin light line under the mean, so the figure reads as a pattern at a glance and as individuals up close (rule 11); `_docs/generate_showcase.py` does this for the README's small multiples.
+`sharey=True` keeps every panel on one scale (rule 5); the panel names sit where a title would, in the same 7 pt type. Ending values, if they matter, go in the figure legend (rule 6). When each panel summarizes several subjects, draw each subject as a thin light line under the mean, so the figure reads as a pattern at a glance and as individuals up close (rule 11); `_docs/generate_showcase.py` does this for the README's small multiples.
 
 ## Export and check
 
 ```python
-fig.savefig("figure1.pdf")           # vector, fonts embedded as TrueType
-fig.savefig("figure1.tiff", dpi=600, pil_kwargs={"compression": "tiff_lzw"})  # only if the journal asks
+fig.savefig("figure1.pdf")                      # main figure: vector, fonts embedded as TrueType
+fig.savefig("extended_data_fig1.jpg", dpi=300)  # Extended Data only: RGB JPEG, at most 300 dpi
 ```
 
-Then check the PDF: `pdffonts figure1.pdf` should list each font with `emb` set to `yes`, and the page size should equal the column width.
+Then check the PDF: `pdffonts figure1.pdf` should list each font with `emb` set to `yes`, and the page size should equal the column width. Nature does not accept JPEG, TIFF or PNG for main figures (rule 25).
 
 ## seaborn
 
@@ -294,6 +283,6 @@ ax.set_xlabel("")
 horizontal_ylabel(ax, "Response (a.u.)")
 ```
 
-- seaborn's `errorbar=("ci", 95)` is a bootstrap interval; say so in the caption, or compute the interval yourself with `mean_ci`.
+- seaborn's `errorbar=("ci", 95)` is a bootstrap interval; say so in the figure legend, or compute the interval yourself with `mean_ci`.
 - Never `sns.barplot` for continuous data (rule 15); use `stripplot` or `swarmplot` with `pointplot`.
 - Prefer a single gray with `HIGHLIGHT` on the finding; `OKABE_ITO` values only when several categories must be colored; never the default palette.

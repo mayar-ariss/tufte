@@ -20,7 +20,7 @@ theme_science <- function(base_size = 7, family = "Helvetica") {
       axis.ticks         = element_line(linewidth = 0.25),
       axis.ticks.length  = unit(1, "mm"),
       legend.position    = "none",                             # label directly (rule 7)
-      plot.title         = element_blank(),                    # the caption carries it (rule 22)
+      plot.title         = element_blank(),                    # the figure legend carries it (rule 22)
       plot.subtitle      = element_text(hjust = 0, size = base_size),
       plot.title.position = "panel",
       plot.background    = element_rect(fill = "white", colour = NA),
@@ -67,7 +67,7 @@ p <- ggplot(df, aes(group, response)) +
   theme(axis.line = element_blank(), axis.ticks.x = element_blank())
 ```
 
-Caption: what the dots are, *n* and what it counts, and that the bars are 95% confidence intervals of the mean (SKILL.md rules 16, 22).
+Figure legend (Nature's form, SKILL.md rule 22): a brief title; what the dots and bars are (95% confidence intervals of the mean); *n* and what it counts; the means, if they matter. On the graphic: labels only (rule 6).
 
 ### Lines with direct labels and a log axis
 
@@ -79,7 +79,7 @@ p <- ggplot(curves, aes(dose, response, colour = condition)) +
   geom_line(linewidth = 0.47) +
   geom_point(size = 0.8) +
   geom_text(data = last, aes(label = condition), hjust = 0, nudge_x = 0.1,
-            size = 7 / .pt) +
+            size = 7 / .pt, colour = "black") +            # labels black (rule 7)
   scale_x_log10(breaks = c(0.01, 0.1, 1, 10, 100),
                 labels = c("0.01", "0.1", "1", "10", "100")) +   # values, not logs (rule 18)
   scale_colour_manual(values = c(Control = GRAY, `Drug B` = HIGHLIGHT)) +
@@ -91,15 +91,15 @@ p <- ggplot(curves, aes(dose, response, colour = condition)) +
 
 When the curves meet at the end, place each label where its curve stands apart rather than at the last point.
 
-Write the values that matter onto the graphic (SKILL.md rule 6), for example each curve's half-maximal dose:
+Mark the values that matter on the curves and give them in the figure legend (SKILL.md rules 6, 22), for example each curve's half-maximal dose:
 
 ```r
 ec50 <- tibble(condition = c("Control", "Drug B"), dose = c(2.65, 0.30), response = 0.5)
 
-p + geom_point(data = ec50, shape = 21, fill = "white", size = 1.2, stroke = 0.4) +
-  geom_text(data = ec50, aes(label = paste0("EC50 ", dose, " µM")),
-            hjust = 0, nudge_x = 0.12, size = 6 / .pt, colour = "black")
+p + geom_point(data = ec50, shape = 21, fill = "white", colour = "black", size = 1.2, stroke = 0.4)
 ```
+
+Legend: "…open circles, half-maximal doses (EC50: control 2.65 µM, drug B 0.30 µM)…"
 
 ### Small multiples and multi-panel figures
 
@@ -113,7 +113,7 @@ p <- ggplot(df, aes(month, value)) +
 # Different quantities: combine plots with patchwork and letter the panels
 library(patchwork)
 fig <- (p_a | p_b) +
-  plot_annotation(tag_levels = "a") &          # Nature: a, b, c; Science: tag_levels = "A"
+  plot_annotation(tag_levels = "a") &          # Nature: 8 pt bold a, b, c (rule 24)
   theme(plot.tag = element_text(face = "bold", size = 8))
 ```
 
@@ -156,7 +156,7 @@ theme_science = theme_classic(base_size=7, base_family="Helvetica") + theme(
     axis_text=element_text(color="black", size=6),
     axis_title_y=element_text(rotation=0, va="center"),   # horizontal label (rule 13)
     legend_position="none",                               # label directly (rule 7)
-    plot_title=element_blank(),                           # the caption carries it (rule 22)
+    plot_title=element_blank(),                           # the figure legend carries it (rule 22)
     strip_background=element_blank(),
 )
 ```

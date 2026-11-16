@@ -11,25 +11,27 @@ Use this file when reviewing figure code or a finished figure for a scientific a
 | **Explanatory variable in a legend or panel order** | The cause cannot be seen | Put it on an axis; order by it | 4 |
 | **Missing zeros, non-responders or controls** | The comparison that reveals the cause is gone (the Challenger lesson) | Include every case | 4 |
 | **Categories in alphabetical order** | Hides the pattern | Order by value or by the explanatory variable | 4 |
-| **Key values left to the caption or the text** | The reader shuttles between figure and words | Write names, values and events on the graphic | 6 |
-| **A sparse figure** that could carry more of the data | Low data density | Add the detail: individual observations, values, more variables | 8 |
+| **Notes, values or symbol keys written on the figure** | Nature puts text, including keys to symbols, in the legend where possible | Labels only on the graphic; values, notes and symbol definitions in the figure legend | 6, 22 |
+| **Colored text, or series named by color in the legend** ("the red line") | Nature recolours colored text; color descriptions fail color-deficient readers | Black direct labels beside each series; name series in the legend as they are labeled | 7, 21 |
+| **A sparse figure** that could carry more of the data | Low data density | Add the detail: individual observations, more variables | 8 |
 | **Every element the same weight** | Clutter; 1 + 1 = 3 effects | Layer: data darkest, references lighter, axes lightest | 11 |
 | **Bar of means with error bars** for continuous data ("dynamite plot") | Many different distributions give the same bar; the data are hidden | Every observation as a dot, with mean and 95% CI beside it | 1, 15 |
-| **Error bars not defined** | SD, SEM and CI bars of the same data differ in length and meaning | State in the caption what the bars show, *n* and what it counts | 16 |
+| **Error bars not defined** | SD, SEM and CI bars of the same data differ in length and meaning | State in the figure legend what the bars show, *n* and what it counts | 16 |
 | **Statistics on *n* = 2 or 3** | Error bars and p-values on so few points mislead | Plot the points | 16 |
 | **Technical replicates as *n*** | Inflates certainty | Error bars across independent experiments only | 16 |
-| **Asterisks with no definition** | The reader cannot tell the test or the threshold | Define each mark in the caption; give exact p-values and effect sizes | 17 |
+| **Asterisks with no definition** | The reader cannot tell the test or the threshold | Define each mark in the figure legend; give exact p-values and effect sizes | 17 |
 | **Rainbow, jet or turbo color map** | Uneven lightness invents boundaries; unreadable for many readers | viridis, cividis or batlow; vik for diverging data | 12 |
 | **Strong color over large areas**, or several categories colored by default | Bright fills side by side are loud and pull the picture apart (Imhof, via Tufte); color does work position or a label could do | Black and grays first, one red accent; light gray or a pale tint for large areas; separate categories by position, labels or small multiples | 12 |
 | **Red against green** as the only contrast | Indistinguishable for the most common color-vision deficiencies | The red accent against grays, blue as a second; Okabe–Ito for several categories; plus position, shape or a label | 12 |
-| **Legend box** | Shuttling between key and data | Direct labels; a key only for a color scale, unframed | 7 |
+| **Key box** | Shuttling between key and data | Direct labels; symbols defined in the figure legend; a key only for a color scale, unframed | 7 |
 | **Gridlines, box, top and right spines** | Non-data-ink | Remove | 9 |
-| **Title inside the figure** | Duplicates the caption, wastes the column | Move it to the caption's first sentence | 22 |
-| **All-caps or Title Case labels** | Harder to read; not the journal's style | Sentence case | 13, 21 |
+| **Title inside the figure** | Duplicates the legend, wastes the column | Make it the brief title that opens the figure legend | 22 |
+| **Legend of 300 words or more, or with methods** | Nature's limit; methods belong in the Methods section | Brief title, each panel and its symbols, statistics; under 300 words | 22 |
+| **All-caps or Title Case labels** | Harder to read; not Nature's style | Lower case with an initial capital, no full stop | 13, 21 |
 | **Rotated y-axis label** where space allows a horizontal one | Type should run horizontally | Label above the axis | 13 |
 | **Text below 5 pt, or different sizes across figures** | Illegible after reduction; inconsistent | One scale, 5–7 pt (Nature) | 21 |
 | **Figure drawn at screen size and scaled down** | Text and lines shrink below the journal's minimums | Draw at the final width in mm | 20 |
-| **Rasterized text or unembedded fonts** | Journals ask for editable vector text | Vector PDF or EPS, TrueType fonts embedded | 25 |
+| **Rasterized text, unembedded fonts, or a PNG, JPEG or TIFF main figure** | Nature asks for editable vector text and does not accept these formats for main figures | Vector AI, EPS or PDF, TrueType fonts embedded | 25 |
 | **Bars on a log axis, or a truncated bar axis** | A bar's length must be proportional to its value | Dots or lines on log axes; bars from zero | 2, 18 |
 | **Log axis labeled with logarithms** | Readers cannot read back values | Label ticks with values | 18 |
 | **Dual y-axes** | Implies a relation set by the choice of scales | Two panels on a shared x-axis | 14 |
@@ -48,7 +50,9 @@ ax.bar(...) with yerr= on continuous data → strip_with_ci() from rules/matplot
 ax.errorbar(..., capsize=N)              → capsize=0, elinewidth=0.5
 ax.legend()                              → direct_label() at each series
 ax.grid(True)                            → remove
-ax.set_title("...")                      → move to the caption
+ax.set_title("...")                      → the brief title opening the figure legend
+ax.text(..., "n = 8") / values on plot   → the figure legend
+color=... on ax.text or a label          → black
 cmap="jet" / "rainbow" / "turbo"         → cmap="viridis" or "cividis"
 figsize=(10, 6) or other screen sizes    → figsize=(89 * MM, h * MM)
 savefig(..., bbox_inches="tight")        → set margins; keep the column width
@@ -64,7 +68,7 @@ sns.barplot(...) on continuous data      → sns.stripplot + sns.pointplot(error
 sns.set_theme() / sns.set_context("talk")→ sns.set_theme(style="ticks", rc=SCIENCE_RC)
 palette="husl" / "Set1" / "rainbow"      → grays plus the red accent; Okabe–Ito for several categories
 legend from hue=                         → ax.get_legend().remove(); label directly
-errorbar="sd" without saying so          → state SD in the caption, or use a CI
+errorbar="sd" without saying so          → state SD in the figure legend, or use a CI
 ```
 
 ### ggplot2
@@ -72,8 +76,8 @@ errorbar="sd" without saying so          → state SD in the caption, or use a C
 ```
 geom_bar(stat = "summary") + geom_errorbar → geom_jitter + geom_pointrange with CI
 theme_grey() / default theme             → theme_science()
-legend.position = "right"                → "none" + geom_text direct labels
-ggtitle("...")                           → caption
+legend.position = "right"                → "none" + black geom_text direct labels
+ggtitle("...")                           → figure legend title
 scale_*_gradientn(colours = rainbow(n))  → scale_*_viridis_c(option = "cividis") or scico
 ggsave(..., device = pdf) with Helvetica → device = cairo_pdf
 ggsave(width = 7, height = 5)            → width = 89, units = "mm"
@@ -85,10 +89,10 @@ scale_x_log10() with default labels      → breaks and labels given as values
 ```
 geom_col / stat_summary bars on continuous data → geom_jitter + geom_pointrange
 theme_gray() default                     → theme_science
-legend_position="right"                  → "none" + geom_text direct labels
+legend_position="right"                  → "none" + black geom_text direct labels
 p.save(width=6.4, height=4.8)            → width=89, units="mm"
 ```
 
 ## The "remove it, add it" test
 
-For each element of the figure, ask: if I remove this, does the reader lose information about the data? If not, remove it (Tufte, VDQI ch. 4: erase non-data-ink, within reason). Then ask the opposite question, which matters as much to Tufte: what could I add that would help the reader — a value, a label, the individual observations, a comparison? Add it, and keep it readable by layering (rules 6, 8, 11). Finally, could a reader with only the figure and its caption tell what was measured, how, on how many samples, and what it shows? If not, add it (rule 22).
+For each element of the figure, ask: if I remove this, does the reader lose information about the data? If not, remove it (Tufte, VDQI ch. 4: erase non-data-ink, within reason). Then ask the opposite question, which matters as much to Tufte: what could I add that would help the reader — the individual observations, a comparison, a label, a value? Add data and labels to the graphic, keeping it readable by layering (rules 8, 11); add values and notes to the figure legend (rule 6). Finally, could a reader with only the figure and its legend tell what was measured, how, on how many samples, and what it shows? If not, add it to the legend (rule 22).
