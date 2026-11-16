@@ -68,9 +68,14 @@ plt.rcParams.update(SCIENCE_RC)
 
 GRAY = "#666666"
 LIGHT = "#8c8c8c"
+RED = "#CC0000"          # the accent (rule 12): the finding, with its value beside it
+BLUE = "#0072B2"         # second accent, only when needed
+FIELD = "#e5e5e5"        # muted field: normal ranges, bands, large areas
+FIELD_BLUE = "#dce9f5"   # muted field: water, a second large area
+HIGHLIGHT = RED
+# Fallback when three or more categories must be colored (rule 12)
 OKABE_ITO = {"blue": "#0072B2", "vermillion": "#D55E00",
              "bluish_green": "#009E73", "reddish_purple": "#CC79A7", "black": "#000000"}
-HIGHLIGHT = OKABE_ITO["blue"]
 
 # Layers, darkest to lightest (rule 11): data, then summaries, then references, then axes
 LAYER = {"data": "black", "summary": "black", "context": GRAY, "reference": LIGHT,
@@ -183,7 +188,7 @@ def quartile_plot(ax, groups, color=GRAY):
 
 def paired_plot(ax, before, after, labels=("Before", "After"), highlight=None):
     """One line per subject between two conditions (rule 15; Tufte's slopegraph).
-    highlight: optional boolean array of subjects to draw in blue."""
+    highlight: optional boolean array of subjects to draw in the accent color."""
     before, after = np.asarray(before, float), np.asarray(after, float)
     for i, (b, a) in enumerate(zip(before, after)):
         on = highlight is not None and highlight[i]
@@ -291,4 +296,4 @@ horizontal_ylabel(ax, "Response (a.u.)")
 
 - seaborn's `errorbar=("ci", 95)` is a bootstrap interval; say so in the caption, or compute the interval yourself with `mean_ci`.
 - Never `sns.barplot` for continuous data (rule 15); use `stripplot` or `swarmplot` with `pointplot`.
-- Prefer `palette=OKABE_ITO` values or a single gray; never the default palette for more than one highlight.
+- Prefer a single gray with `HIGHLIGHT` on the finding; `OKABE_ITO` values only when several categories must be colored; never the default palette.

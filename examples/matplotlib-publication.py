@@ -66,7 +66,7 @@ SCIENCE_RC = {
 }
 
 GRAY = "#666666"
-HIGHLIGHT = "#0072B2"  # Okabe-Ito blue: 5.2:1 on white, so its label can share its color
+HIGHLIGHT = "#CC0000"  # the accent red (rule 12): 5.9:1 on white, so its label can share its color
 T975 = {3: 3.182, 7: 2.365}  # two-sided 95% t quantiles for the degrees of freedom used here
 
 
@@ -186,9 +186,9 @@ def main(outdir):
                                   shrinkA=2.5, shrinkB=2.5, mutation_scale=4), zorder=3)
     ax_b.text(np.sqrt(ec50["Drug B"] * ec50["Control"]), half + 0.035, f"{fold:.0f}-fold",
               ha="center", va="bottom", fontsize=5.5)
-    ax_b.text(ec50["Drug B"] * 0.9, half - 0.05, f"EC$_{{50}}$ {ec50['Drug B']:.2f} µM",
+    ax_b.text(ec50["Drug B"] * 0.3, half - 0.04, f"EC$_{{50}}$\n{ec50['Drug B']:.2f} µM",
               ha="right", va="top", fontsize=5.5, color=HIGHLIGHT)
-    ax_b.text(ec50["Control"] * 1.12, half - 0.05, f"EC$_{{50}}$ {ec50['Control']:.2f} µM",
+    ax_b.text(ec50["Control"] * 1.12, half - 0.04, f"EC$_{{50}}$\n{ec50['Control']:.2f} µM",
               ha="left", va="top", fontsize=5.5)
     ax_b.set_xscale("log")
     ax_b.xaxis.set_major_locator(FixedLocator([0.01, 0.1, 1, 10, 100]))

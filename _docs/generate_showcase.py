@@ -119,10 +119,13 @@ stats_by_diet = {d: (m.mean(axis=0), np.array([mean_ci(col)[1] for col in m.T]))
 lo = min(m.min() for m in mice.values())
 hi = max(m.max() for m in mice.values())
 
+week0 = np.concatenate([m[:, 0] for m in mice.values()])
+band = (week0.min(), week0.max())   # week-0 range of all 32 mice, from the data
+
 fig, axes = plt.subplots(1, 4, figsize=(183 * MM, 45 * MM), sharey=True)
 for ax, (diet, (m, h)) in zip(axes, stats_by_diet.items()):
-    start = stats_by_diet["Standard"][0][0]
-    ax.axhline(start, color=LIGHT, lw=0.5, ls=(0, (2, 2)), zorder=1)   # week-0 level, from the data
+    # Tufte's gray band for the normal range (rule 12: a muted field, not a line)
+    ax.fill_between(weeks[[0, -1]], *band, color=FIELD, lw=0, zorder=0)
     # Two readings (SKILL.md rule 11): each mouse as a thin light line, the diet's
     # mean as a heavier line on top
     for mouse in mice[diet]:
@@ -141,7 +144,7 @@ for ax in axes[1:]:
 axes[0].text(0, 1.22, "Body mass (g)", transform=axes[0].transAxes, ha="left", va="bottom")
 fig.text(0.5, 0.02, "Week", ha="center")
 fig.subplots_adjust(left=0.05, right=0.975, bottom=0.2, top=0.72, wspace=0.18)
-axes[0].text(12, start - 0.3, "Week-0 mean", ha="right", va="top", fontsize=5, color=GRAY)
+axes[0].text(12, band[0] - 0.3, "Week-0 range", ha="right", va="top", fontsize=5, color=GRAY)
 axes[-1].text(1, 1.06, "n = 8 mice per diet", transform=axes[-1].transAxes, ha="right",
               va="bottom", color=GRAY)
 

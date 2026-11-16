@@ -57,28 +57,41 @@ The values in this file (point sizes, hex colors, opacities) are this skill's de
 
 *Source: convention; Journal (Science: "Avoid using colored type").* Text and axes in black: small gray text prints as a halftone screen and loses sharpness.
 
-### Categorical palette: Okabe–Ito
+### Tufte's palette: black and grays, one accent, muted fields
 
-*Source: Literature (Okabe and Ito 2008; Wong 2011).* The Okabe–Ito palette was designed to stay distinct for readers with the common forms of color-vision deficiency. On white, four of its colors clear 3:1 for lines, dots and text:
+*Source: Tufte, EI ch. 5 (gray first; strong color only in small areas, on muted fields, after Imhof); BE pp. 46–63 and Tufte's notes on sparklines (a gray band for the normal range; a red accent tied to a specific number; red for the first and last values, blue for the low and high; color coding kept modest). Hex values: convention, checked for color-vision deficiency (below).*
+
+Black and the grays in the table above carry the figure. Color is added sparingly:
+
+| Role | Hex | Contrast on white | Use |
+|---|---|---|---|
+| Accent red | `#CC0000` | 5.9:1 | The one thing the reader must find, tied to a value; its label may share its color |
+| Second accent blue | `#0072B2` | 5.2:1 | Only when a second kind of highlight is needed; its label may share its color |
+| Field gray | `#e5e5e5` | — | Normal ranges, reference bands, large areas |
+| Field blue | `#dce9f5` | — | Water on maps; a second large area |
+
+- **Color last.** Position, direct labels and small multiples separate things before color does (Tufte, EI ch. 4–5).
+- **Black and grays first.** Data in black, context in gray (`#666666`), individual observations and references in light gray (`#8c8c8c`).
+- **One accent, red,** on the finding, with its value written beside it, as in Tufte's sparklines. **Blue only as a second accent,** for a second kind of highlight; Tufte pairs the two (red for the first and last values, blue for the low and high).
+- **Muted fields for large areas.** Field gray for a normal range or a band; field blue, or a pale tint of one hue, for a large region; light-to-dark steps when the area encodes a quantity. Never strong or bright colors over large areas: Tufte's color rules, taken from the cartographer Eduard Imhof, keep strong color to small areas on a muted field (EI ch. 5; see `rules/maps.md`, rule 11).
+- **Checked for color-deficient readers** (Tufte, VDQI p. 183). In simulations of protanopia and deuteranopia (Machado et al. 2009), the red and the blue each stay as distinct from the gray `#666666` as Okabe–Ito blue does, and stay clearly distinct from each other. Label them directly anyway.
+- **Same condition, same color** in every figure of the paper (Tufte, integrity principle 3).
+- **Never red against green** for a contrast that matters (Journal, Science; Wong 2011).
+
+### Fallback for several categories: Okabe–Ito
+
+*Source: Literature (Okabe and Ito 2008; Wong 2011).* Tufte gives no palette for many categories. When three or more must be told apart by color, and position, direct labels or small multiples cannot do it, use the Okabe–Ito palette, designed to stay distinct for the common forms of color-vision deficiency. Use the set in place of the accents (its vermillion is too close to the accent red to mix them), in small areas only, at most four colors in one figure; more categories go to small multiples. Keep the hexes as published: muting them would undo the color-vision design.
 
 | Name | Hex | Contrast on white | Use |
 |---|---|---|---|
-| Blue | `#0072B2` | 5.2:1 | Default highlight; its label may share its color |
-| Vermillion | `#D55E00` | 3.9:1 | Second highlight, only when needed; label in black |
-| Bluish green | `#009E73` | 3.4:1 | Third, only when needed; label in black |
-| Reddish purple | `#CC79A7` | 3.1:1 | Fourth, only when needed; label in black |
+| Blue | `#0072B2` | 5.2:1 | First category; its label may share its color |
+| Vermillion | `#D55E00` | 3.9:1 | Second category; label in black |
+| Bluish green | `#009E73` | 3.4:1 | Third category; label in black |
+| Reddish purple | `#CC79A7` | 3.1:1 | Fourth category; label in black |
 | Black | `#000000` | 21:1 | Reference or fifth category |
 | Orange | `#E69F00` | 2.3:1 | Not for marks (below 3:1); never over large areas |
 | Sky blue | `#56B4E9` | 2.3:1 | Not for marks (below 3:1); never over large areas |
 | Yellow | `#F0E442` | 1.3:1 | Avoid |
-
-- **Color last.** Position, direct labels and small multiples separate categories before color does (Tufte, EI ch. 4–5).
-- **Gray first.** Draw everything in gray (`#666666`) and give color only to what the reader must find (Tufte, EI ch. 5).
-- **One highlight by default**, blue. Add the next colors in table order only when the reader must tell highlighted things apart; at most four in one figure, more categories go to small multiples (convention; Tufte, EI ch. 4).
-- **Small areas only.** These colors are for lines, dots, labels and small marks. Tufte's color rules, taken from the cartographer Eduard Imhof, keep strong color to small areas on a muted field and warn against bright colors side by side over large areas (EI ch. 5; see `rules/maps.md`, rule 11). Large areas (fills, wide bars, map regions, backgrounds) take light gray (`#e5e5e5`) or a pale tint of one hue, stepped light to dark when they encode a quantity.
-- **The hexes stay as published.** Muting them would undo the color-vision design that Tufte himself asks for (VDQI p. 183); the rules above limit where they go instead.
-- **Same condition, same color** in every figure of the paper (Tufte, integrity principle 3).
-- **Never red against green** for a contrast that matters (Journal, Science; Wong 2011).
 
 ### Color maps for quantities
 
@@ -108,4 +121,4 @@ The minimums are an extension (WCAG): 4.5:1 for text and 3:1 for data marks agai
 python3 scripts/check_contrast.py
 ```
 
-It reads the tables in this file and exits non-zero if any text or data color misses its minimum. Rows marked "never text", "Not for marks" or "Avoid" are reported but not failed.
+It reads the tables in this file and exits non-zero if any text or data color misses its minimum. Field rows are skipped (they are areas, not marks); rows marked "never text", "Not for marks" or "Avoid" are reported but not failed.

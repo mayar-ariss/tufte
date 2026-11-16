@@ -140,17 +140,17 @@ Each axis line spans only the range of the data, so the frame itself reports the
 
 A dense figure stays clear when its layers are visually ordered: data darkest and heaviest; summaries and fits next; comparisons and references lighter; axes, grids and leader lines lightest and thinnest. Two heavy lines close together create a third, illusory element (1 + 1 = 3); separate by lightness, weight and space instead. Design for two readings: the overall pattern at a glance (the macro reading) and every individual value up close (the micro reading) — for example, each subject's trajectory as a thin light line under the group mean.
 
-### 12. Color: last, gray first, strong color only in small areas, the smallest effective difference
+### 12. Color: black and grays, one accent, muted fields
 
-*Source: Tufte, EI ch. 5 (color: "above all, do no harm"; muted fields with strong color in small areas, and no bright colors side by side over large areas, after Imhof; color as quantity, light to dark); VE ch. 4 (smallest effective difference); VDQI ch. 9, p. 183 (colors that color-deficient readers can tell apart). Palette and maps: Literature (Okabe and Ito 2008; Wong 2011; Crameri et al. 2020).*
+*Source: Tufte, EI ch. 5 (color: "above all, do no harm"; muted fields with strong color in small areas, and no bright colors side by side over large areas, after Imhof; color as quantity, light to dark); BE pp. 46–63 and his sparkline notes (a gray band for the normal range; a red accent tied to a number; red and blue as a pair); VE ch. 4 (smallest effective difference); VDQI ch. 9, p. 183 (colors that color-deficient readers can tell apart). Fallback palette and maps: Literature (Okabe and Ito 2008; Wong 2011; Crameri et al. 2020).*
 
-- **Color last.** Separate categories first by position, direct labels or small multiples (rules 5 and 7); use color only for what those cannot do.
-- **Gray first.** Draw everything in gray; give color only to what the reader must find. Make every difference as small as will still read clearly.
-- **One highlight by default:** Okabe–Ito blue `#0072B2` against grays. Add vermillion `#D55E00`, then bluish green `#009E73` and reddish purple `#CC79A7`, only when the reader must tell highlighted things apart. More than four categories go to small multiples.
-- **Strong color only in small areas:** lines, dots, labels, small marks. Large areas (fills, wide bars, map regions, backgrounds) take light gray or a pale tint of one hue, stepped light to dark when they encode a quantity. Never strong or bright colors side by side over large areas.
-- Okabe–Ito is kept for what Tufte asks on VDQI p. 183, colors that color-deficient readers can tell apart; muting its hues would undo that, so the rule limits where they go instead.
-- For quantities, light to dark in one hue, or a perceptually uniform map (viridis, cividis, batlow; vik for diverging data). Never rainbow or jet.
-- Never red against green for a contrast that matters. Same condition, same color in every figure of the paper. The figure must read in grayscale.
+- **Color last.** Separate things first by position, direct labels or small multiples (rules 5 and 7); use color only for what those cannot do.
+- **Black and grays carry the figure:** data in black, context in gray, individual observations and references in light gray. Make every difference as small as will still read clearly.
+- **One accent, red `#CC0000`,** on the finding, with its value written beside it, as in Tufte's sparklines. **Blue `#0072B2` only as a second accent,** for a second kind of highlight; Tufte pairs the two (red for first and last values, blue for low and high).
+- **Muted fields for large areas:** a light gray band for a normal range or reference interval; a pale tint of one hue for a large region, stepped light to dark when it encodes a quantity. Strong color only in small areas (lines, dots, labels, small marks); never strong or bright colors over large areas.
+- **For quantities,** light to dark in one hue, or a perceptually uniform map (viridis, cividis, batlow; vik for diverging data). Never rainbow or jet.
+- **Several categories that must be colored** (three or more, when position, labels and small multiples cannot separate them): the Okabe–Ito palette, as a set in place of the accents, in small areas, at most four colors. Tufte gives no palette for this; Okabe–Ito meets his p. 183 requirement.
+- Never red against green for a contrast that matters. Same condition, same color in every figure of the paper. The figure must read in grayscale. The red and the blue were checked in simulations of color-vision deficiency and stay distinct from the grays and from each other.
 
 Hex values and contrast ratios: `rules/typography-and-color.md`.
 
@@ -321,7 +321,7 @@ Before presenting any figure, verify:
 - [ ] The figure carries as much of the data as the reader can use (rule 8)
 - [ ] No frame, box, heavy grid or decoration (rule 9); range-frame axes (rule 10)
 - [ ] Layers ordered: data darkest, references lighter, axes lightest; readable at a glance and up close (rule 11)
-- [ ] Color last and gray first; one highlight unless more are needed; strong color only in small areas, large areas muted; Okabe–Ito or a uniform map; grayscale test passed (rule 12)
+- [ ] Color last; black and grays first; one red accent, blue only as a second; large areas in muted fields; Okabe–Ito only for several colored categories; a uniform map for quantities; grayscale test passed (rule 12)
 - [ ] Upper-and-lower case, horizontal type, words spelled out (rule 13)
 
 **Evidence**
@@ -347,7 +347,7 @@ Each is named in its rule; all are here so none is hidden.
 | Bold panel letters | Journals require them | 24 |
 | Sentence case rather than any upper-and-lower case | Science's style; a narrower form of Tufte's rule | 21 |
 | Error bars, p-values, log scales | Tufte gives no rule; the statistics literature does. These extend him | 15–18 |
-| Okabe–Ito, a palette of distinct hues, rather than muted tints | Chosen for Tufte's own requirement that color-deficient readers can tell the colors apart (VDQI p. 183). Used only where his color rules allow: one highlight by default, in small areas, never over large ones | 12 |
+| Exact hexes for the red, the blue and the fields; Okabe–Ito when several categories must be colored | Tufte names colors, not values, and gives no palette for many categories. The values were chosen to pass contrast and color-vision checks; Okabe–Ito meets his own requirement that color-deficient readers can tell colors apart (VDQI p. 183), and is used only in small areas | 12 |
 
 ## Additional resources
 

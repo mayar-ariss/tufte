@@ -20,8 +20,8 @@ Use this file when reviewing figure code or a finished figure for a scientific a
 | **Technical replicates as *n*** | Inflates certainty | Error bars across independent experiments only | 16 |
 | **Asterisks with no definition** | The reader cannot tell the test or the threshold | Define each mark in the caption; give exact p-values and effect sizes | 17 |
 | **Rainbow, jet or turbo color map** | Uneven lightness invents boundaries; unreadable for many readers | viridis, cividis or batlow; vik for diverging data | 12 |
-| **Strong color over large areas**, or several categories colored by default | Bright fills side by side are loud and pull the picture apart (Imhof, via Tufte); color does work position or a label could do | Gray first, one highlight; light gray or a pale tint for large areas; separate categories by position, labels or small multiples | 12 |
-| **Red against green** as the only contrast | Indistinguishable for the most common color-vision deficiencies | Okabe–Ito colors, plus position, shape or a label | 12 |
+| **Strong color over large areas**, or several categories colored by default | Bright fills side by side are loud and pull the picture apart (Imhof, via Tufte); color does work position or a label could do | Black and grays first, one red accent; light gray or a pale tint for large areas; separate categories by position, labels or small multiples | 12 |
+| **Red against green** as the only contrast | Indistinguishable for the most common color-vision deficiencies | The red accent against grays, blue as a second; Okabe–Ito for several categories; plus position, shape or a label | 12 |
 | **Legend box** | Shuttling between key and data | Direct labels; a key only for a color scale, unframed | 7 |
 | **Gridlines, box, top and right spines** | Non-data-ink | Remove | 9 |
 | **Title inside the figure** | Duplicates the caption, wastes the column | Move it to the caption's first sentence | 22 |
@@ -62,7 +62,7 @@ ax.set_yscale("log") with bars           → dots or lines
 ```
 sns.barplot(...) on continuous data      → sns.stripplot + sns.pointplot(errorbar=("ci", 95))
 sns.set_theme() / sns.set_context("talk")→ sns.set_theme(style="ticks", rc=SCIENCE_RC)
-palette="husl" / "Set1" / "rainbow"      → gray plus Okabe–Ito
+palette="husl" / "Set1" / "rainbow"      → grays plus the red accent; Okabe–Ito for several categories
 legend from hue=                         → ax.get_legend().remove(); label directly
 errorbar="sd" without saying so          → state SD in the caption, or use a CI
 ```

@@ -31,7 +31,7 @@ The skill has three parts, in order of authority.
 - **Carry information**: small multiples for multivariate data; high data density; multifunctioning elements such as range frames that report the data's range.
 - **Explain on the graphic, generously**: names, values, events and findings written beside what they explain; direct labels instead of legends.
 - **Stay clear by design, not by omission**: erase what carries no information; layer the rest from dark data to light references, so the figure reads at a glance and up close.
-- **Color last, gray first, strong color only in small areas**, one highlight by default; type that is clear, precise and modest, running horizontally.
+- **Tufte's colors: black and grays, one red accent, muted fields**; color last, strong color only in small areas, Okabe–Ito only when several categories must be colored; type that is clear, precise and modest, running horizontally.
 
 **2. The statistics literature adds the evidence Tufte left open** (rules 15–19): every observation for small samples instead of dynamite plots, error bars defined as SD, SEM or 95% confidence intervals, *n* stated, effect sizes before p-values, log axes for multiplicative data.
 
@@ -60,37 +60,37 @@ Each rule is labeled **Tufte** (book and chapter), **Literature** (author and ye
 
 All figures are drawn at a journal width by `_docs/generate_showcase.py`, which runs the same code the skill gives an agent. Data are synthetic except for the cholera map.
 
-<img src="_docs/tufte-scientific-figure.png" width="520" alt="A two-panel figure, 89 mm wide. Panel a: each culture as a dot for three groups, Drug B in blue, with a black mean and 95% confidence interval beside each group and the mean's value written next to it. Panel b: dose-response curves on a log dose axis with light confidence bands; open circles mark each curve's half-maximal dose, labeled EC50 0.30 µM for Drug B and 2.65 µM for the control, joined by a double arrow labeled 9-fold.">
+<img src="_docs/tufte-scientific-figure.png" width="520" alt="A two-panel figure, 89 mm wide. Panel a: each culture as a dot for three groups, Drug B in red, with a black mean and 95% confidence interval beside each group and the mean's value written next to it. Panel b: dose-response curves on a log dose axis with light confidence bands; open circles mark each curve's half-maximal dose, labeled EC50 0.30 µM for Drug B and 2.65 µM for the control, joined by a double arrow labeled 9-fold.">
 
 *Nature single column, 89 mm. **a**, every culture shown (*n* = 8 per group), with means, 95% confidence intervals and the means' values; the range frame's ends report the data's range. **b**, dose on the x-axis as the explanatory variable, on a log scale labeled with values; the finding is drawn where it is — each half-maximal dose marked on its curve, and the 9-fold shift between them. Panel letters in Nature's 8 pt bold lowercase; no title in the artwork. From `examples/matplotlib-publication.py`, which checks its caption against the data.*
 
-<img src="_docs/small-multiples.png" alt="Four panels of body mass over 12 weeks, one per diet, on one shared scale. Each panel shows every mouse as a thin gray line and the diet's mean as a heavier line, with a dotted line at the week-0 mean; the high-fat mean is blue and ends highest, at 31.7 g; the restricted mean ends below its start, at 24.0 g.">
+<img src="_docs/small-multiples.png" alt="Four panels of body mass over 12 weeks, one per diet, on one shared scale. Each panel shows every mouse as a thin gray line and the diet's mean as a heavier line, over a light gray band showing the week-0 range of all mice; the high-fat mean is red and ends highest, at 31.7 g; the restricted mean ends below its start, at 24.0 g.">
 
-*Small multiples with two readings, 183 mm. Mice on the high-fat diet gained the most mass by week 12 (31.7 g); those on the restricted diet lost mass. At a glance, the four means; up close, every mouse as a thin light line under its diet's mean (*n* = 8 per diet). One scale in every panel; the week-0 mean as the shared reference; the ending values written in.*
+*Small multiples with two readings, 183 mm. Mice on the high-fat diet gained the most mass by week 12 (31.7 g); those on the restricted diet lost mass. At a glance, the four means; up close, every mouse as a thin light line under its diet's mean (*n* = 8 per diet). One scale in every panel; the week-0 range of all mice as a gray band, Tufte's device for a normal range; the ending values written in.*
 
-<img src="_docs/tufte-designs.png" width="640" alt="Two panels. Panel a: systolic pressure before and after treatment, one line per subject; ten lines fall, labeled 10 fell; two rise, drawn in blue and labeled 2 rose. Panel b: Tufte's quartile plots for four sites, ordered by median from 9.7 to 13.6, each a dot at the median with its value written beside it, a gap for the middle half and lines to the extremes.">
+<img src="_docs/tufte-designs.png" width="640" alt="Two panels. Panel a: systolic pressure before and after treatment, one line per subject; ten lines fall, labeled 10 fell; two rise, drawn in red and labeled 2 rose. Panel b: Tufte's quartile plots for four sites, ordered by median from 9.7 to 13.6, each a dot at the median with its value written beside it, a gap for the middle half and lines to the extremes.">
 
-*Tufte's designs for distributions, 120 mm. **a**, paired measurements as a slopegraph, one line per subject: pressure fell in 10 of 12 subjects; the two who rose are in blue, and both counts are written on the graphic. **b**, Tufte's quartile plot (no box: a dot at the median, a gap for the middle half, lines to the extremes), sites ordered by median rather than by name, each median's value written in, *n* = 40 per site.*
+*Tufte's designs for distributions, 120 mm. **a**, paired measurements as a slopegraph, one line per subject: pressure fell in 10 of 12 subjects; the two who rose are in red, and both counts are written on the graphic. **b**, Tufte's quartile plot (no box: a dot at the median, a gap for the middle half, lines to the extremes), sites ordered by median rather than by name, each median's value written in, *n* = 40 per site.*
 
 <img src="_docs/tufte-cholera-map.png" width="560" alt="John Snow's 1854 cholera map redrawn: one black dot per death on a pale street plan, the 13 water pumps as gray crosses, each labeled with its name and its count of nearest deaths, from 0 to 64, and the Broad Street pump as a blue cross at the center of the cluster, labeled Broad St pump: 359.">
 
-*John Snow's 1854 cholera data, drawn by `rules/maps.md`, 120 mm. 359 of the 578 deaths lay nearer the Broad Street pump (blue) than any other; the next pump, South Soho, has 64. Every pump carries its count on the map, zeros included, so the comparison is on the page, as Snow annotated his own map. One dot per death; straight-line distances; the population at risk is not shown (Tufte, Visual Explanations, p. 35). Data: Snow (1855), digitized by Dodson and Tobler, via the R package HistData.*
+*John Snow's 1854 cholera data, drawn by `rules/maps.md`, 120 mm. 359 of the 578 deaths lay nearer the Broad Street pump (red) than any other; the next pump, South Soho, has 64. Every pump carries its count on the map, zeros included, so the comparison is on the page, as Snow annotated his own map. One dot per death; straight-line distances; the population at risk is not shown (Tufte, Visual Explanations, p. 35). Data: Snow (1855), digitized by Dodson and Tobler, via the R package HistData.*
 
 ### The palette
 
-Nine numbers belong in a table, not a chart (Tufte, *The Visual Display of Quantitative Information*, ch. 9). Contrast against a white page; the skill asks 3:1 for marks and 4.5:1 for text.
+A palette belongs in a table, not a chart (Tufte, *The Visual Display of Quantitative Information*, ch. 9). Contrast against a white page; the skill asks 3:1 for marks and 4.5:1 for text.
 
 | Color | Hex | Contrast | Use |
 |---|---|---:|---|
-| Gray (default) | `#666666` | 5.7 | Data, context, text |
-| Blue | `#0072B2` | 5.2 | Default highlight; its label may share its color |
-| Vermillion | `#D55E00` | 3.9 | Second highlight, only when needed; label in black |
-| Bluish green | `#009E73` | 3.4 | Third, only when needed; label in black |
+| Black | `#000000` | 21 | Data, text, axes |
+| Gray | `#666666` | 5.7 | Context |
 | Light gray | `#8c8c8c` | 3.4 | Individual observations, references |
-| Reddish purple | `#CC79A7` | 3.1 | Fourth, only when needed; label in black |
-| Sky blue | `#56B4E9` | 2.3 | Not for marks; never over large areas |
-| Orange | `#E69F00` | 2.3 | Not for marks; never over large areas |
-| Yellow | `#F0E442` | 1.3 | Avoid |
+| Accent red | `#CC0000` | 5.9 | The finding, with its value beside it |
+| Second accent blue | `#0072B2` | 5.2 | A second kind of highlight, only when needed |
+| Field gray | `#e5e5e5` | — | Normal ranges, bands, large areas |
+| Field blue | `#dce9f5` | — | Water, a second large area |
+
+Black, grays, a red accent with blue as its pair, and muted fields are Tufte's own practice (*Envisioning Information*, ch. 5; *Beautiful Evidence*, pp. 46–63); the hex values are the skill's, checked for contrast and in simulations of color-vision deficiency. When three or more categories must be colored, the Okabe–Ito palette is the fallback.
 
 `scripts/check_contrast.py` checks the palette documented in `rules/typography-and-color.md`, so it cannot drift.
 
@@ -109,7 +109,7 @@ Nine numbers belong in a table, not a chart (Tufte, *The Visual Display of Quant
 | `SKILL.md` | The workflow and 25 rules in three parts — Tufte's principles, scientific evidence, journal production — with chart types, quick references, anti-patterns, a checklist and the list of departures from Tufte. The agent always reads this. |
 | `rules/matplotlib.md` | Setup, layers, helpers (range frames with labeled ends, direct labels, annotations, panel letters, confidence intervals, quartile and paired plots, log axes), complete examples, export |
 | `rules/ggplot2-plotnine.md` | A journal theme, the same figures in ggplot2 and plotnine, patchwork panels, export with embedded fonts |
-| `rules/typography-and-color.md` | Helvetica and sizes per journal, Okabe–Ito colors, color maps, contrast on white |
+| `rules/typography-and-color.md` | Helvetica and sizes per journal, Tufte's palette (Okabe–Ito as the fallback), color maps, contrast on white |
 | `rules/small-multiples-and-panels.md` | Multi-panel layout, small multiples, slopegraphs, quartile and dot-dash plots, sparklines in tables |
 | `rules/anti-patterns.md` | Common faults in scientific figures, with per-library detection and fixes |
 | `rules/journals.md` | Nature, Science and PLOS requirements, quoted and dated |

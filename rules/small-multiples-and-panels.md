@@ -66,7 +66,7 @@ In ggplot2: `geom_rug(colour = "#8c8c8c", linewidth = 0.25)`.
 In a paper, sparklines belong in tables, beside the numbers they summarize.
 
 1. No axes and no gridlines, but the beginning and ending values as numbers beside the line.
-2. Small dots for reference values: first and last values in red, low and high in blue (BE pp. 50–51). For print, use vermillion `#D55E00` and blue `#0072B2`.
+2. Small dots for reference values: first and last values in red, low and high in blue (BE pp. 50–51). Use the accent red `#CC0000` and the blue `#0072B2` (rule 12).
 3. A light gray band for the normal range when the data have one.
 4. Bank to 45°: set the width so the slopes average about 45° (Tufte, after Cleveland).
 5. The height of a line of text; same scale down a column when rows are compared.

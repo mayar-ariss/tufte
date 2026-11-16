@@ -4,8 +4,8 @@
 Reads the color tables in rules/typography-and-color.md and verifies:
   - text colors reach 4.5:1 against white
   - data colors reach 3:1 against white
-The page and gridline rows are skipped. Rows whose use says "Not for marks" or
-"Avoid" are reported but never fail: the file already restricts them.
+The page, gridline and field rows are skipped. Rows whose use says "Not for marks"
+or "Avoid" are reported but never fail: the file already restricts them.
 
 Usage: python3 scripts/check_contrast.py    (exit code 1 on any failure)
 No dependencies beyond the Python standard library.
@@ -60,7 +60,13 @@ def main():
         minimum = TEXT_MIN if name.startswith("text") else DATA_MIN
         checks.append((role, color, minimum, True))
 
-    for name, color, _ratio, use in table_rows(text, "Categorical palette: Okabe–Ito"):
+    for role, color, _ratio, use in table_rows(text, "Tufte's palette: black and grays, one accent, muted fields"):
+        if "field" in role.lower():
+            continue
+        minimum = TEXT_MIN if "label may share its color" in use else DATA_MIN
+        checks.append((role, color, minimum, True))
+
+    for name, color, _ratio, use in table_rows(text, "Fallback for several categories: Okabe–Ito"):
         restricted = "not for marks" in use.lower() or use.strip().lower() == "avoid"
         minimum = TEXT_MIN if "label may share its color" in use else DATA_MIN
         checks.append((f"Okabe–Ito {name}", color, minimum, not restricted))
