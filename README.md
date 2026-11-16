@@ -8,9 +8,9 @@
 npx skills add mayar-ariss/tufte-skill
 ```
 
-Works with Claude Code, Cursor, Codex, GitHub Copilot, Gemini CLI and any agent the [skills CLI](https://skills.sh) supports. Covers matplotlib, seaborn, Plotly, ggplot2, plotnine, Vega-Lite, Altair, Observable Plot, Recharts, ECharts, Chart.js and D3/SVG, plus maps and flowcharts, with accessibility, dark mode and responsive layout built in.
+Works with Claude Code, Cursor, Codex, GitHub Copilot, Gemini CLI and any agent the [skills CLI](https://skills.sh) supports. Covers matplotlib, seaborn, Plotly, ggplot2, plotnine, Vega-Lite, Altair, Observable Plot, Recharts, ECharts, Chart.js and D3/SVG, plus maps and flowcharts, with accessibility, dark mode and responsive layout built in, and a separate profile for figures in [scientific articles](#scientific-articles).
 
-**[Live demo](https://mayar-ariss.github.io/tufte-skill/)**: toggle default and Tufte styling in ECharts, Chart.js, Plotly and D3, light and dark · [Examples](#examples) · [What it does](#what-it-does)
+**[Live demo](https://mayar-ariss.github.io/tufte-skill/)**: toggle default and Tufte styling in ECharts, Chart.js, Plotly and D3, light and dark · [Examples](#examples) · [Scientific articles](#scientific-articles) · [What it does](#what-it-does)
 
 ## Try it
 
@@ -21,10 +21,11 @@ Once installed, ask your agent for a chart the way you normally would. The skill
 - *"Review this ECharts config and remove the chartjunk."*
 - *"Make a dark-mode version of this Plotly dashboard."*
 - *"Draw a flowchart of our order process in Mermaid."*
+- *"Make a single-column Nature figure of the dose–response data in assay.csv, with 95% confidence intervals."*
 
 ## Fair warning
 
-This skill is **opinionated by design**. It will remove your gridlines, replace your legends with direct labels, reject your pie charts, and default to serif type. It enforces a specific visual philosophy — Tufte's — not a neutral one. If you want total creative freedom over your chart styling, this is not the skill for you. If you want every chart to come out clean, honest, and readable without thinking about it, read on.
+This skill is **opinionated by design**. It will remove your gridlines, replace your legends with direct labels, reject your pie charts, and default to serif type (Helvetica for journal figures; see below). It enforces a specific visual philosophy — Tufte's — not a neutral one. If you want total creative freedom over your chart styling, this is not the skill for you. If you want every chart to come out clean, honest, and readable without thinking about it, read on.
 
 ## Examples
 
@@ -62,6 +63,26 @@ Gridlines fade, legends become direct labels, chartjunk dissolves:
 Every text and data color meets the skill's own contrast rule: 4.5:1 for text, 3:1 for data marks. `scripts/check_contrast.py` checks the documented palette so it can't drift.
 
 <img src="_docs/tufte-palette-contrast.png" alt="Dot plot of each palette color's contrast ratio before and after the fix, in light and dark mode; every color now sits at or beyond its 3:1 or 4.5:1 line">
+
+## Scientific articles
+
+Tufte wrote about printed graphics, and many of his central examples are scientific: Snow's cholera map, Minard's map of the Russian campaign, the Challenger O-ring data. His principles suit a journal page well. This skill's defaults do not, because they are written for screens: an off-white background, serif type, a headline title in the chart, pixel sizes, tooltips and dark mode.
+
+So figures for journal articles, preprints and theses get their own profile, [`rules/scientific-articles.md`](rules/scientific-articles.md). It keeps Tufte's principles and changes the house style around them, and it says which is which:
+
+| Kept from Tufte | Changed for the journal page |
+|---|---|
+| Graphical integrity, data-ink, no chartjunk | White page instead of off-white |
+| Direct labels, range-frame axes, gray first | **Helvetica** instead of serif type, at the journal's sizes (5–7 pt for Nature) |
+| Small multiples on a shared scale | Widths in millimeters (89 or 183 mm for Nature) instead of pixels |
+| Quartile plots, dot-dash plots, slopegraphs | The finding and the documentation in the caption, not a title on the plot |
+| Upper-and-lower case, words spelled out | Error bars and intervals shown and defined; individual observations for small samples |
+| "Compared to what?" | Okabe–Ito colors, perceptually uniform color maps, vector PDF with embedded fonts |
+
+Helvetica is the one place the profile departs from Tufte's own preference: he sets data graphics in serif type, while Science prefers Helvetica and Nature asks for Helvetica or Arial. The file explains the choice, and notes that Tufte himself sets tables in a sans serif. Where Tufte gives no rule (error bars, significance marks, log scales), the profile cites the statistics and visualization literature instead: Cumming et al. (2007) and Krzywinski and Altman (2013) on error bars, Weissgerber et al. (2015) on showing the data, Wong (2011) and Crameri et al. (2020) on color, and Rougier et al. (2014) on figures. Journal requirements are quoted from the Nature, Science and PLOS author guidelines, with the date they were read.
+
+<img src="_docs/tufte-scientific-figure.png" width="640" alt="A two-panel journal figure, 89 mm wide, in Helvetica on white. Panel a shows each culture as a dot for three groups, with Drug B in blue and the others in gray, and a black mean and 95% confidence interval beside each group. Panel b shows dose-response curves on a log dose axis with light confidence bands; Drug B, labeled in blue, reaches half its maximum at about a ninth of the control's dose; the control is labeled in black."><br>
+<b>Journal figure</b> — Nature single column (89 mm), drawn by `examples/matplotlib-publication.py`: every observation shown, means with 95% confidence intervals, a log dose axis, direct labels, bold lowercase panel letters, no title in the artwork, vector PDF with embedded fonts. Synthetic data; the script checks its caption against the data.
 
 ## What it does
 
@@ -136,7 +157,8 @@ Then 22 universal rules in three tiers, plus guidance on chart types and diagram
 | `rules/small-multiples-sparklines.md` | Small multiples, sparklines, slopegraphs, rug plots |
 | `rules/diagrams-flowcharts.md` | Flowcharts, process maps, org charts and networks, drawn only from Tufte's writing on connectors, layering and explanation |
 | `rules/maps.md` | Choropleth, dot, flow and small-multiple maps, drawn only from Tufte's writing on data maps |
-| `examples/` | Runnable reference implementations for Recharts, ECharts, Chart.js, matplotlib, Plotly and SVG |
+| `rules/scientific-articles.md` | Figures for journal articles: what carries over from Tufte, what changes for the journal page and why, with references to Tufte, journal guidelines and the literature |
+| `examples/` | Runnable reference implementations for Recharts, ECharts, Chart.js, matplotlib, Plotly and SVG, plus a journal figure in matplotlib |
 | `scripts/check_contrast.py` | Checks the documented palette against the contrast minimums |
 | `_docs/` | Showcase figures and the script that generates them |
 
@@ -145,7 +167,8 @@ Then 22 universal rules in three tiers, plus guidance on chart types and diagram
 Issues and pull requests are welcome. Before opening a PR:
 
 - **Changed a color?** Update `rules/typography-and-color.md`, then run `python3 scripts/check_contrast.py`. It exits non-zero if any text or data color misses its minimum.
-- **Changed the showcase figures?** Run `python3 _docs/generate_showcase.py` to regenerate every image in `_docs/`.
+- **Changed the showcase figures?** Run `python3 _docs/generate_showcase.py` to regenerate every image in `_docs/`. The journal figure comes from `python3 examples/matplotlib-publication.py /tmp/fig`; copy `/tmp/fig/figure1.png` to `_docs/tufte-scientific-figure.png`.
+- **Changed a journal requirement?** Quote the journal's current guide in `rules/scientific-articles.md` and update the date under References.
 - **Changed a chart title?** Check it against the data. Rule 20 asks titles to state the finding, so a title that misstates the data is a bug.
 
 ## Credits
@@ -158,6 +181,8 @@ tufte-skill began as a fork of [caylent/tufte-data-viz](https://github.com/cayle
 - *Envisioning Information* (1990)
 - *Visual Explanations* (1997)
 - *Beautiful Evidence* (2006)
+
+The scientific-articles profile also draws on journal author guidelines (Nature, Science, PLOS) and on published statistics and visualization research; its references are listed at the end of [`rules/scientific-articles.md`](rules/scientific-articles.md).
 
 ## License
 

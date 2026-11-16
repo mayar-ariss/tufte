@@ -4,6 +4,8 @@ Load this file when generating any ggplot2 (R) or plotnine (Python) chart code. 
 
 **Written for ggplot2 4.x and plotnine 0.15.** The rules come from Tufte (see the citations in `SKILL.md`); the code below is implementation, not principle. Rule numbers refer to `SKILL.md`.
 
+**For a figure in a journal article,** use `theme_science()` from `rules/scientific-articles.md` and save with `cairo_pdf` at the column width in millimeters, so Helvetica is embedded.
+
 ## ggplot2 (R)
 
 ### Theme
