@@ -1,4 +1,4 @@
-"""A two-panel figure for a journal article, drawn by rules/scientific-articles.md.
+"""A two-panel figure for a journal article, drawn by the rules in SKILL.md.
 
 Nature single column (89 mm), Helvetica (Arial or a metric clone where Helvetica
 is not installed), white page, no title in the artwork, individual observations

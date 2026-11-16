@@ -1,287 +1,180 @@
-# ggplot2 and plotnine: Tufte Configuration
+# ggplot2 and plotnine
 
-Load this file when generating any ggplot2 (R) or plotnine (Python) chart code. plotnine follows ggplot2's grammar, so the two halves of this file mirror each other.
+Load this file when generating ggplot2 (R) or plotnine (Python) code for a figure in a scientific article. plotnine follows ggplot2's grammar, so the two halves mirror each other.
 
-**Written for ggplot2 4.x and plotnine 0.15.** The rules come from Tufte (see the citations in `SKILL.md`); the code below is implementation, not principle. Rule numbers refer to `SKILL.md`.
-
-**For a figure in a journal article,** use `theme_science()` from `rules/scientific-articles.md` and save with `cairo_pdf` at the column width in millimeters, so Helvetica is embedded.
+**Written for ggplot2 3.5+ (with patchwork, dplyr and ggthemes) and plotnine 0.13+.** The rules come from `SKILL.md`, where each names its source; the code below is implementation, not principle. Unlike `rules/matplotlib.md`, the code in this file is not run by the repository's checks (`scripts/check_code.py`); test it in your own environment.
 
 ## ggplot2 (R)
 
 ### Theme
 
-Start from `theme_minimal()`, which already drops the panel border and axis lines, then remove the grid and the legend. ggplot2 4.0 added the `paper` (background) and `ink` (foreground) arguments to the built-in themes; they set the off-white background (rule 9) in one place.
-
 ```r
 library(ggplot2)
 
-TUFTE <- list(
-  bg = "#fffff8", text = "#111111", text_secondary = "#666666",
-  text_tertiary = "#767676", axis = "#cccccc",
-  series_default = "#666666", bar = "#7a7a7a", highlight = "#e41a1c",
-  categorical = c("#4e79a7", "#db730d", "#e15759", "#539e73")
-)
-TUFTE_DARK <- list(
-  bg = "#151515", text = "#dddddd", text_secondary = "#999999",
-  text_tertiary = "#808080", axis = "#444444",
-  series_default = "#999999", highlight = "#fc8d62",
-  categorical = c("#6a9fd8", "#f2a860", "#e87a7c", "#8accc7")
-)
-
-theme_tufte_skill <- function(base_size = 12, pal = TUFTE) {
-  theme_minimal(base_size = base_size, base_family = "serif",
-                paper = pal$bg, ink = pal$text) +
+theme_science <- function(base_size = 7, family = "Helvetica") {
+  theme_classic(base_size = base_size, base_family = family) +
     theme(
-      panel.grid = element_blank(),                       # rule 3
-      axis.ticks = element_line(colour = pal$axis, linewidth = 0.25),
-      axis.ticks.length = unit(3, "pt"),
-      axis.text = element_text(colour = pal$text_tertiary, size = rel(0.9)),
-      axis.title = element_text(colour = pal$text_secondary),
-      plot.title = element_text(size = rel(1.5), colour = pal$text),
-      plot.title.position = "plot",
-      plot.subtitle = element_text(colour = pal$text_secondary, margin = margin(b = 12)),
-      plot.caption = element_text(colour = pal$text_tertiary, hjust = 0),
-      plot.caption.position = "plot",
-      legend.position = "none"                            # rule 2: label lines directly
+      text               = element_text(colour = "black"),
+      axis.text          = element_text(colour = "black", size = base_size - 1),
+      axis.line          = element_line(linewidth = 0.25),     # about 0.5 pt (rule 16)
+      axis.ticks         = element_line(linewidth = 0.25),
+      axis.ticks.length  = unit(1, "mm"),
+      legend.position    = "none",                             # label directly (rule 5)
+      plot.title         = element_blank(),                    # the caption carries it (rule 15)
+      plot.subtitle      = element_text(hjust = 0, size = base_size),
+      plot.title.position = "panel",
+      plot.background    = element_rect(fill = "white", colour = NA),
+      strip.background   = element_blank(),
+      strip.text         = element_text(hjust = 0, size = base_size),
+      panel.spacing      = unit(3, "mm")
     )
 }
 
-theme_set(theme_tufte_skill())
+GRAY <- "#666666"
+HIGHLIGHT <- "#0072B2"   # Okabe-Ito blue
+OKABE_ITO <- c(blue = "#0072B2", vermillion = "#D55E00",
+               bluish_green = "#009E73", reddish_purple = "#CC79A7")
 ```
 
-On ggplot2 3.x, drop `paper` and `ink` and add `plot.background = element_rect(fill = TUFTE$bg, colour = NA)`.
+- A ggplot2 `linewidth` of 1 draws a line about 0.75 mm (about 2.1 pt) wide: 0.25 gives about 0.5 pt (axes) and 0.47 about 1 pt (data lines).
+- Text `size` in geoms is in millimeters: use `size = 7 / .pt` for 7 pt.
+- **Horizontal y-axis label (rule 2):** set `labs(y = NULL, subtitle = "Response (a.u.)")`; with `plot.title.position = "panel"` the subtitle sits above the axis, left-aligned.
+- **Range frame (rule 4):** replace the axis lines with `ggthemes::geom_rangeframe()` and add `theme(axis.line = element_blank())`.
 
-Save at about 1.5:1 (rule 7): `ggsave("chart.png", width = 9, height = 6, dpi = 150)`.
-
-### Range-frame axes (rule 4)
-
-Draw each axis line only across the data's range. `-Inf` places the segment on the panel edge, where the axis would sit.
+### Individual observations with 95% confidence intervals
 
 ```r
-range_frame <- function(x, y, colour = TUFTE$axis) {
-  list(
-    annotate("segment", x = min(x), xend = max(x), y = -Inf, yend = -Inf,
-             colour = colour, linewidth = 0.25),
-    annotate("segment", x = -Inf, xend = -Inf, y = min(y), yend = max(y),
-             colour = colour, linewidth = 0.25)
-  )
-}
+library(dplyr)
+
+summ <- df |>
+  group_by(group) |>
+  summarise(n = n(), mean = mean(response), sd = sd(response)) |>
+  mutate(half = qt(0.975, n - 1) * sd / sqrt(n))
+
+p <- ggplot(df, aes(group, response)) +
+  geom_jitter(aes(colour = group == "Drug B"), width = 0.12, height = 0,
+              size = 0.8, stroke = 0) +
+  geom_pointrange(data = summ, aes(y = mean, ymin = mean - half, ymax = mean + half),
+                  position = position_nudge(x = 0.25), shape = 95, size = 0.6,
+                  linewidth = 0.25, colour = "black") +
+  scale_colour_manual(values = c(`FALSE` = GRAY, `TRUE` = HIGHLIGHT)) +
+  labs(x = NULL, y = NULL, subtitle = "Response (a.u.)") +
+  ggthemes::geom_rangeframe(sides = "l") +
+  theme_science() +
+  theme(axis.line = element_blank(), axis.ticks.x = element_blank())
 ```
 
-The `ggthemes` package also provides `geom_rangeframe()` and `theme_tufte()`; either works with the rest of this file.
+Caption: what the dots are, *n* and what it counts, and that the bars are 95% confidence intervals of the mean (SKILL.md rules 10, 15).
 
-### Accessibility (rule 16)
-
-ggplot2 output is a static image, so there is no animation to manage.
-
-- **Alt text that states the finding.** Pass it as `labs(alt = "...")`; R Markdown and Quarto (through knitr) use it as the image's alt text when no `fig-alt` is set. Elsewhere, put the same sentence in the `alt` attribute where the image is embedded.
-- **Don't rely on color alone.** Pair color with `linetype` or `shape`.
-
-### Complete example: annotated time series
+### Lines with direct labels and a log axis
 
 ```r
-df <- data.frame(
-  month   = 1:12,
-  revenue = c(42, 48, 51, 49, 56, 62, 58, 65, 71, 68, 75, 82),
-  target  = c(40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62)
-)
-last <- df[nrow(df), ]
+last <- curves |> group_by(condition) |> slice_max(dose)
 
-ggplot(df, aes(month)) +
-  geom_line(aes(y = target), colour = "#8c8c8c", linewidth = 0.4, linetype = "dashed") +
-  geom_line(aes(y = revenue), colour = TUFTE$highlight, linewidth = 0.7) +
-  # Direct labels at the last point (rule 2)
-  annotate("text", x = last$month + 0.25, y = last$revenue, label = "Revenue",
-           hjust = 0, colour = TUFTE$highlight, family = "serif", size = 12 / .pt) +
-  annotate("text", x = last$month + 0.25, y = last$target, label = "Target",
-           hjust = 0, colour = TUFTE$text_tertiary, family = "serif", size = 12 / .pt) +
-  range_frame(df$month, c(df$revenue, df$target)) +
-  scale_x_continuous(breaks = 1:12, labels = month.abb) +
+p <- ggplot(curves, aes(dose, response, colour = condition)) +
+  geom_ribbon(aes(ymin = lo, ymax = hi, fill = condition), alpha = 0.2, colour = NA) +
+  geom_line(linewidth = 0.47) +
+  geom_point(size = 0.8) +
+  geom_text(data = last, aes(label = condition), hjust = 0, nudge_x = 0.1,
+            size = 7 / .pt) +
+  scale_x_log10(breaks = c(0.01, 0.1, 1, 10, 100),
+                labels = c("0.01", "0.1", "1", "10", "100")) +   # values, not logs (rule 12)
+  scale_colour_manual(values = c(Control = GRAY, `Drug B` = HIGHLIGHT)) +
+  scale_fill_manual(values = c(Control = GRAY, `Drug B` = HIGHLIGHT)) +
   coord_cartesian(clip = "off") +
-  labs(
-    title = "Revenue Exceeded Target Every Month, Accelerating in H2",   # rule 20
-    subtitle = "Monthly revenue vs. target, 2025",
-    x = NULL, y = "Revenue ($k)",
-    alt = "Revenue beat target every month, rising from $42k in January to $82k in December"
-  ) +
-  theme(plot.margin = margin(12, 70, 12, 12))   # room for the direct labels
+  labs(x = "Dose (µM)", y = NULL, subtitle = "Response (fraction of maximum)") +
+  theme_science()
 ```
 
-The y-axis starts near the data, not at zero: a time series takes a baseline that shows the data (graphical integrity, `SKILL.md`).
+When the curves meet at the end, place each label where its curve stands apart rather than at the last point.
 
-### Complete example: horizontal bar chart
-
-```r
-products <- data.frame(
-  product = c("Product A", "Product B", "Product C", "Product D", "Product E"),
-  revenue = c(42, 38, 27, 19, 12)
-)
-
-ggplot(products, aes(revenue, reorder(product, revenue))) +
-  geom_col(fill = TUFTE$bar, width = 0.6) +
-  geom_text(aes(label = paste0("$", revenue, "k")), hjust = 0, nudge_x = 0.8,
-            colour = TUFTE$text_secondary, family = "serif", size = 12 / .pt) +
-  # Bars start at zero (graphical integrity 1); no left padding
-  scale_x_continuous(expand = expansion(mult = c(0, 0.1))) +
-  labs(
-    title = "Products A and B Bring In 58% of Revenue",
-    subtitle = "Revenue by product, $k",
-    x = NULL, y = NULL,
-    alt = "Product A leads revenue at $42k, followed by B at $38k, C at $27k, D at $19k and E at $12k"
-  ) +
-  theme(axis.text.x = element_blank(), axis.ticks = element_blank())   # values sit on the bars
-```
-
-### Small multiples
-
-`facet_wrap()` keeps one scale for every panel by default (`scales = "fixed"`), as the small-multiples row in `SKILL.md` requires. Don't switch to `scales = "free_y"` when the panels are meant to be compared.
+### Small multiples and multi-panel figures
 
 ```r
-ggplot(long_df, aes(month, value)) +
-  geom_line(colour = TUFTE$series_default, linewidth = 0.5) +
+# One quantity, one scale (rule 17): facet_wrap keeps scales fixed by default
+p <- ggplot(df, aes(month, value)) +
+  geom_line(colour = GRAY, linewidth = 0.47) +
   facet_wrap(~ region, nrow = 1) +
-  theme(strip.text = element_text(hjust = 0, colour = TUFTE$text))
+  theme_science()
+
+# Different quantities: combine plots with patchwork and letter the panels
+library(patchwork)
+fig <- (p_a | p_b) +
+  plot_annotation(tag_levels = "a") &          # Nature: a, b, c; Science: tag_levels = "A"
+  theme(plot.tag = element_text(face = "bold", size = 8))
 ```
 
-### Sparklines
-
-Tufte's marks: first and last values in red, low and high in blue (BE pp. 50–51).
+### Color maps
 
 ```r
-spark <- data.frame(i = seq_along(values), v = values)
-ends  <- spark[c(1, nrow(spark)), ]
-lohi  <- spark[c(which.min(spark$v), which.max(spark$v)), ]
-
-ggplot(spark, aes(i, v)) +
-  geom_line(colour = TUFTE$series_default, linewidth = 0.3) +
-  geom_point(data = lohi, colour = "#4e79a7", size = 0.6) +
-  geom_point(data = ends, colour = "#e41a1c", size = 0.6) +
-  theme_void()
-# ggsave("spark.png", width = 0.8, height = 0.2, dpi = 300)
+scale_fill_viridis_c(option = "cividis")         # built into ggplot2
+scico::scale_fill_scico(palette = "batlow")      # Crameri's maps (scico package)
+scico::scale_fill_scico(palette = "vik", midpoint = 0)  # diverging, centered on zero
 ```
 
-### Dark mode (rule 19)
+Never `scale_fill_gradientn(colours = rainbow(…))` for a quantity (SKILL.md rule 8).
+
+### Export
 
 ```r
-theme_set(theme_tufte_skill(pal = TUFTE_DARK))
+ggsave("figure1.pdf", fig, width = 89, height = 60, units = "mm", device = cairo_pdf)
 ```
 
-Swap series colors to `TUFTE_DARK$series_default` and `TUFTE_DARK$highlight` as well.
+- `cairo_pdf` embeds the fonts. The base `pdf()` device writes Helvetica as a standard PDF font without embedding it, which some journals reject.
+- Check with `pdffonts figure1.pdf`: every font `emb yes`.
+- If Helvetica is not installed, use `family = "Arial"` in `theme_science()`.
 
 ## plotnine (Python)
 
 ### Theme
 
 ```python
-from plotnine import (
-    ggplot, aes, geom_line, geom_col, geom_text, geom_point, annotate,
-    labs, theme, theme_minimal, theme_void, element_blank, element_line,
-    element_rect, element_text, scale_x_continuous, scale_y_continuous,
-    coord_flip, facet_wrap,
-)
+import matplotlib.pyplot as plt
+from plotnine import (aes, element_blank, element_text, geom_jitter, geom_line,
+                      geom_pointrange, geom_text, ggplot, labs, position_nudge,
+                      scale_color_manual, scale_x_log10, theme, theme_classic)
 
-TUFTE = {
-    "bg": "#fffff8", "text": "#111111", "text_secondary": "#666666",
-    "text_tertiary": "#767676", "axis": "#cccccc",
-    "series_default": "#666666", "bar": "#7a7a7a", "highlight": "#e41a1c",
-    "categorical": ["#4e79a7", "#db730d", "#e15759", "#539e73"],
-}
+plt.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})   # embedded TrueType fonts
 
+GRAY, HIGHLIGHT = "#666666", "#0072B2"
 
-def theme_tufte_skill(base_size=12, pal=TUFTE):
-    return theme_minimal(base_size=base_size, base_family="serif") + theme(
-        plot_background=element_rect(fill=pal["bg"], color=pal["bg"]),
-        panel_grid=element_blank(),                                   # rule 3
-        axis_ticks=element_line(color=pal["axis"], size=0.5),
-        axis_text=element_text(color=pal["text_tertiary"]),
-        axis_title=element_text(color=pal["text_secondary"]),
-        plot_title=element_text(size=18, color=pal["text"], ha="left"),
-        plot_subtitle=element_text(color=pal["text_secondary"], ha="left"),
-        legend_position="none",                                       # rule 2
-        figure_size=(9, 6),                                           # rule 7
-    )
-```
-
-plotnine also ships `theme_tufte()`, which removes the grid and the frame. The theme above does the same and adds the skill's palette and type sizes.
-
-### Range-frame axes (rule 4)
-
-```python
-import numpy as np
-
-
-def range_frame(x, y, color=TUFTE["axis"]):
-    return [
-        annotate("segment", x=min(x), xend=max(x), y=-np.inf, yend=-np.inf, color=color, size=0.5),
-        annotate("segment", x=-np.inf, xend=-np.inf, y=min(y), yend=max(y), color=color, size=0.5),
-    ]
-```
-
-Add the returned list to a plot with `+`, as with any list of layers.
-
-### Accessibility (rule 16)
-
-plotnine writes static images. Put alt text that states the finding wherever the image is embedded, and pair color with `linetype` or `shape`.
-
-### Complete example: annotated time series
-
-```python
-import pandas as pd
-
-df = pd.DataFrame({
-    "month": range(1, 13),
-    "revenue": [42, 48, 51, 49, 56, 62, 58, 65, 71, 68, 75, 82],
-    "target": [40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62],
-})
-last = df.iloc[-1]
-months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-
-p = (
-    ggplot(df, aes("month"))
-    + geom_line(aes(y="target"), color="#8c8c8c", size=0.5, linetype="dashed")
-    + geom_line(aes(y="revenue"), color=TUFTE["highlight"], size=1)
-    + annotate("text", x=last.month + 0.25, y=last.revenue, label="Revenue",
-               ha="left", color=TUFTE["highlight"], family="serif", size=12)
-    + annotate("text", x=last.month + 0.25, y=last.target, label="Target",
-               ha="left", color=TUFTE["text_tertiary"], family="serif", size=12)
-    + range_frame(df["month"], pd.concat([df["revenue"], df["target"]]))
-    + scale_x_continuous(breaks=list(range(1, 13)), labels=months)
-    + labs(
-        title="Revenue Exceeded Target Every Month, Accelerating in H2",
-        subtitle="Monthly revenue vs. target, 2025",
-        x="", y="Revenue ($k)",
-    )
-    + theme_tufte_skill()
-)
-p.save("revenue.png", dpi=150)
-```
-
-### Complete example: horizontal bar chart
-
-```python
-products = pd.DataFrame({
-    "product": ["Product A", "Product B", "Product C", "Product D", "Product E"],
-    "revenue": [42, 38, 27, 19, 12],
-})
-products["label"] = "$" + products["revenue"].astype(str) + "k"
-
-p = (
-    ggplot(products, aes("reorder(product, revenue)", "revenue"))
-    + geom_col(fill=TUFTE["bar"], width=0.6)
-    + geom_text(aes(label="label"), ha="left", nudge_y=0.8,
-                color=TUFTE["text_secondary"], family="serif", size=12)
-    + scale_y_continuous(expand=(0, 0, 0.1, 0))   # bars start at zero (graphical integrity 1)
-    + coord_flip()
-    + labs(title="Products A and B Bring In 58% of Revenue",
-           subtitle="Revenue by product, $k", x="", y="")
-    + theme_tufte_skill()
-    + theme(axis_text_x=element_blank(), axis_ticks=element_blank())
+theme_science = theme_classic(base_size=7, base_family="Helvetica") + theme(
+    text=element_text(color="black"),
+    axis_text=element_text(color="black", size=6),
+    axis_title_y=element_text(rotation=0, va="center"),   # horizontal label (rule 2)
+    legend_position="none",                               # label directly (rule 5)
+    plot_title=element_blank(),                           # the caption carries it (rule 15)
+    strip_background=element_blank(),
 )
 ```
 
-With `coord_flip()`, the value axis is still `y`, so the nudge and the expansion apply to `y`.
+### Individual observations with 95% confidence intervals
 
-### Small multiples
+```python
+from scipy import stats
 
-As in ggplot2, `facet_wrap("region", nrow=1)` keeps one scale for every panel unless you pass `scales="free_y"`; keep it fixed when the panels are compared.
+summ = (df.groupby("group")["response"]
+          .agg(["mean", "std", "count"]).reset_index())
+summ["half"] = stats.t.ppf(0.975, summ["count"] - 1) * summ["std"] / summ["count"] ** 0.5
+summ["lo"], summ["hi"] = summ["mean"] - summ["half"], summ["mean"] + summ["half"]
+
+p = (ggplot(df, aes("group", "response"))
+     + geom_jitter(aes(color="group == 'Drug B'"), width=0.12, height=0, size=0.8)
+     + geom_pointrange(summ, aes(y="mean", ymin="lo", ymax="hi"),
+                       position=position_nudge(x=0.25), size=0.3)
+     + scale_color_manual(values={False: GRAY, True: HIGHLIGHT})
+     + labs(x="", y="Response (a.u.)")
+     + theme_science)
+```
+
+### Log axis, facets and export
+
+```python
+p = p + scale_x_log10(breaks=[0.01, 0.1, 1, 10, 100],
+                      labels=["0.01", "0.1", "1", "10", "100"])   # values, not logs (rule 12)
+# facets keep one scale by default (rule 17): + facet_wrap("region", nrow=1)
+
+p.save("figure1.pdf", width=89, height=60, units="mm")   # final width (rule 1)
+```
+
+For a multi-panel figure, check whether your plotnine version can compose plots; otherwise draw each panel at its final size and assemble them, or add the panel letters with matplotlib after `fig = p.draw()`.

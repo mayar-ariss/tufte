@@ -1,141 +1,85 @@
 # Anti-Patterns: Detection and Fixes
 
+Use this file when reviewing figure code or a finished figure for a scientific article. Rule numbers refer to `SKILL.md`; sources are named there.
+
 ## Quick reference
 
-| Anti-pattern | Why it fails | Fix | Source |
+| Anti-pattern | Why it fails | Fix | Rule |
 |---|---|---|---|
-| **Pie chart** | Low data density, and the numbers are not ordered along a visual dimension (Tufte, VDQI ch. 9). | Horizontal bar chart sorted by value descending, or a table. | Tufte, VDQI ch. 9 |
-| **3D effects** | Perspective distorts relative sizes. Back bars appear smaller than front bars of equal value. | Remove all 3D. Flat 2D only. | Tufte, integrity principle 5, VDQI ch. 2 |
-| **Dual y-axes** | Implies correlation between two series that may not exist. Scale manipulation can make any two lines appear correlated. | Two stacked charts sharing the same x-axis (small multiples). | Convention |
-| **Legend box** | "Obscure codings require going back and forth between legend and graphic" (Tufte's unfriendly graphic). | Direct labels at the endpoint or on the data element itself. Keep a key only for an encoding that cannot be labeled in place (a color scale for quantity), beside the data and without a frame. | Tufte, VDQI ch. 9 (p. 183); his own keyed cancer maps, VDQI pp. 16–20 |
-| **Heavy gridlines** | Compete with data for visual attention. Create a "cage" that imprisons the data. | Remove entirely, or horizontal-only at opacity 0.08–0.12. | Tufte, VDQI ch. 5 |
-| **Rainbow palette** | No natural ordering. Creates false category boundaries. Inaccessible to 8% of males (colorblind). | Gray default + single accent, or 4-color muted palette. | Convention |
-| **Gauge/speedometer** | Uses enormous screen area for a single number. No trend, no context, no comparison. | Single large number + sparkline + comparison text. | Convention |
-| **Zebra-striped table** | Alternating row fills are non-data ink. | Whitespace + thin horizontal rules every 3–5 rows. | Convention |
-| **Gradient fills** | Add no information. Distract from data values. Make it harder to read precise heights. | Solid flat color (muted gray or accent). | Convention |
-| **Rotated axis labels** | 45° or 90° text is hard to read. Forces head-tilting. | Horizontal bar chart (flip axes) so words run left to right and stay spelled out. | Tufte, VDQI ch. 9 (p. 183) |
-| **Truncated bar or area** | A bar's length or an area's size is proportional to its value only from zero; cutting it off raises the lie factor (Tufte, VDQI ch. 2). | Start bars and areas at zero. For lines in a time series, Tufte advises a baseline that shows the data rather than forcing zero. | Convention, from integrity principle 1 |
-| **Decorative borders** | A box around the chart is non-data-ink. Adds zero information. | Remove entirely. Let whitespace define the chart boundary. | Tufte, non-data-ink, VDQI ch. 4 |
-| **Area chart with high opacity** | Filled areas at 50%+ opacity obscure overlapping series and add visual weight that distorts perception. | Use lines only, or area with opacity 0.03–0.08. | Convention |
-| **Exploded pie slices** | Pulling slices apart makes comparison even harder than standard pie. | Don't. Use a bar chart. | Tufte, VDQI ch. 9 |
-| **Data point markers on every point** | Large circles on 50+ data points create a confetti effect that obscures the trend. | `dot={false}` or markers only at notable points (min, max, endpoint). | Convention |
-| **Thick axis lines** | Heavy 2-3px axis lines draw attention away from the data. The 1+1=3 effect creates phantom visual weight. | 0.5–1px axis lines, or remove entirely if ticks provide orientation. | Tufte, 1+1=3, EI ch. 3 |
-| **Hover-only information** | Touch and keyboard users can never access it. Violates WCAG. | Tap/click/focus fallback for all hover content. | Extension |
-| **Missing text alternative** | Screen readers announce nothing. The chart is invisible to blind users. | Add `aria-label` with key finding + data summary, or companion data table. | Extension |
-| **Color as sole differentiator** | 8% of males have color vision deficiency. Series become indistinguishable. | Add shape, dash pattern, or direct label as second channel. | Extension; Tufte on color-deficient readers, VDQI p. 183 |
-| **Gratuitous entrance animation** | Chart "building" on load delays comprehension and is chartjunk in motion. | Remove, or gate behind `prefers-reduced-motion` check. | Extension |
-| **Fixed pixel width** | Chart overflows or becomes unreadable on mobile. | Use percentage/viewBox width or breakpoint-based layout. | Extension |
-| **Hatching or pattern fills** | Dense patterns vibrate (moiré) and force readers back and forth to a legend. | Direct labels or value labels; gray steps if a fill must vary. | Tufte, chartjunk, VDQI ch. 5 |
-| **All-caps labels** | Tufte lists all-capitals type among the marks of an unfriendly graphic. | Upper-and-lower case type, serif by default (rule 10). | Tufte, VDQI ch. 9 (p. 183) |
-| **Alphabetical order** | Hides the ranking the reader came for. | Order by data value or by content. | Tufte, VDQI ch. 9 (p. 178) |
-| **No source line** | Readers can't check the evidence. | State source, units and author under the chart. | Tufte, documentation, BE ch. 5 |
+| **Bar of means with error bars** for continuous data ("dynamite plot") | Many different distributions give the same bar; the data are hidden | Every observation as a dot, with mean and 95% CI beside it | 9 |
+| **Error bars not defined** | SD, SEM and CI bars of the same data differ in length and meaning | State in the caption what the bars show, *n* and what it counts | 10 |
+| **Statistics on *n* = 2 or 3** | Error bars and p-values on so few points mislead | Plot the points | 10 |
+| **Technical replicates as *n*** | Inflates certainty | Error bars across independent experiments only | 10 |
+| **Asterisks with no definition** | The reader cannot tell the test or the threshold | Define each mark in the caption; give exact p-values and effect sizes | 11 |
+| **Rainbow, jet or turbo color map** | Uneven lightness invents boundaries; unreadable for many readers | viridis, cividis or batlow; vik for diverging data | 8 |
+| **Red against green** as the only contrast | Indistinguishable for the most common color-vision deficiencies | Okabe–Ito colors, plus position, shape or a label | 8 |
+| **Legend box** | Shuttling between key and data | Direct labels; a key only for a color scale, unframed | 5 |
+| **Gridlines, box, top and right spines** | Non-data-ink | Remove | 3, 6 |
+| **Title inside the figure** | Duplicates the caption, wastes the column | Move it to the caption's first sentence | 15 |
+| **All-caps or Title Case labels** | Harder to read; not the journal's style | Sentence case | 2 |
+| **Rotated y-axis label** where space allows a horizontal one | Type should run horizontally | Label above the axis | 2 |
+| **Text below 5 pt, or different sizes across figures** | Illegible after reduction; inconsistent | One scale, 5–7 pt (Nature) | 2 |
+| **Figure drawn at screen size and scaled down** | Text and lines shrink below the journal's minimums | Draw at the final width in mm | 1 |
+| **Rasterized text or unembedded fonts** | Journals ask for editable vector text | Vector PDF or EPS, TrueType fonts embedded | 18 |
+| **Bars on a log axis, or a truncated bar axis** | A bar's length must be proportional to its value | Dots or lines on log axes; bars from zero | 7, 12 |
+| **Log axis labeled with logarithms** | Readers cannot read back values | Label ticks with values | 12 |
+| **Dual y-axes** | Implies a relation set by the choice of scales | Two panels on a shared x-axis | 7 |
+| **Pie chart, 3D** | Low data density; distorted sizes | Sorted dot or bar plot; flat 2D | 7 |
+| **Panels comparing one quantity on different scales** | Defeats comparison | Shared axis and range | 17 |
+| **Reference line or target not in the data** | Invents context | Remove, or use a value the user supplies | 14 |
+| **Different colors for the same condition** across figures | Design variation read as data variation | One color per condition throughout the paper | 8 |
+| **Hatching or pattern fills** | Moiré vibration (chartjunk) | Lightness steps or direct labels | 8 |
 
-## Per-library detection patterns
-
-### Recharts
-
-```
-PATTERN                              FIX
-<Legend />                          → Remove entirely; add direct labels
-<CartesianGrid />                   → <CartesianGrid stroke="none" /> or remove
-<Pie> or <PieChart>                 → <BarChart layout="vertical">
-fill="url(#gradient...)"           → fill="#666" (solid gray)
-<YAxis yAxisId="right"...>          → Two separate <LineChart> in a flex column
-stroke="#..." (bright/loud color)   → stroke="#666" (gray) unless it's the highlight series
-<Area fillOpacity={0.3+}            → <Line> or <Area fillOpacity={0.05}>
-<div role="img"> around a chart      → <figure aria-label="…"> (keeps Recharts 3's keyboard layer)
-```
-
-### ECharts
-
-```
-PATTERN                              FIX
-type: 'pie'                         → type: 'bar' with horizontal orientation
-splitLine: { show: true }           → splitLine: { show: false }
-legend: { show: true }              → legend: { show: false } + label on series
-grid: { borderWidth: N }            → grid: { show: false }
-series.areaStyle: { opacity: 0.3+ } → Remove or opacity: 0.05
-visualMap with rainbow colors        → Muted single-hue sequential palette
-```
-
-### Chart.js
-
-```
-PATTERN                              FIX
-type: 'pie' / 'doughnut'           → type: 'bar' with indexAxis: 'y'
-grid: { display: true }            → grid: { display: false }
-border: { display: true } on scale  → border: { display: false }
-plugins.legend.display: true        → display: false + chartjs-plugin-datalabels
-backgroundColor: 'rgba(R,G,B,0.5)' → 'rgba(102,102,102,0.8)' (gray)
-```
+## Per-library detection
 
 ### matplotlib
 
 ```
-PATTERN                              FIX
-plt.pie(...)                        → plt.barh(...) sorted by value
-ax.legend()                         → ax.annotate() at each line endpoint
-ax.grid(True)                       → ax.grid(False) or ax.grid(axis='y', alpha=0.1)
-fig.patch.set_facecolor('white')    → fig.patch.set_facecolor('#fffff8')
-plt.xticks(rotation=45)            → Use plt.barh() so labels stay horizontal and spelled out
-ax.set_frame_on(True)              → Remove top/right spines + range-frame
+ax.bar(...) with yerr= on continuous data → strip_with_ci() from rules/matplotlib.md
+ax.errorbar(..., capsize=N)              → capsize=0, elinewidth=0.5
+ax.legend()                              → direct_label() at each series
+ax.grid(True)                            → remove
+ax.set_title("...")                      → move to the caption
+cmap="jet" / "rainbow" / "turbo"         → cmap="viridis" or "cividis"
+figsize=(10, 6) or other screen sizes    → figsize=(89 * MM, h * MM)
+savefig(..., bbox_inches="tight")        → set margins; keep the column width
+savefig("fig.png", dpi=150)              → savefig("fig.pdf") with pdf.fonttype 42
+font.family default (DejaVu Sans)        → Helvetica, Arial fallback
+ax.set_yscale("log") with bars           → dots or lines
 ```
 
-### Plotly
+### seaborn
 
 ```
-PATTERN                              FIX
-go.Pie(...)                         → go.Bar(orientation='h', ...)
-fig.update_layout(showlegend=True)  → showlegend=False + add annotations at endpoints
-xaxis=dict(showgrid=True)          → showgrid=False
-plot_bgcolor='white'               → plot_bgcolor='#fffff8'
-template='plotly'                   → Use custom Tufte template
+sns.barplot(...) on continuous data      → sns.stripplot + sns.pointplot(errorbar=("ci", 95))
+sns.set_theme() / sns.set_context("talk")→ sns.set_theme(style="ticks", rc=SCIENCE_RC)
+palette="husl" / "Set1" / "rainbow"      → gray plus Okabe–Ito
+legend from hue=                         → ax.get_legend().remove(); label directly
+errorbar="sd" without saying so          → state SD in the caption, or use a CI
 ```
 
-### ggplot2 / plotnine
+### ggplot2
 
 ```
-PATTERN                              FIX
-coord_polar() on a bar               → Horizontal geom_col(), sorted with reorder()
-theme_gray() / default theme         → theme_tufte_skill() (rules/ggplot2-plotnine.md)
-legend shown for colour/linetype     → legend.position = "none" + annotate("text") at line ends
-facet_wrap(..., scales = "free_y")   → Default fixed scales when panels are compared
-geom_col() with expand on the left   → expansion(mult = c(0, 0.1)) so bars start at zero
+geom_bar(stat = "summary") + geom_errorbar → geom_jitter + geom_pointrange with CI
+theme_grey() / default theme             → theme_science()
+legend.position = "right"                → "none" + geom_text direct labels
+ggtitle("...")                           → caption
+scale_*_gradientn(colours = rainbow(n))  → scale_*_viridis_c(option = "cividis") or scico
+ggsave(..., device = pdf) with Helvetica → device = cairo_pdf
+ggsave(width = 7, height = 5)            → width = 89, units = "mm"
+scale_x_log10() with default labels      → breaks and labels given as values
 ```
 
-### Vega-Lite / Altair
+### plotnine
 
 ```
-PATTERN                              FIX
-mark: "arc" / mark_arc()             → Horizontal bar, sort: "-x"
-config.axis.grid unset (defaults on) → axis.grid: false
-legend shown for color               → legend.disable: true + text layer at the last point
-view stroke unset (box drawn)        → view.stroke: null
-line chart with default zero: true   → scale.zero: false for time series
-resolve_scale(y="independent")       → Shared scales across compared facets
+geom_col / stat_summary bars on continuous data → geom_jitter + geom_pointrange
+theme_gray() default                     → theme_science
+legend_position="right"                  → "none" + geom_text direct labels
+p.save(width=6.4, height=4.8)            → width=89, units="mm"
 ```
 
-### Observable Plot
+## The "can I remove it?" test
 
-```
-PATTERN                              FIX
-color: { legend: true }              → Plot.text(…, Plot.selectLast(…)) direct labels
-grid: true                           → Remove
-Plot.frame() (all four sides)        → Plot.frame({ anchor: 'left' }) / ({ anchor: 'bottom' }) range frame
-y: { zero: true } on a line chart    → Leave zero off for time series
-one Plot.plot() per compared panel   → One plot with fx/fy so scales are shared
-```
-
-## The "Can I remove it?" test
-
-For each non-data element, ask: "If I delete this, does the chart lose information?"
-
-- **Gridlines**: Usually no. The data points themselves show position.
-- **Legend**: No, if you label directly. A scale for a color or shading that stands for a quantity stays, unframed, beside the data (rule 2).
-- **Axis title**: Sometimes no — if the chart title already specifies the axis ("Monthly Revenue in USD").
-- **Top/right borders**: Always no.
-- **Background color other than off-white**: Always no (decoration).
-- **Tick marks**: Maybe — keep if needed for reading precision, remove if axis line is sufficient.
-- **Tooltip border/background**: Always no.
-
-If the answer is "no," remove it. If the answer is "maybe," try removing it and see if the chart still communicates.
+For each element of the figure, ask: if I remove this, does the reader lose information about the data? If not, remove it (Tufte, VDQI ch. 4: erase non-data-ink, within reason). Then ask the opposite question about the caption: could a reader with only the figure and its caption tell what was measured, how, on how many samples, and what it shows? If not, add it (rule 15).

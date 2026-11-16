@@ -1,175 +1,108 @@
-# Typography and Color Reference
+# Typography and Color
 
-The values in this file (fonts, sizes, hex colors) are this skill's defaults (convention), not Tufte's. Tufte is cited where a rule is his.
+The values in this file (point sizes, hex colors, opacities) are this skill's defaults (convention) unless a line names another source. Journal requirements are quoted in `rules/journals.md`; full references are in `rules/references.md`.
 
-## Font hierarchy
+## Typeface: Helvetica
 
-| Element | Font family | Size | Weight | Color (light) | Color (dark) |
-|---------|------------|------|--------|---------------|--------------|
-| Chart title | ET Book, Palatino, Georgia, serif | 18–22px | 400 | #111 | #ddd |
-| Subtitle / caption | ET Book, Palatino, Georgia, serif | 14–16px | 400 | #666 | #999 |
-| Axis tick label | ET Book, Palatino, Georgia, serif | 11–12px | 400 | #767676 | #808080 |
-| Data label (on chart) | ET Book, Palatino, Georgia, serif | 12–14px | 400 | #333 | #bbb |
-| Annotation | ET Book, Palatino, Georgia, serif | 12–13px | 400 italic | #333 | #bbb |
-| Tooltip text | ET Book, Palatino, Georgia, serif | 12–13px | 400 | #333 | #ccc |
-| Source citation | ET Book, Palatino, Georgia, serif | 10–11px | 400 | #767676 | #808080 |
+*Source: Journal. Science: "Use a sans-serif font whenever possible (Helvetica is preferred)". Nature: "a sans-serif typeface, preferably Helvetica or Arial, the same font throughout all figures". PLOS: "Arial, Times, or Symbol font only".*
 
-**Key rule**: Data marks and labels should always be visually equal to or larger than axis tick labels. If axis ticks are 12px, data labels must be >= 12px. The data is the priority.
+| Use | Font stack |
+|---|---|
+| Default | `Helvetica, Arial, "TeX Gyre Heros", "Nimbus Sans", "Liberation Sans", sans-serif` |
+| PLOS journals | `Arial, "Liberation Sans", sans-serif` |
+| Greek and math symbols | the same face where it has them; otherwise Symbol, if the journal lists it |
 
-## Font loading
+- Arial has the same character widths as Helvetica, so a figure laid out in one does not shift in the other.
+- TeX Gyre Heros, Nimbus Sans and Liberation Sans are free metric clones. They look the same but are not Helvetica or Arial by name; check that the journal accepts them before a final submission.
+- On macOS, Helvetica is installed. On Windows, use Arial. On Linux, install a clone or Arial.
 
-### CSS — ET Book (Tufte's custom Bembo variant)
+**On the departure from Tufte.** The friendly data graphic in VDQI sets type "upper-and-lower case, with serifs" (Tufte, VDQI ch. 9, p. 183). Journals require sans serif type in figures, and Tufte's own practice already uses a sans serif, Gill Sans, for tables and dense numeric displays: his books set some tables in it, and he wrote that he finds Gill Sans "very good for tables" (edwardtufte.com, "Tufte book fonts", 2003). So Helvetica departs from his preferred typeface, not from what he asks of type: clear, precise and modest, in upper-and-lower case, words spelled out, running horizontally.
 
-```css
-@font-face {
-  font-family: "ET Book";
-  src: url("https://cdn.jsdelivr.net/gh/edwardtufte/tufte-css@gh-pages/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+## Sizes
 
-@font-face {
-  font-family: "ET Book";
-  src: url("https://cdn.jsdelivr.net/gh/edwardtufte/tufte-css@gh-pages/et-book/et-book-bold-line-figures/et-book-bold-line-figures.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
+| Element | Nature (default) | Science | PLOS |
+|---|---|---|---|
+| Axis labels, annotations, direct labels | 7 pt | 7 pt | 8 pt |
+| Tick labels | 6 pt | 6–7 pt | 8 pt |
+| Smallest text | 5 pt | 5 pt | 8 pt |
+| Panel letters | 8 pt bold, lowercase | 10 pt bold, capitals | 10 pt bold |
 
-@font-face {
-  font-family: "ET Book";
-  src: url("https://cdn.jsdelivr.net/gh/edwardtufte/tufte-css@gh-pages/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff") format("woff");
-  font-weight: normal;
-  font-style: italic;
-  font-display: swap;
-}
-```
+*Source: Journal (Nature: text from 5 to 7 pt, panel letters "8 pt bold, upright (not italic) a, b, c"; Science: about 7 pt after reduction, never below 5 pt, part labels "10 pt and bold"; PLOS: 8–12 pt).*
 
-### CSS — Google Fonts fallback (when ET Book is unavailable)
+- One size scale across every figure in the paper (Journal, Nature).
+- Avoid wide variation in size within a figure (Journal, Science).
+- Regular weight for everything except panel letters.
 
-```html
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-```
+## Case, symbols and units
 
-EB Garamond is the closest freely available web font to Bembo/ET Book.
+*Source: Tufte, VDQI ch. 9, p. 183 (case, spelling, orientation); Journal (Science: capitalize only the first letter of a label; units in parentheses; powers of 10).*
 
-### Python (matplotlib)
+- Sentence case: "Response (fraction of maximum)", never "RESPONSE" or "Response (Fraction Of Maximum)".
+- Units in parentheses after the quantity: "Concentration (µM)", "Time (h)".
+- Very large or small numbers as powers of 10: "Counts (×10³)" or 10⁻³ on the ticks.
+- The true minus sign (−, U+2212), the multiplication sign (×) and µ. In matplotlib, `axes.unicode_minus: True` sets the minus sign.
+- Italic for variables, upright for units and labels (convention, following SI style).
 
-```python
-plt.rcParams["font.family"] = "serif"
-plt.rcParams["font.serif"] = ["Palatino", "Palatino Linotype", "Georgia", "DejaVu Serif"]
-plt.rcParams["font.size"] = 12
-```
+## Colors
 
-### React / CSS-in-JS
+### Page, text and axes
 
-```typescript
-const TUFTE_FONT = '"ET Book", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif';
-```
+| Role | Hex | Contrast on white |
+|---|---|---|
+| Page | `#ffffff` | — |
+| Text, axes, ticks | `#000000` | 21:1 |
+| Default data series and context | `#666666` | 5.7:1 |
+| Light context (reference curves, rug marks) | `#8c8c8c` | 3.4:1 (marks only, never text) |
+| Gridlines, if any | `#dddddd` | — |
 
-## Old-style (hanging) figures
+*Source: convention; Journal (Science: "Avoid using colored type").* Text and axes in black: small gray text prints as a halftone screen and loses sharpness.
 
-For tabular data with numbers, use old-style figures. These have descenders (3, 4, 5, 7, 9 hang below the baseline) which makes columns of numbers easier to scan vertically.
+### Categorical palette: Okabe–Ito
 
-```css
-.data-table td {
-  font-feature-settings: "onum" 1;
-  font-variant-numeric: oldstyle-nums;
-}
-```
+*Source: Literature (Okabe and Ito 2008; Wong 2011).* The Okabe–Ito palette was designed to stay distinct for readers with the common forms of color-vision deficiency. On white, four of its colors clear 3:1 for lines, dots and text:
 
-In matplotlib: OpenType features such as `onum` can't be switched on. Georgia draws old-style figures by default, so put it first in `font.serif` when you want hanging figures; Palatino draws lining figures by default.
+| Name | Hex | Contrast on white | Use |
+|---|---|---|---|
+| Blue | `#0072B2` | 5.2:1 | Highlight; its label may share its color |
+| Vermillion | `#D55E00` | 3.9:1 | Second category; label in black |
+| Bluish green | `#009E73` | 3.4:1 | Third category; label in black |
+| Reddish purple | `#CC79A7` | 3.1:1 | Fourth category; label in black |
+| Black | `#000000` | 21:1 | Reference or fifth category |
+| Orange | `#E69F00` | 2.3:1 | Filled areas with a dark outline only |
+| Sky blue | `#56B4E9` | 2.3:1 | Filled areas with a dark outline only |
+| Yellow | `#F0E442` | 1.3:1 | Avoid |
 
-## Color palettes
+- **Gray first.** Draw everything in gray (`#666666`) and give color only to what the reader must find (Tufte, EI ch. 5).
+- **At most four colors** in one figure; more categories go to small multiples (convention; Tufte, EI ch. 4).
+- **Same condition, same color** in every figure of the paper (Tufte, integrity principle 3).
+- **Never red against green** for a contrast that matters (Journal, Science; Wong 2011).
 
-### Light mode
+### Color maps for quantities
 
-| Role | Hex | CSS variable suggestion |
-|------|-----|------------------------|
-| Page/chart background | `#fffff8` | `--bg` |
-| Text primary (titles, data labels) | `#111111` | `--text-1` |
-| Text secondary (subtitles, annotations) | `#666666` | `--text-2` |
-| Text tertiary (axis ticks, source) | `#767676` | `--text-3` |
-| Axis line (bottom/left only) | `#cccccc` | `--axis` |
-| Grid line (if absolutely needed) | `#eeeeee` | `--grid` |
-| Default data series | `#666666` | `--series-default` |
-| Highlight / accent | `#e41a1c` | `--highlight` |
+*Source: Literature (Crameri et al. 2020); Tufte, EI ch. 5 (color as quantity: light to dark).*
 
-### Dark mode
+| Kind | Use | Maps |
+|---|---|---|
+| Sequential | magnitude from low to high | viridis, cividis, batlow |
+| Diverging | departure from a meaningful midpoint (zero, a control) | vik, roma, or ColorBrewer RdBu centered on the midpoint |
+| Cyclic | angle, phase, time of day | romaO, twilight |
 
-| Role | Hex | CSS variable suggestion |
-|------|-----|------------------------|
-| Page/chart background | `#151515` | `--bg` |
-| Text primary | `#dddddd` | `--text-1` |
-| Text secondary | `#999999` | `--text-2` |
-| Text tertiary | `#808080` | `--text-3` |
-| Axis line | `#444444` | `--axis` |
-| Grid line | `#333333` | `--grid` |
-| Default data series | `#999999` | `--series-default` |
-| Highlight / accent | `#fc8d62` | `--highlight` |
+- Never rainbow, jet, turbo or any spectral map for a quantity: uneven steps in lightness invent boundaries and hide others, and red–green maps are unreadable for many readers (Crameri et al. 2020).
+- Crameri's maps (batlow, vik, roma, romaO) are in the `cmcrameri` package for Python and the `scico` package for R.
+- Put the colorbar beside the data, unframed, with units.
 
-### Categorical palette (maximum 4 colors)
+### Grayscale and color-vision checks
 
-Use only when the chart must distinguish multiple categories and direct labeling is not sufficient on its own.
+- The figure must still read when printed in grayscale; if two series merge, separate them by lightness, marker shape or direct labels, not hatching (hatching is chartjunk: Tufte, VDQI ch. 5).
+- Check the figure with a color-vision simulator before submission (Literature, Wong 2011).
+- RGB color mode, unless the journal asks for CMYK (Journal, Nature).
 
-| Name | Hex | Swatch |
-|------|-----|--------|
-| Steel blue | `#4e79a7` | Muted blue |
-| Tangerine | `#db730d` | Warm orange |
-| Coral | `#e15759` | Muted red |
-| Sage | `#539e73` | Muted green |
+## Checking contrast
 
-Each color reaches 3:1 against `#fffff8` (rule 16). At that darkness the four colors sit in a narrow lightness band and separate less for color-blind readers; rule 16 already requires pairing color with labels, shapes or dash patterns.
-
-### Categorical palette, dark mode
-
-Lighter, slightly desaturated counterparts for `#151515` (rule 19):
-
-| Name | Hex |
-|------|-----|
-| Steel blue | `#6a9fd8` |
-| Tangerine | `#f2a860` |
-| Coral | `#e87a7c` |
-| Sage | `#8accc7` |
-
-If more than 4 categories exist, use small multiples or group lesser categories into "Other."
-
-### Sequential palette (single hue)
-
-For ordered magnitude (low to high):
-```
-#f7fbff → #deebf7 → #c6dbef → #9ecae1 → #6baed6 → #3182bd → #08519c
-```
-
-### Diverging palette (below/above center)
-
-For deviation from a midpoint (e.g., profit/loss, above/below average):
-```
-Negative: #e15759 → #f7c4c4 → #f0f0f0 (center) → #c0ddd6 → #76b7b2 :Positive
-```
-
-The light steps of the sequential and diverging palettes fall below 3:1 against the background. The contrast check below does not cover them.
-
-### Checking contrast
-
-Rule 16 (an extension, not Tufte) asks for 4.5:1 for text and 3:1 for data marks. The check covers the text, series, highlight and categorical colors in the tables above; axis, grid and palette-fill colors are not checked. After changing any color in this file, run:
+The minimums are an extension (WCAG): 4.5:1 for text and 3:1 for data marks against the page. After changing any color in the tables above, run:
 
 ```bash
 python3 scripts/check_contrast.py
 ```
 
-It reads the tables above and exits non-zero if any text or data color misses its minimum.
-
-## Color rules
-
-Tufte names four uses of color in information design: to label (color as noun), to measure (color as quantity), to represent or imitate reality, and to enliven or decorate. His first principle for bringing color to information is "Above all, do no harm" (EI ch. 5). Give every color one of these jobs, and name which.
-
-1. **Gray is your primary color.** Default all data to gray. Only add color when it carries meaning. *(Tufte — muted fields, after Imhof, EI ch. 5)*
-2. **Maximum 4 categorical colors.** *(Convention)*
-3. **Ghosting**: De-emphasize secondary data by setting opacity to 0.2–0.3. The primary series stays at full opacity. *(Convention)*
-4. **No rainbow/spectral palettes for quantities.** Hues have no natural order, so a spectrum creates false boundaries; use steps of one hue's lightness, which read in order. *(Convention; Tufte discusses color as quantity in EI ch. 5)*
-5. **Smallest effective difference.** If you need to distinguish two things, make the difference as small as will still read clearly. Dark gray vs. medium gray, not red vs. blue. *(Tufte — VE ch. 4)*
-6. **Grayscale test.** The chart should be fully readable when printed in grayscale. If two series become indistinguishable, add direct labels (which you should have anyway), not hatching. *(Convention; hatching is chartjunk, Tufte, VDQI ch. 5)*
-7. **No loud colors over large areas.** Use muted tones for large areas; keep strong color for small areas of emphasis. *(Tufte — after Imhof, EI ch. 5)*
-8. **Readable by color-deficient viewers.** Choose colors that the 5–10% of viewers with color-vision deficiency can still tell apart; Tufte notes that most can distinguish blue from other colors. *(Tufte — friendly data graphic, VDQI ch. 9, p. 183)*
+It reads the tables in this file and exits non-zero if any text or data color misses its minimum. Rows marked "never text", "filled areas" or "Avoid" are reported but not failed.
