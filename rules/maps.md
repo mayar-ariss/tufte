@@ -4,7 +4,7 @@ Load this file for any display drawn on geographic space: shaded-area maps (chor
 
 Maps run through all four of Tufte's books. *The Visual Display of Quantitative Information* (VDQI) opens its history of data graphics with data maps and closes it with Minard's map of Napoleon's campaign. *Envisioning Information* (EI) draws most of its principles from maps: the Tokyo mesh maps, Nolli's Rome, the Swiss topographic sheets, the GEBCO ocean chart. *Visual Explanations* (VE), ch. 2, is a statistical critique of John Snow's cholera map. *Beautiful Evidence* (BE), ch. 5, derives the fundamental principles of analytical design from Minard. Every rule below is Tufte's and names its source. Where Tufte gives no rule, this file says so instead of supplying one.
 
-**What carries over from SKILL.md:** graphical integrity (VDQI ch. 2), data-ink and chartjunk (VDQI ch. 4–5), the analytical-design principles (BE ch. 5), direct labels (rule 5), muted color with strong color only in small areas (rule 8; that rule was itself taken from Tufte's writing on maps), small multiples, and the smallest effective difference (VE ch. 4).
+**What carries over from SKILL.md:** graphical integrity (VDQI ch. 2), data-ink and chartjunk (VDQI ch. 4–5), the analytical-design principles (BE ch. 5), direct labels (rule 7), causality (rule 4: the suspected cause on the map with the effect), layering (rule 11), muted color with strong color only in small areas (rule 12; that rule was itself taken from Tufte's writing on maps), small multiples, and the smallest effective difference (VE ch. 4).
 
 **What does not apply:** the rules about axes, baselines, range frames and aspect ratio. A map's frame is set by its projection and extent, not by a data scale.
 
@@ -166,7 +166,7 @@ Small multiples let the eye compare; a constant design keeps attention on change
 
 Minard's sheet has a title naming the method and the subject, the author and his credential, a text block explaining the color code and the three scales, and five acknowledged sources (BE pp. 126, 133). Of Minard's Hannibal map Tufte says the north arrow "should appear on every map" (p. 134). Excellent maps, "the heart and soul of good practices in analytical graphics," routinely integrate words, numbers, line art, grids and measurement scales (p. 131). In BE ch. 1 the map is Tufte's model for all evidence images: labels belong on the image, external grids give it scale, and data are more credible in context (p. 21). Snow annotated his map and table with notes on possible errors and gaps in the data, and that annotation is part of the map's credibility (VE p. 34). Tufte's redrawn cancer maps separate "in highest decile, statistically significant" from rates not significantly different from the national figure, and his text flags that death-certificate data follow "diagnostic fashions" (VDQI pp. 16–20).
 
-- In a paper, the caption carries the title, method, data sources and date of the data (SKILL.md rule 15). On the map itself: measurement scale, north arrow, units, and labels on the features.
+- In a paper, the caption carries the title, method, data sources and date of the data (SKILL.md rule 22). On the map itself: measurement scale, north arrow, units, and labels on the features.
 - Mark uncertainty and significance in the classes themselves; note known data problems next to the map.
 - Labels on the map, beside the features; no letter codes keyed to a separate list.
 
@@ -198,7 +198,7 @@ counties = gpd.read_file("counties.gpkg")
 states = gpd.read_file("states.gpkg")
 counties["rate"] = counties["deaths"] / counties["population"] * 1e5   # rule 3: a rate, not a count
 
-fig, ax = plt.subplots(figsize=(89 * MM, 60 * MM))                       # SKILL.md rule 1
+fig, ax = plt.subplots(figsize=(89 * MM, 60 * MM))                       # SKILL.md rule 20
 counties.plot(column="rate", cmap="Greys", scheme="quantiles", k=5,     # rule 9: value ramp, dark = more
               edgecolor="#bbbbbb", linewidth=0.2, ax=ax,                # rule 14: thin low-contrast edges
               legend=True, legend_kwds={"frameon": False, "title": "Deaths per 100,000"})

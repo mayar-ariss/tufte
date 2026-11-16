@@ -16,11 +16,11 @@ theme_science <- function(base_size = 7, family = "Helvetica") {
     theme(
       text               = element_text(colour = "black"),
       axis.text          = element_text(colour = "black", size = base_size - 1),
-      axis.line          = element_line(linewidth = 0.25),     # about 0.5 pt (rule 16)
+      axis.line          = element_line(linewidth = 0.25),     # about 0.5 pt (rule 23)
       axis.ticks         = element_line(linewidth = 0.25),
       axis.ticks.length  = unit(1, "mm"),
-      legend.position    = "none",                             # label directly (rule 5)
-      plot.title         = element_blank(),                    # the caption carries it (rule 15)
+      legend.position    = "none",                             # label directly (rule 7)
+      plot.title         = element_blank(),                    # the caption carries it (rule 22)
       plot.subtitle      = element_text(hjust = 0, size = base_size),
       plot.title.position = "panel",
       plot.background    = element_rect(fill = "white", colour = NA),
@@ -38,8 +38,8 @@ OKABE_ITO <- c(blue = "#0072B2", vermillion = "#D55E00",
 
 - A ggplot2 `linewidth` of 1 draws a line about 0.75 mm (about 2.1 pt) wide: 0.25 gives about 0.5 pt (axes) and 0.47 about 1 pt (data lines).
 - Text `size` in geoms is in millimeters: use `size = 7 / .pt` for 7 pt.
-- **Horizontal y-axis label (rule 2):** set `labs(y = NULL, subtitle = "Response (a.u.)")`; with `plot.title.position = "panel"` the subtitle sits above the axis, left-aligned.
-- **Range frame (rule 4):** replace the axis lines with `ggthemes::geom_rangeframe()` and add `theme(axis.line = element_blank())`.
+- **Horizontal y-axis label (rule 13):** set `labs(y = NULL, subtitle = "Response (a.u.)")`; with `plot.title.position = "panel"` the subtitle sits above the axis, left-aligned.
+- **Range frame (rule 10):** replace the axis lines with `ggthemes::geom_rangeframe()` and add `theme(axis.line = element_blank())`.
 
 ### Individual observations with 95% confidence intervals
 
@@ -64,7 +64,7 @@ p <- ggplot(df, aes(group, response)) +
   theme(axis.line = element_blank(), axis.ticks.x = element_blank())
 ```
 
-Caption: what the dots are, *n* and what it counts, and that the bars are 95% confidence intervals of the mean (SKILL.md rules 10, 15).
+Caption: what the dots are, *n* and what it counts, and that the bars are 95% confidence intervals of the mean (SKILL.md rules 16, 22).
 
 ### Lines with direct labels and a log axis
 
@@ -78,7 +78,7 @@ p <- ggplot(curves, aes(dose, response, colour = condition)) +
   geom_text(data = last, aes(label = condition), hjust = 0, nudge_x = 0.1,
             size = 7 / .pt) +
   scale_x_log10(breaks = c(0.01, 0.1, 1, 10, 100),
-                labels = c("0.01", "0.1", "1", "10", "100")) +   # values, not logs (rule 12)
+                labels = c("0.01", "0.1", "1", "10", "100")) +   # values, not logs (rule 18)
   scale_colour_manual(values = c(Control = GRAY, `Drug B` = HIGHLIGHT)) +
   scale_fill_manual(values = c(Control = GRAY, `Drug B` = HIGHLIGHT)) +
   coord_cartesian(clip = "off") +
@@ -88,10 +88,20 @@ p <- ggplot(curves, aes(dose, response, colour = condition)) +
 
 When the curves meet at the end, place each label where its curve stands apart rather than at the last point.
 
+Write the values that matter onto the graphic (SKILL.md rule 6), for example each curve's half-maximal dose:
+
+```r
+ec50 <- tibble(condition = c("Control", "Drug B"), dose = c(2.65, 0.30), response = 0.5)
+
+p + geom_point(data = ec50, shape = 21, fill = "white", size = 1.2, stroke = 0.4) +
+  geom_text(data = ec50, aes(label = paste0("EC50 ", dose, " µM")),
+            hjust = 0, nudge_x = 0.12, size = 6 / .pt, colour = "black")
+```
+
 ### Small multiples and multi-panel figures
 
 ```r
-# One quantity, one scale (rule 17): facet_wrap keeps scales fixed by default
+# One quantity, one scale (rule 5): facet_wrap keeps scales fixed by default
 p <- ggplot(df, aes(month, value)) +
   geom_line(colour = GRAY, linewidth = 0.47) +
   facet_wrap(~ region, nrow = 1) +
@@ -112,7 +122,7 @@ scico::scale_fill_scico(palette = "batlow")      # Crameri's maps (scico package
 scico::scale_fill_scico(palette = "vik", midpoint = 0)  # diverging, centered on zero
 ```
 
-Never `scale_fill_gradientn(colours = rainbow(…))` for a quantity (SKILL.md rule 8).
+Never `scale_fill_gradientn(colours = rainbow(…))` for a quantity (SKILL.md rule 12).
 
 ### Export
 
@@ -141,9 +151,9 @@ GRAY, HIGHLIGHT = "#666666", "#0072B2"
 theme_science = theme_classic(base_size=7, base_family="Helvetica") + theme(
     text=element_text(color="black"),
     axis_text=element_text(color="black", size=6),
-    axis_title_y=element_text(rotation=0, va="center"),   # horizontal label (rule 2)
-    legend_position="none",                               # label directly (rule 5)
-    plot_title=element_blank(),                           # the caption carries it (rule 15)
+    axis_title_y=element_text(rotation=0, va="center"),   # horizontal label (rule 13)
+    legend_position="none",                               # label directly (rule 7)
+    plot_title=element_blank(),                           # the caption carries it (rule 22)
     strip_background=element_blank(),
 )
 ```
@@ -171,10 +181,10 @@ p = (ggplot(df, aes("group", "response"))
 
 ```python
 p = p + scale_x_log10(breaks=[0.01, 0.1, 1, 10, 100],
-                      labels=["0.01", "0.1", "1", "10", "100"])   # values, not logs (rule 12)
-# facets keep one scale by default (rule 17): + facet_wrap("region", nrow=1)
+                      labels=["0.01", "0.1", "1", "10", "100"])   # values, not logs (rule 18)
+# facets keep one scale by default (rule 5): + facet_wrap("region", nrow=1)
 
-p.save("figure1.pdf", width=89, height=60, units="mm")   # final width (rule 1)
+p.save("figure1.pdf", width=89, height=60, units="mm")   # final width (rule 20)
 ```
 
 For a multi-panel figure, check whether your plotnine version can compose plots; otherwise draw each panel at its final size and assemble them, or add the panel letters with matplotlib after `fig = p.draw()`.

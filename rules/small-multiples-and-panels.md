@@ -23,6 +23,8 @@ Tufte describes small multiples as illustrations "of postage-stamp size" that re
 3. **Label each panel once**, with its category, in the panel's top left, at the text size of the figure.
 4. **No panel borders**; whitespace separates panels.
 5. **Order the panels by something meaningful** (time, magnitude, geography), not alphabetically, unless the reader must look them up.
+6. **Design for two readings** (Tufte, EI ch. 2): when a panel summarizes several subjects, draw each subject as a thin light line or small dot under the mean, so the figure reads as a pattern at a glance and as individuals up close. Layer them: individuals lightest, the summary darker, the highlight darkest (SKILL.md rule 11).
+7. **Write the key values in** (SKILL.md rule 6): the ending value of each panel's summary, the change, or *n*, in the panel itself.
 
 In matplotlib, `plt.subplots(..., sharey=True)` keeps one scale; see the example in `rules/matplotlib.md`. In ggplot2 and plotnine, `facet_wrap` keeps scales fixed unless `scales = "free"` is set.
 
@@ -40,7 +42,7 @@ In matplotlib, `plt.subplots(..., sharey=True)` keeps one scale; see the example
 Drop the box. Draw lines from the minimum to the lower quartile and from the upper quartile to the maximum, leave the middle half as a gap, and mark the median with a dot. `quartile_plot()` draws it.
 
 - It shows the five-number summary (minimum, quartiles, median, maximum), not Tukey's whiskers and outliers; say which in the caption.
-- Use it, or a box plot, for at least five observations per group (Literature, Krzywinski and Altman 2014); for fewer, plot the points (SKILL.md rule 9).
+- Use it, or a box plot, for at least five observations per group (Literature, Krzywinski and Altman 2014); for fewer, plot the points (SKILL.md rule 15).
 
 ## Dot-dash plots (rug marks)
 
