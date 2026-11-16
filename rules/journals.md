@@ -1,6 +1,8 @@
 # Journal Requirements
 
-Nature's guidance governs the structure of every figure this skill draws: size, panel layout, which text goes on the figure and which in the legend, type, line weights and file format. It supersedes Tufte and the other journals listed here wherever they differ (`SKILL.md`, Part III). Tufte still governs style.
+Nature's guidance governs the structure of every figure this skill draws: size, panel layout, which text goes on the figure and which in the caption, type, line weights and file format. It supersedes Tufte and the other journals listed here wherever they differ (`SKILL.md`, Part III). Tufte still governs style.
+
+**Terms.** Nature calls the text printed under a figure the "figure legend"; this skill calls it the **caption**. The element inside a figure that explains its symbols or colors is the **key** (what plotting libraries call the legend). Quotes below keep Nature's word.
 
 Requirements quoted from the journals' author guidelines, read on 16 November 2026. Journals revise these pages; when Nature's current guide differs from this file, Nature's guide wins.
 
@@ -25,7 +27,7 @@ Sources: Nature, "Formatting guide" and "Final submission"; Nature Research figu
 | Panel letters | "8 pt bold, upright (not italic) a, b, c" |
 | Line weights | "between 0.25 and 1 pt at the final size" |
 | Main-figure formats | vector `.ai`, `.eps` or `.pdf` with editable layers; fonts embedded (TrueType 2 or 42), not outlined; "Please do not rasterize line art or text"; JPEG, TIFF and PNG not accepted; under 50 MB |
-| Extended Data formats | RGB; JPEG preferred, or TIFF or EPS; at most 300 dpi and 10 MB; sized to fit one page with room for the legend |
+| Extended Data formats | RGB; JPEG preferred, or TIFF or EPS; at most 300 dpi and 10 MB; sized to fit one page with room for the caption |
 
 ### Layout and content
 
@@ -43,9 +45,9 @@ Sources: Nature, "Formatting guide" and "Final submission"; Nature Research figu
 | Schematics | no separate specification: they follow the rules for all figures; a simple schematic may go in an Extended Data figure |
 | Color | avoid red/green combinations and rainbow scales |
 
-`SKILL.md` reconciles the two key rules: series are labeled directly on the figure, in black (the in-figure key); symbols, values and notes go in the legend (rules 6 and 7).
+`SKILL.md` reconciles the two key rules: series are labeled directly on the figure, in black (the in-figure key); symbols, values and notes go in the caption (rules 6 and 7).
 
-### Figure legends
+### Captions (Nature: "figure legends")
 
 | Requirement | Nature's words |
 |---|---|
@@ -53,9 +55,9 @@ Sources: Nature, "Formatting guide" and "Final submission"; Nature Research figu
 | Opening | "Each figure legend should begin with a brief title for the whole figure" |
 | Content | then "a short description of each panel and the symbols used" |
 | Statistics | "All error bars and statistics must be defined in the figure legend" |
-| Units | unusual units or abbreviations defined in the legend |
+| Units | unusual units or abbreviations defined in the caption |
 | Methods | no details of methods when the paper has a Methods section |
-| Placement | with the figure at initial submission; at final submission, listed one after another in the text document. Extended Data legends are prepared the same way |
+| Placement | with the figure at initial submission; at final submission, listed one after another in the text document. Extended Data captions are prepared the same way |
 
 ### Nature Reviews: conceptual figures (secondary)
 
@@ -66,7 +68,7 @@ Nature's "Guide to designing figures" for Nature Reviews covers conceptual figur
 | Hierarchy | key elements most saturated, background elements neutral |
 | Flow | logical, top to bottom or left to right; readers look top left first; circular layouts only for circular processes |
 | Arrows | one arrow for an action; no multiple arrow weights and styles whose meaning is unclear |
-| Clarity | explain all elements in labels or the legend; label the first instance of every object |
+| Clarity | explain all elements in labels or the caption; label the first instance of every object |
 | Brevity | a full-page figure of no more than six panels |
 | Icons | only to aid understanding and context |
 | Figure or table | content that only categorises ideas works better as a list or table |
@@ -108,5 +110,5 @@ PLOS lists Arial and not Helvetica.
 
 ### Others
 
-- *Freshwater Science*: figures "should not contain a title or text that is duplicated in the figure caption"; sans serif only; sentence case. A rule many journals share with Nature: the legend, not the artwork, carries the title.
+- *Freshwater Science*: figures "should not contain a title or text that is duplicated in the figure caption"; sans serif only; sentence case. A rule many journals share with Nature: the caption, not the artwork, carries the title.
 - Cell Press: read the current figure guidelines (URL in `rules/references.md`); not quoted here because the page could not be retrieved.

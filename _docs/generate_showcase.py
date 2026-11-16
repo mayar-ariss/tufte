@@ -2,9 +2,9 @@
 
 The setup and helpers are read from rules/matplotlib.md and executed here, so the
 figures are drawn by the same code the skill gives an agent. Every figure is
-drawn at Nature's widths in millimeters, carries labels only (the README legend,
+drawn at Nature's widths in millimeters, carries labels only (the README caption,
 in Nature's form, carries the title, values and n), and is saved as a 600 dpi PNG
-for the README. Numbers in the README legends are checked against the data below.
+for the README. Numbers in the README captions are checked against the data below.
 
 Usage: python3 _docs/generate_showcase.py
 """
@@ -54,7 +54,7 @@ groups = {
 
 fig = plt.figure(figsize=(183 * MM, 62 * MM))
 
-# a: matplotlib's defaults, as a dynamite plot with SEM bars, legend and grid
+# a: matplotlib's defaults, as a dynamite plot with SEM bars, a key and a grid
 with plt.rc_context(matplotlib.rcParamsDefault):
     plt.rcParams.update({"font.size": 7, "pdf.fonttype": 42})
     ax_a = fig.add_axes([0.07, 0.17, 0.36, 0.66])
@@ -71,16 +71,16 @@ with plt.rc_context(matplotlib.rcParamsDefault):
 ax_b = fig.add_axes([0.60, 0.17, 0.37, 0.62])
 summary = strip_with_ci(ax_b, groups, colors={"Drug A": HIGHLIGHT})
 range_frame(ax_b, y=np.concatenate(list(groups.values())), label_ends=True, fmt="{:.2f}")
-horizontal_ylabel(ax_b, "Response (a.u.)")   # labels only; values and n in the legend (rule 6)
+horizontal_ylabel(ax_b, "Response (a.u.)")   # labels only; values and n in the caption (rule 6)
 
 fig.text(0.015, 0.92, "a", fontsize=8, fontweight="bold")
 fig.text(0.535, 0.92, "b", fontsize=8, fontweight="bold")
 
-# Legend check: the two Drug A clusters do not overlap, and its mean falls
+# Caption check: the two Drug A clusters do not overlap, and its mean falls
 # between them, where no culture lies
 low, high = np.sort(groups["Drug A"])[:4], np.sort(groups["Drug A"])[4:]
 assert low.max() < summary["Drug A"][0] < high.min()
-assert [f"{summary[k][0]:.2f}" for k in groups] == ["0.96", "1.30", "1.33"]   # README legend
+assert [f"{summary[k][0]:.2f}" for k in groups] == ["0.96", "1.30", "1.33"]   # README caption
 save(fig, "before-after.png")
 
 
@@ -141,7 +141,7 @@ fig.subplots_adjust(left=0.05, right=0.975, bottom=0.2, top=0.72, wspace=0.18)
 
 final = {d: m[-1] for d, (m, _) in stats_by_diet.items()}
 assert max(final, key=final.get) == "High fat" and min(final, key=final.get) == "Restricted"
-assert [f"{v:.1f}" for v in final.values()] == ["26.3", "31.7", "29.2", "24.0"]   # README legend
+assert [f"{v:.1f}" for v in final.values()] == ["26.3", "31.7", "29.2", "24.0"]   # README caption
 save(fig, "small-multiples.png")
 
 
@@ -175,7 +175,7 @@ ax_b.set_xlim(-0.4, len(dist) - 0.45)
 
 panel_letters(fig, [ax_a, ax_b], dx=-0.08, dy=0.08)
 assert fell.sum() == 10 and (~fell).sum() == 2, (fell.sum(), (~fell).sum())  # README: 10 of 12
-assert [f"{np.median(v):.1f}" for v in dist.values()] == ["9.7", "10.9", "11.9", "13.6"]   # README legend
+assert [f"{np.median(v):.1f}" for v in dist.values()] == ["9.7", "10.9", "11.9", "13.6"]   # README caption
 save(fig, "tufte-designs.png")
 
 
@@ -203,14 +203,14 @@ segs = {}
 for r in streets:
     segs.setdefault(r["street"], []).append((float(r["x"]), float(r["y"])))
 
-# The README legend's numbers, computed: deaths nearest each pump (straight line)
+# The README caption's numbers, computed: deaths nearest each pump (straight line)
 xs = [p[0] for s in segs.values() for p in s]
 ys = [p[1] for s in segs.values() for p in s]
 nearest = np.hypot(dx[:, None] - px, dy[:, None] - py).argmin(axis=1)
 counts = np.bincount(nearest, minlength=len(pumps))
 broad = plabels.index("Broad St")
 assert counts.argmax() == broad
-assert dict(zip(plabels, counts.tolist())) == {   # README legend
+assert dict(zip(plabels, counts.tolist())) == {   # README caption
     "Broad St": 359, "So Soho": 64, "Crown Chapel": 61, "Briddle St": 27, "Oxford St #2": 24,
     "Warwick": 16, "Oxford St #1": 12, "Gt Marlborough": 6, "Vigo St": 4, "Dean St": 2,
     "Coventry St": 2, "Castle St E": 1, "Oxford Market": 0}, dict(zip(plabels, counts.tolist()))
@@ -220,7 +220,7 @@ fig = plt.figure(figsize=(120 * MM, 116 * MM))
 ax = fig.add_axes([0.01, 0.01, 0.98, 0.98])
 ax.add_collection(LineCollection(list(segs.values()), colors="#c4c4c4", linewidths=0.4, zorder=1))
 ax.scatter(dx, dy, s=1.6, color="black", linewidths=0, zorder=3)
-# Each pump named on the map, in black; the counts go in the legend (rules 6, 7)
+# Each pump named on the map, in black; the counts go in the caption (rules 6, 7)
 plabels_n = plabels
 for i, (x0, y0, lab) in enumerate(zip(px, py, plabels_n)):
     if i == broad:

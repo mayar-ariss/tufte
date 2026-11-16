@@ -151,7 +151,7 @@ Anderson's map of midtown Manhattan carries individual windows and some 1,686 na
 
 Small multiples let the eye compare; a constant design keeps attention on changes in the data rather than in the frames (EI p. 67). The twelve Los Angeles smog maps, one per hour, index the same map on time and add up the day's pollution (EI pp. 28–29). The four maps of China's poets by dynasty show birthplaces shifting south-east, a pattern visible only across the series (pp. 74–75). A map of Matsu temples on a separate page cannot be compared with them; comparisons must fall within one eyespan (p. 76). The six cancer maps in VDQI are a small multiple by cancer type and sex.
 
-- Same projection, extent, scale and class breaks on every panel; one legend for all.
+- Same projection, extent, scale and class breaks on every panel; one key for all.
 - Panels on one page, never one per page.
 
 ### 17. Change over space and time: map plus time-series
@@ -166,7 +166,7 @@ Small multiples let the eye compare; a constant design keeps attention on change
 
 Minard's sheet has a title naming the method and the subject, the author and his credential, a text block explaining the color code and the three scales, and five acknowledged sources (BE pp. 126, 133). Of Minard's Hannibal map Tufte says the north arrow "should appear on every map" (p. 134). Excellent maps, "the heart and soul of good practices in analytical graphics," routinely integrate words, numbers, line art, grids and measurement scales (p. 131). In BE ch. 1 the map is Tufte's model for all evidence images: labels belong on the image, external grids give it scale, and data are more credible in context (p. 21). Snow annotated his map and table with notes on possible errors and gaps in the data, and that annotation is part of the map's credibility (VE p. 34). Tufte's redrawn cancer maps separate "in highest decile, statistically significant" from rates not significantly different from the national figure, and his text flags that death-certificate data follow "diagnostic fashions" (VDQI pp. 16–20).
 
-- In a paper, the figure legend carries the title, method, data sources and date of the data (SKILL.md rule 22). On the map itself, labels only: a scale bar (Nature asks for scale bars, not magnification factors), north arrow, units, and the names of features, in black.
+- In a paper, the caption carries the title, method, data sources and date of the data (SKILL.md rule 22). On the map itself, labels only: a scale bar (Nature asks for scale bars, not magnification factors), north arrow, units, and the names of features, in black.
 - Mark uncertainty and significance in the classes themselves; note known data problems next to the map.
 - Labels on the map, beside the features; no letter codes keyed to a separate list.
 
@@ -181,7 +181,7 @@ Tufte applies the lie factor even to Minard: the widths of the two flows at the 
 
 ## Where Tufte gives no rule
 
-Tufte writes no cartography manual. He gives no rule on map projection, on north-up orientation, on the form of a scale bar, on legend design or placement, on how many classes to use or how to set class breaks (he notes only that cutpoints and the data's distribution matter, EI ch. 5 n. 13), on cartograms, hexagonal binning, kernel density surfaces, basemap imagery, label-placement algorithms, or interactive zoom. This skill adds none. Use what the user asks for or the library's default, and apply the rules above to it.
+Tufte writes no cartography manual. He gives no rule on map projection, on north-up orientation, on the form of a scale bar, on key design or placement, on how many classes to use or how to set class breaks (he notes only that cutpoints and the data's distribution matter, EI ch. 5 n. 13), on cartograms, hexagonal binning, kernel density surfaces, basemap imagery, label-placement algorithms, or interactive zoom. This skill adds none. Use what the user asks for or the library's default, and apply the rules above to it.
 
 ## Library notes
 
@@ -204,7 +204,7 @@ counties.plot(column="rate", cmap="Greys", scheme="quantiles", k=5,     # rule 9
               legend=True, legend_kwds={"frameon": False, "title": "Deaths per 100,000"})
 states.boundary.plot(ax=ax, color="#888888", linewidth=0.4)             # rule 12: muted base layer
 ax.set_axis_off()                                                        # rule 13: no graticule by default
-fig.savefig("figure2.pdf")                                               # title and sources in the figure legend
+fig.savefig("figure2.pdf")                                               # title and sources in the caption
 ```
 
 - `scheme`/`k` are left to the user; Tufte gives no classification rule. `scheme=` needs the `mapclassify` package.
@@ -229,7 +229,7 @@ ggsave("figure2.pdf", p, width = 89, height = 60, units = "mm", device = cairo_p
 
 **Small multiples of maps (either library)**
 
-- One shared color scale and class breaks across all panels; one colorbar or legend for the whole figure (rule 16).
+- One shared color scale and class breaks across all panels; one colorbar or key for the whole figure (rule 16).
 - Same extent and projection on every panel; one label per panel stating what changes.
 
 ## Validation checklist
@@ -245,5 +245,5 @@ ggsave("figure2.pdf", p, width = 89, height = 60, units = "mm", device = cairo_p
 - [ ] Base map thinner and grayer than the data layer; no graticule unless needed for look-up (rules 12–13)
 - [ ] Boundaries thin and low-contrast (rule 14)
 - [ ] Small multiples share projection, extent, scale and breaks, on one page (rule 16)
-- [ ] Title, sources, date and data caveats in the figure legend; scale, north arrow and units on the map (rule 18)
+- [ ] Title, sources, date and data caveats in the caption; scale, north arrow and units on the map (rule 18)
 - [ ] Symbol sizes and flow widths proportional to the data; no 3D (rule 19)

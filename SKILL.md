@@ -8,7 +8,7 @@ description: >-
   comparison, causality, data density, layering, direct labeling) to the
   style of scientific figures, the statistics literature on showing
   uncertainty, and Nature's guidance to their structure (size, panels, text
-  placement, figure legends, file formats). Covers matplotlib, seaborn,
+  placement, captions, file formats). Covers matplotlib, seaborn,
   ggplot2 and plotnine.
 allowed-tools: Read, Glob, Grep
 ---
@@ -19,11 +19,13 @@ Apply these rules whenever you generate or review code that draws a figure for a
 
 Tufte wrote about printed evidence, and many of his central examples are scientific: Snow's cholera map, Minard's map of the Russian campaign, the Challenger O-ring data. His vision is the core of this skill. A scientific figure is a display of evidence: it shows the data, makes the comparison and the cause visible, carries as much information as the reader can use, and explains itself on the page.
 
+**Terms.** The **caption** is the text printed under the figure; Nature calls it the "figure legend". The **key** is the element inside the figure that explains its symbols or colors; plotting libraries call it the legend (`ax.legend()`, `legend.position`). This skill uses "caption" and "key" throughout.
+
 The skill is in three parts:
 
 1. **Tufte's principles** (rules 1–14) govern the figure's **style**: what is drawn and how — the data, the comparison, the cause, data-ink, color, layering, labels.
 2. **Scientific evidence** (rules 15–19). What the statistics literature adds where Tufte gives no rule: distributions, uncertainty, p-values, log scales. These extend Tufte; none contradicts him.
-3. **Nature's structure** (rules 20–25) governs the figure's **structure**: size, panel layout, which text goes on the figure and which in the figure legend, type sizes, line weights, file format.
+3. **Nature's structure** (rules 20–25) governs the figure's **structure**: size, panel layout, which text goes on the figure and which in the caption, type sizes, line weights, file format.
 
 **Tufte governs style; Nature governs structure.** Where they differ on structure, Nature's guidance supersedes Tufte and every other journal's guidance. Every departure from Tufte is named where it occurs, with its reason, and listed under "Departures from Tufte" at the end.
 
@@ -34,10 +36,10 @@ The skill is in three parts:
 1. **Find the evidence.** What must the reader see, compared with what, and caused by what? Use only comparisons and explanatory variables that exist in the data or that the user supplies; never invent a target, baseline or reference value.
 2. **Design by Part I.** Choose the form that shows the data, the comparison and the cause, with as much detail as the reader can use, layered so it stays readable.
 3. **Add the evidence Part II asks for**: every observation where feasible, uncertainty defined, *n* stated.
-4. **Structure by Part III**, to Nature's guidance: 89 mm (single column) or 183 mm (double column), 5–7 pt Helvetica or Arial, labels on the figure, everything else in the figure legend (`rules/journals.md`).
+4. **Structure by Part III**, to Nature's guidance: 89 mm (single column) or 183 mm (double column), 5–7 pt Helvetica or Arial, labels on the figure, everything else in the caption (`rules/journals.md`).
 5. **Respect an existing figure style.** If the user's project already has one (a matplotlibrc, a ggplot2 theme, a lab template, earlier figures in the paper), keep its look and apply Parts I and II to the content. Apply the full style only when asked or when there is none.
 6. **Library setup:** read ONE of `rules/matplotlib.md` or `rules/ggplot2-plotnine.md`.
-7. **Write the figure legend** (rule 22) and check every number in it against the data. **Validate** with the checklist at the end.
+7. **Write the caption** (rule 22) and check every number in it against the data. **Validate** with the checklist at the end.
 
 ## Sources
 
@@ -92,7 +94,7 @@ Every figure answers "compared to what?" on the page: a control, a reference con
 
 The lesson of VE ch. 2: the evidence about the Challenger's O-rings was displayed so that its cause could not be seen. Plot the outcome against the variable that may explain it, order the evidence by that variable, and include every case — including those where nothing happened, which are the comparison that makes the cause visible.
 
-- Put the explanatory variable on an axis (dose, temperature, time since treatment, distance to the source), not in a legend or a panel order.
+- Put the explanatory variable on an axis (dose, temperature, time since treatment, distance to the source), not in a key or a panel order.
 - Order categories by the explanatory variable or by the outcome, never alphabetically by default (VDQI ch. 9, p. 178).
 - Plot the zeros, the non-responders and the controls with the cases.
 - Put the suspected cause on the same figure as the effect, as Snow put the pumps on the map of deaths.
@@ -103,15 +105,15 @@ The lesson of VE ch. 2: the evidence about the Challenger's O-rings was displaye
 
 Show more than one or two variables when the evidence has them. Small multiples are Tufte's main device: one design repeated, one scale in every panel, panels close together and ordered by something meaningful, so the eye compares the data rather than the graphics. Prefer small multiples to stacked bars, dual axes or more than four colors in one panel. See `rules/small-multiples-and-panels.md`.
 
-### 6. Labels on the graphic; explanations in the figure legend
+### 6. Labels on the graphic; explanations in the caption
 
-*Source: Tufte, VDQI ch. 2 (principle 2: clear, detailed labeling defeats distortion); VDQI ch. 9 (words and pictures together); BE ch. 5 (fourth and fifth principles). Journal (Nature formatting guide: "Where possible, text, including keys to symbols, should be provided in the legend rather than on the figure itself"; Nature figure guide: keys in the figure rather than colour descriptions in the caption). **Departure from Tufte** on structure: Tufte writes explanations on the graphic itself; Nature puts them in the figure legend.*
+*Source: Tufte, VDQI ch. 2 (principle 2: clear, detailed labeling defeats distortion); VDQI ch. 9 (words and pictures together); BE ch. 5 (fourth and fifth principles). Journal (Nature formatting guide: "Where possible, text, including keys to symbols, should be provided in the legend rather than on the figure itself"; Nature figure guide: keys in the figure rather than colour descriptions in the caption). **Departure from Tufte** on structure: Tufte writes explanations on the graphic itself; Nature puts them in the caption.*
 
 Words and data still belong together; Nature decides where the words go.
 
 - **On the graphic, labels only:** axis labels with units, tick labels, the name of each group and series as a direct label (rule 7), panel letters, scale bars, and labels that name a feature (a pump, a gene, a region).
-- **In the figure legend** (rule 22): what each symbol, line, band and bar means; the values that matter (an EC₅₀, a mean, a fold change); *n* and what it counts; events, thresholds and notes; statistics; unusual units and abbreviations.
-- Keep Tufte's standard for explanation: every question a reader would ask of the figure is answered, on the graphic if it is a label and in the legend if not. Nothing is left out for a clean look; it moves to the legend.
+- **In the caption** (rule 22): what each symbol, line, band and bar means; the values that matter (an EC₅₀, a mean, a fold change); *n* and what it counts; events, thresholds and notes; statistics; unusual units and abbreviations.
+- Keep Tufte's standard for explanation: every question a reader would ask of the figure is answered, on the graphic if it is a label and in the caption if not. Nothing is left out for a clean look; it moves to the caption.
 
 ### 7. Label directly, in black; a key only for a scale
 
@@ -119,9 +121,9 @@ Words and data still belong together; Nature decides where the words go.
 
 - Label each series where it is, at the end of a line or beside a cluster, and turn the key off. The direct label is Nature's in-figure key.
 - **Labels in black.** Position, not color, ties a label to its series. Where a label cannot sit beside its series, a thin keyline runs from the black label to it (Nature: "keylines pointing to black text labels").
-- **Never colored text, in the figure or the legend.** Name a series in the legend as it is labeled. Where a key or the legend must refer to a color, put a small solid colored box, or a sample of the line or marker, beside black text (Nature figure guide).
+- **Never colored text, in the figure or the caption.** Name a series in the caption as it is labeled. Where a key or the caption must refer to a color, put a small solid colored box, or a sample of the line or marker, beside black text (Nature figure guide).
 - A key stays only for an encoding that cannot carry its own label, such as a color scale for a quantity: in the figure, beside the data, unframed. Tufte does not ban keys: his redrawn cancer maps carry one (VDQI pp. 16–20).
-- Symbols that are not series (open circles, bands, bars) are defined in the figure legend (rule 6).
+- Symbols that are not series (open circles, bands, bars) are defined in the caption (rule 6).
 
 ### 8. Maximize data density, within reason
 
@@ -135,7 +137,7 @@ Words and data still belong together; Nature decides where the words go.
 
 *Source: Tufte, VDQI ch. 4 (data-ink), ch. 5 (chartjunk), ch. 6 (erasing the frame). Journal (Nature figure guide: avoid background gridlines, superfluous icons and other decorative elements, drop shadows and patterns; axis lines and tick marks required).*
 
-No box around the plot, no top or right spines, no background fill, no gridlines, no drop shadows, no hatching or pattern fills (solid fills instead), no decorative icons. Keep the axis lines and tick marks: Nature requires them, and the range frame (rule 10) keeps both. Where readers must read values precisely, give the values in a table or the legend rather than adding a grid (Tufte would allow a muted grid, VDQI ch. 5; Nature avoids it). Erase what carries no information about the data, never what does: erasing is subordinate to rule 1, and information taken off the graphic goes to the legend (rule 6).
+No box around the plot, no top or right spines, no background fill, no gridlines, no drop shadows, no hatching or pattern fills (solid fills instead), no decorative icons. Keep the axis lines and tick marks: Nature requires them, and the range frame (rule 10) keeps both. Where readers must read values precisely, give the values in a table or the caption rather than adding a grid (Tufte would allow a muted grid, VDQI ch. 5; Nature avoids it). Erase what carries no information about the data, never what does: erasing is subordinate to rule 1, and information taken off the graphic goes to the legend (rule 6).
 
 ### 10. Range-frame axes that report the data
 
@@ -155,7 +157,7 @@ A dense figure stays clear when its layers are visually ordered: data darkest an
 
 - **Color last.** Separate things first by position, direct labels or small multiples (rules 5 and 7); use color only for what those cannot do.
 - **Black and grays carry the figure:** data in black, context in gray, individual observations and references in light gray. Make every difference as small as will still read clearly.
-- **One accent, red `#CC0000`,** on the finding, as in Tufte's sparklines; its value goes in the figure legend (rule 6). **Blue `#0072B2` only as a second accent,** for a second kind of highlight; Tufte pairs the two (red for first and last values, blue for low and high).
+- **One accent, red `#CC0000`,** on the finding, as in Tufte's sparklines; its value goes in the caption (rule 6). **Blue `#0072B2` only as a second accent,** for a second kind of highlight; Tufte pairs the two (red for first and last values, blue for low and high).
 - **Muted fields for large areas:** a light gray band for a normal range or reference interval; a pale tint of one hue for a large region, stepped light to dark when it encodes a quantity. Strong color only in small areas (lines, dots, small marks; text stays black, rule 7); never strong or bright colors over large areas.
 - **For quantities,** light to dark in one hue, or a perceptually uniform map (viridis, cividis, batlow; vik for diverging data). Never rainbow or jet.
 - **Several categories that must be colored** (three or more, when position, labels and small multiples cannot separate them): the Okabe–Ito palette, as a set in place of the accents, in small areas, at most four colors. Tufte gives no palette for this; Okabe–Ito meets his p. 183 requirement.
@@ -204,7 +206,7 @@ For continuous data in small samples, plot every observation (a strip, jittered 
 
 *Source: Literature (Wasserstein and Lazar 2016); convention for the marks.*
 
-A p-value does not measure the size of an effect. Show the effect and its interval on the figure; give the estimate and exact p-values in the figure legend or text (rule 6). If asterisks or brackets are used, define each in the legend and draw brackets thin and gray.
+A p-value does not measure the size of an effect. Show the effect and its interval on the figure; give the estimate and exact p-values in the caption or text (rule 6). If asterisks or brackets are used, define each in the caption and draw brackets thin and gray.
 
 ### 18. Log scales for multiplicative data
 
@@ -216,7 +218,7 @@ Use a log axis when values span orders of magnitude, or when ratios, fold change
 
 *Source: Tufte, BE ch. 5 ("content counts most of all"); convention.*
 
-Every number on a figure matches the text and tables. A reader with only the figure and its legend can tell what was measured, in what units, on how many samples, and what the authors conclude.
+Every number on a figure matches the text and tables. A reader with only the figure and its caption can tell what was measured, in what units, on how many samples, and what the authors conclude.
 
 ---
 
@@ -228,7 +230,7 @@ These rules follow Nature's author guidelines: the formatting guide, final submi
 
 *Source: Journal (Nature figure guide; final submission).*
 
-- Width: 89 mm (single column) or 183 mm (double column); 120–136 mm for 1.5 columns. Height at most 170 mm, to leave room for the legend beneath. (Nature's formatting guide rounds the widths to 90 and 180 mm; the figure guide's values are used here.)
+- Width: 89 mm (single column) or 183 mm (double column); 120–136 mm for 1.5 columns. Height at most 170 mm, to leave room for the caption beneath. (Nature's formatting guide rounds the widths to 90 and 180 mm; the figure guide's values are used here.)
 - Set the width before drawing, so type and lines come out at their printed size; never scale an exported figure to fit.
 - Submit at the smallest size that keeps every element legible; Nature may reduce figures further.
 
@@ -242,7 +244,7 @@ These rules follow Nature's author guidelines: the formatting guide, final submi
 - No type directly over shaded or textured areas; no reversed type where it can be avoided. Scale bars rather than magnification factors.
 - The departure is of typeface only: everything Tufte asks of type (rule 13) still holds, and his own books set tables in a sans serif, Gill Sans. See `rules/typography-and-color.md`.
 
-### 22. The figure legend, in Nature's form
+### 22. The caption, in Nature's form
 
 *Source: Journal (Nature formatting guide); Tufte, BE ch. 5 (fifth principle: document the evidence). **Departure from Tufte**, who puts a detailed title and the explanations on the graphic itself.*
 
@@ -252,7 +254,7 @@ These rules follow Nature's author guidelines: the formatting guide, final submi
 - Define every error bar and statistic, *n* and what it counts, and any unusual unit or abbreviation. Give the values and notes moved off the graphic (rule 6).
 - No details of methods when the paper has a Methods section.
 - Fewer than 300 words. Refer to series by their labels, never by their colors.
-- Check every number against the data. At final submission the legends go in the text document, one after another, not in the figure file.
+- Check every number against the data. At final submission the captions go in the text document, one after another, not in the figure file.
 
 ### 23. Lines and marks that survive reduction
 
@@ -274,7 +276,7 @@ Data lines 1 pt; axes, ticks, error bars and leader lines 0.5 pt or lighter; mar
 *Source: Journal (Nature figure guide; final submission: "Please do not rasterize line art or text").*
 
 - Main figures: vector `.ai`, `.eps` or `.pdf`, text editable, fonts embedded (TrueType, Type 42), never outlined or rasterized. Photographic images at 300 dpi or more (450 dpi gives the best online proof), with scale bars and their text on a separate, editable layer. Nature does not accept JPEG, TIFF or PNG for main figures. Keep files under 50 MB, everything embedded, not linked.
-- Extended Data figures: RGB, JPEG preferred (TIFF or EPS accepted), at most 300 dpi and 10 MB, sized to fit one page with room for the legend.
+- Extended Data figures: RGB, JPEG preferred (TIFF or EPS accepted), at most 300 dpi and 10 MB, sized to fit one page with room for the caption.
 - Check with `pdffonts figure.pdf`: every font `emb yes`.
 
 ---
@@ -285,7 +287,7 @@ These settings are this skill's defaults (convention), except where a cell names
 
 | Type | Key settings |
 |---|---|
-| **Strip / dot plot** | Every observation, jittered; mean or median with 95% CI beside the points; the groups labeled; values and *n* in the legend (rules 1, 6, 15, 16) |
+| **Strip / dot plot** | Every observation, jittered; mean or median with 95% CI beside the points; the groups labeled; values and *n* in the caption (rules 1, 6, 15, 16) |
 | **Line** | 1 pt; markers where measurements were taken; direct labels; CI band light; individual trajectories as thin light lines under the mean when *n* is small enough (rule 11) |
 | **Scatter** | Every point; highlight the group that matters; fitted line thin, with its band; rug marks for marginals (Tufte's dot-dash plot, VDQI ch. 6) |
 | **Bar** | Counts and proportions only; zero baseline; sorted by value or by the explanatory variable (Tufte, VDQI ch. 9, p. 178) |
@@ -293,7 +295,7 @@ These settings are this skill's defaults (convention), except where a cell names
 | **Paired data** | One line per subject between conditions (slopegraph: Tufte, VDQI pp. 158–159) |
 | **Small multiples** | One design, one scale, panels close together and ordered meaningfully (Tufte, EI ch. 4) |
 | **Heatmap** | Light to dark, or a perceptually uniform map; values in the cells when few; colorbar beside, unframed |
-| **Dose–response, growth, concentration** | Explanatory variable on x, on a log axis labeled with values; key values (EC₅₀, plateau) marked on the curve and given in the legend |
+| **Dose–response, growth, concentration** | Explanatory variable on x, on a log axis labeled with values; key values (EC₅₀, plateau) marked on the curve and given in the caption |
 | **Sparklines** | Word-sized, in tables or text; beginning and ending values beside the line; first and last values in red, low and high in blue (Tufte, BE pp. 50–51) |
 
 Avoid: dynamite plots, pie charts, 3D, dual axes; stacked bars and area charts except for cumulative totals (convention: small multiples compare better).
@@ -307,7 +309,7 @@ Avoid: dynamite plots, pie charts, 3D, dual axes; stacked bars and area charts e
 | Text size | 5–7 pt |
 | Panel letters | 8 pt bold, upright **a, b, c** |
 | On the figure | Labels only: axes, series names, panel letters, scale bars |
-| Figure legend | Brief title; each panel and its symbols; error bars, statistics, *n*; values and notes; < 300 words |
+| Caption | Brief title; each panel and its symbols; error bars, statistics, *n*; values and notes; < 300 words |
 | Main figures | Vector AI, EPS or PDF, editable text, fonts embedded |
 
 Quotes, sources and dates: `rules/journals.md`, which also keeps other journals' requirements for reference.
@@ -324,9 +326,9 @@ Quotes, sources and dates: `rules/journals.md`, which also keeps other journals'
 
 When reviewing a figure or its code, check for:
 
-- **Against Tufte:** summaries without the data (→ show the observations); a comparison the reader must assemble across figures (→ side by side, same scale); the explanatory variable hidden in a legend or panel order (→ on an axis); missing zeros or non-responders (→ include them); categories in alphabetical order (→ order by value or cause); unlabeled series (→ direct labels, in black); a key box (→ direct labels; symbols defined in the legend); a frame, grid, drop shadow, pattern or decorative icon (→ erase); every element the same weight (→ layer); a sparse figure that could carry more of the data (→ add detail); color over large areas or rainbow maps (→ gray first, light to dark); all-caps or rotated labels (→ upper-and-lower case, horizontal); pie, 3D or dual axes.
+- **Against Tufte:** summaries without the data (→ show the observations); a comparison the reader must assemble across figures (→ side by side, same scale); the explanatory variable hidden in a key or panel order (→ on an axis); missing zeros or non-responders (→ include them); categories in alphabetical order (→ order by value or cause); unlabeled series (→ direct labels, in black); a key box (→ direct labels; symbols defined in the caption); a frame, grid, drop shadow, pattern or decorative icon (→ erase); every element the same weight (→ layer); a sparse figure that could carry more of the data (→ add detail); color over large areas or rainbow maps (→ gray first, light to dark); all-caps or rotated labels (→ upper-and-lower case, horizontal); pie, 3D or dual axes.
 - **Against the evidence:** dynamite plots; undefined error bars or *n*; statistics on two or three points; technical replicates as *n*; undefined asterisks; bars on a log axis.
-- **Against Nature's structure:** a figure drawn at screen size and scaled down; text outside 5–7 pt or sizes that vary across figures; a title, notes or values written inside the figure; colored text; series identified by color in the legend; a legend of 300 words or more, or one with methods; rasterized text or unembedded fonts.
+- **Against Nature's structure:** a figure drawn at screen size and scaled down; text outside 5–7 pt or sizes that vary across figures; a title, notes or values written inside the figure; colored text; series identified by color in the caption; a caption of 300 words or more, or one with methods; rasterized text or unembedded fonts.
 
 Per-library detection and fixes: `rules/anti-patterns.md`.
 
@@ -340,7 +342,7 @@ Before presenting any figure, verify:
 - [ ] The comparison is on the page, side by side, on one scale, and comes from the data (rule 3)
 - [ ] The explanatory variable is on an axis; every case is included, zeros too; categories ordered meaningfully (rule 4)
 - [ ] Multivariate evidence shown, by small multiples where needed (rule 5)
-- [ ] Labels only on the graphic; values, notes and symbol definitions in the legend (rule 6); series labeled directly in black, with keylines where needed; no colored text anywhere (rule 7)
+- [ ] Labels only on the graphic; values, notes and symbol definitions in the caption (rule 6); series labeled directly in black, with keylines where needed; no colored text anywhere (rule 7)
 - [ ] The figure carries as much of the data as the reader can use (rule 8)
 - [ ] No frame, box, gridlines, drop shadows, patterns or decorative icons (rule 9); range-frame axes with tick marks (rule 10)
 - [ ] Layers ordered: data darkest, references lighter, axes lightest; readable at a glance and up close (rule 11)
@@ -355,7 +357,7 @@ Before presenting any figure, verify:
 
 **Nature's structure**
 - [ ] 89 or 183 mm wide, at most 170 mm tall; Helvetica or Arial, 5–7 pt, black (rules 20–21)
-- [ ] Legend: brief title; each panel and its symbols; error bars, statistics and *n* defined; values and notes; no methods; under 300 words; checked against the data (rule 22)
+- [ ] Caption: brief title; each panel and its symbols; error bars, statistics and *n* defined; values and notes; no methods; under 300 words; checked against the data (rule 22)
 - [ ] Lines 0.25–1 pt; 8 pt bold upright a, b, c; panels in order, logically connected (rules 23–24)
 - [ ] Vector AI, EPS or PDF with embedded TrueType fonts (rule 25)
 
@@ -366,9 +368,9 @@ Each is named in its rule; all are here so none is hidden.
 | Departure | Why | Rule |
 |---|---|---|
 | Helvetica instead of serif type | Nature asks for a sans serif, preferably Helvetica or Arial. Only the typeface changes; Tufte's other requirements for type hold | 21 |
-| Explanations, values and symbol keys in the figure legend; only labels on the graphic | Nature: text, including keys to symbols, in the legend rather than on the figure where possible. Tufte writes them on the graphic, and puts link strengths on the links of diagrams | 6, 22 |
+| Explanations, values and symbol keys in the caption; only labels on the graphic | Nature: text, including keys to symbols, in the caption (its "figure legend") rather than on the figure where possible. Tufte writes them on the graphic, and puts link strengths on the links of diagrams | 6, 22 |
 | Labels in black, not in their series' color | Nature recolours colored text. Position ties a label to its series | 7, 21 |
-| Title in the legend, not on the graphic | Nature's legends begin with the figure's title | 22 |
+| Title in the caption, not on the graphic | Nature's captions begin with the figure's title | 22 |
 | Bold panel letters | Nature requires them | 24 |
 | Lower case with an initial capital, rather than any upper-and-lower case | Nature's style; a narrower form of Tufte's rule | 21 |
 | Error bars, p-values, log scales | Tufte gives no rule; the statistics literature does. These extend him | 15–18 |
@@ -380,4 +382,4 @@ Each is named in its rule; all are here so none is hidden.
 
 **Cross-cutting** (read when needed): `rules/typography-and-color.md` (type, palette, maps, contrast), `rules/small-multiples-and-panels.md` (small multiples, panels, slopegraphs, quartile and dot-dash plots, sparklines), `rules/anti-patterns.md`, `rules/journals.md`, `rules/references.md`, `rules/diagrams-flowcharts.md`, `rules/maps.md`.
 
-**Working example:** `examples/matplotlib-publication.py` — a two-panel, 89 mm figure: every observation, 95% confidence intervals, a log dose axis with the half-maximal doses marked on the curves, black direct labels, range frames, panel letters and vector export; it prints a Nature-style legend and checks it against the data.
+**Working example:** `examples/matplotlib-publication.py` — a two-panel, 89 mm figure: every observation, 95% confidence intervals, a log dose axis with the half-maximal doses marked on the curves, black direct labels, range frames, panel letters and vector export; it prints a Nature-style caption and checks it against the data.

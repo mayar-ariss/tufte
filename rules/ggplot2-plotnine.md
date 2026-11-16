@@ -19,8 +19,8 @@ theme_science <- function(base_size = 7, family = "Helvetica") {
       axis.line          = element_line(linewidth = 0.25),     # about 0.5 pt (rule 23)
       axis.ticks         = element_line(linewidth = 0.25),
       axis.ticks.length  = unit(1, "mm"),
-      legend.position    = "none",                             # label directly (rule 7)
-      plot.title         = element_blank(),                    # the figure legend carries it (rule 22)
+      legend.position    = "none",                             # no key: label directly (rule 7)
+      plot.title         = element_blank(),                    # the caption carries it (rule 22)
       plot.subtitle      = element_text(hjust = 0, size = base_size),
       plot.title.position = "panel",
       plot.background    = element_rect(fill = "white", colour = NA),
@@ -67,7 +67,7 @@ p <- ggplot(df, aes(group, response)) +
   theme(axis.line = element_blank(), axis.ticks.x = element_blank())
 ```
 
-Figure legend (Nature's form, SKILL.md rule 22): a brief title; what the dots and bars are (95% confidence intervals of the mean); *n* and what it counts; the means, if they matter. On the graphic: labels only (rule 6).
+Caption (Nature's form, SKILL.md rule 22): a brief title; what the dots and bars are (95% confidence intervals of the mean); *n* and what it counts; the means, if they matter. On the graphic: labels only (rule 6).
 
 ### Lines with direct labels and a log axis
 
@@ -91,7 +91,7 @@ p <- ggplot(curves, aes(dose, response, colour = condition)) +
 
 When the curves meet at the end, place each label where its curve stands apart rather than at the last point.
 
-Mark the values that matter on the curves and give them in the figure legend (SKILL.md rules 6, 22), for example each curve's half-maximal dose:
+Mark the values that matter on the curves and give them in the caption (SKILL.md rules 6, 22), for example each curve's half-maximal dose:
 
 ```r
 ec50 <- tibble(condition = c("Control", "Drug B"), dose = c(2.65, 0.30), response = 0.5)
@@ -99,7 +99,7 @@ ec50 <- tibble(condition = c("Control", "Drug B"), dose = c(2.65, 0.30), respons
 p + geom_point(data = ec50, shape = 21, fill = "white", colour = "black", size = 1.2, stroke = 0.4)
 ```
 
-Legend: "…open circles, half-maximal doses (EC50: control 2.65 µM, drug B 0.30 µM)…"
+Caption: "…open circles, half-maximal doses (EC50: control 2.65 µM, drug B 0.30 µM)…"
 
 ### Small multiples and multi-panel figures
 
@@ -155,8 +155,8 @@ theme_science = theme_classic(base_size=7, base_family="Helvetica") + theme(
     text=element_text(color="black"),
     axis_text=element_text(color="black", size=6),
     axis_title_y=element_text(rotation=0, va="center"),   # horizontal label (rule 13)
-    legend_position="none",                               # label directly (rule 7)
-    plot_title=element_blank(),                           # the figure legend carries it (rule 22)
+    legend_position="none",                               # no key: label directly (rule 7)
+    plot_title=element_blank(),                           # the caption carries it (rule 22)
     strip_background=element_blank(),
 )
 ```

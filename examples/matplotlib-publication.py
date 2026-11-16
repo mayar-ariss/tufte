@@ -6,11 +6,11 @@ the curves, black direct labels, range frames whose ends report the data's
 range, and layers from dark data to light references. Nature governs the
 structure: single column (89 mm), Helvetica (Arial or a metric clone where
 Helvetica is not installed), labels only on the figure, the values, n and symbol
-definitions in the figure legend, 8 pt bold lowercase panel letters, and vector
+definitions in the caption, 8 pt bold lowercase panel letters, and vector
 PDF output with embedded TrueType fonts.
 
 The data are synthetic, generated below with a fixed seed. The script checks the
-legend's claims against the data before saving, and prints the legend.
+caption's claims against the data before saving, and prints the caption.
 
 Usage:
     python3 examples/matplotlib-publication.py [output_directory]
@@ -127,14 +127,14 @@ def main(outdir):
     plt.rcParams.update(SCIENCE_RC)
     groups, dose, curves = make_data()
 
-    # Check the legend's claims against the data before drawing anything.
+    # Check the caption's claims against the data before drawing anything.
     stats = {name: mean_ci(v) for name, v in groups.items()}
     assert stats["Drug B"][0] - stats["Drug B"][1] > max(
         stats["Control"][0] + stats["Control"][1], stats["Drug A"][0] + stats["Drug A"][1]
-    ), "Legend says Drug B's interval lies above the others"
+    ), "Caption says Drug B's interval lies above the others"
     ec50 = {name: half_max_dose(dose, c.mean(axis=1)) for name, c in curves.items()}
     fold = ec50["Control"] / ec50["Drug B"]
-    assert 5 < fold < 20, f"Legend says about tenfold; data give {fold:.1f}"
+    assert 5 < fold < 20, f"Caption says about tenfold; data give {fold:.1f}"
 
     fig = plt.figure(figsize=(89 * MM, 52 * MM))
     gs = fig.add_gridspec(1, 2, width_ratios=[1, 1.05], wspace=0.32,
@@ -172,7 +172,7 @@ def main(outdir):
         ax_b.plot(dose, m, color=color, marker="o", markersize=2.5, markeredgewidth=0)
         i, dx, dy, ha = label_at[name]
         ax_b.text(dose[i] * dx, m[i] + dy, name, ha=ha, va="center", color="black")  # black (rule 7)
-    # Each half-maximal dose marked on its curve; the values go in the legend (rule 6).
+    # Each half-maximal dose marked on its curve; the values go in the caption (rule 6).
     halves = {name: (c.mean(axis=1).min() + c.mean(axis=1).max()) / 2 for name, c in curves.items()}
     for name, x0 in ec50.items():
         ax_b.plot(x0, halves[name], "o", ms=3, mfc="white", mec="black", mew=0.5, zorder=4)
@@ -196,7 +196,7 @@ def main(outdir):
     fig.savefig(outdir / "figure1.png", dpi=600)
 
     means = ", ".join(f"{name} {stats[name][0]:.2f}" for name in groups)
-    legend = (
+    caption = (
         "Fig. 1 | Drug B raises the response and lowers the half-maximal dose about "
         f"{fold:.0f}-fold. a, Response of each culture (dots); horizontal lines, means; "
         "vertical lines, 95% confidence intervals of the mean; n = 8 independent "
@@ -206,8 +206,8 @@ def main(outdir):
         f"{ec50['Control']:.2f} µM, Drug B {ec50['Drug B']:.2f} µM ({fold:.1f}-fold). "
         "Synthetic data generated for illustration."
     )
-    assert len(legend.split()) < 300, "Nature: legends under 300 words"
-    print(legend)
+    assert len(caption.split()) < 300, "Nature: captions (its figure legends) under 300 words"
+    print(caption)
 
 
 if __name__ == "__main__":

@@ -71,7 +71,7 @@ Black and the grays in the table above carry the figure. Color is added sparingl
 
 - **Color last.** Position, direct labels and small multiples separate things before color does (Tufte, EI ch. 4–5).
 - **Black and grays first.** Data in black, context in gray (`#666666`), individual observations and references in light gray (`#8c8c8c`).
-- **One accent, red,** on the finding, as in Tufte's sparklines; its value goes in the figure legend and its label stays black (`SKILL.md` rules 6–7). **Blue only as a second accent,** for a second kind of highlight; Tufte pairs the two (red for the first and last values, blue for the low and high).
+- **One accent, red,** on the finding, as in Tufte's sparklines; its value goes in the caption and its label stays black (`SKILL.md` rules 6–7). **Blue only as a second accent,** for a second kind of highlight; Tufte pairs the two (red for the first and last values, blue for the low and high).
 - **Muted fields for large areas.** Field gray for a normal range or a band; field blue, or a pale tint of one hue, for a large region; light-to-dark steps when the area encodes a quantity. Never strong or bright colors over large areas: Tufte's color rules, taken from the cartographer Eduard Imhof, keep strong color to small areas on a muted field (EI ch. 5; see `rules/maps.md`, rule 11).
 - **Checked for color-deficient readers** (Tufte, VDQI p. 183). In simulations of protanopia and deuteranopia (Machado et al. 2009), the red and the blue each stay as distinct from the gray `#666666` as Okabe–Ito blue does, and stay clearly distinct from each other. Label them directly anyway.
 - **Same condition, same color** in every figure of the paper (Tufte, integrity principle 3).
