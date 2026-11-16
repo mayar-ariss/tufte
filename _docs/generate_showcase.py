@@ -69,8 +69,15 @@ with plt.rc_context(matplotlib.rcParamsDefault):
 
 # b: the same data, drawn by this skill
 ax_b = fig.add_axes([0.60, 0.17, 0.37, 0.62])
-summary = strip_with_ci(ax_b, groups, colors={"Drug A": HIGHLIGHT})
+summary = strip_with_ci(ax_b, groups, colors={"Drug A": HIGHLIGHT}, write_means=True)
+range_frame(ax_b, y=np.concatenate(list(groups.values())), label_ends=True, fmt="{:.2f}")
 horizontal_ylabel(ax_b, "Response (a.u.)")
+ax_b.text(1, 1.04, "n = 8 cultures per group", transform=ax_b.transAxes, ha="right",
+          va="bottom", color=GRAY)
+# Explanations on the graphic, beside what they explain (SKILL.md rule 6)
+drug_a = np.sort(groups["Drug A"])
+note(ax_b, 0.86, drug_a[4:].mean(), "4 responded", dx=-6, dy=0, ha="right")
+note(ax_b, 1.0, drug_a[:4].min(), "4 did not", dx=0, dy=-9, ha="center")
 
 fig.text(0.015, 0.92, "a", fontsize=8, fontweight="bold")
 fig.text(0.535, 0.92, "b", fontsize=8, fontweight="bold")
@@ -109,15 +116,18 @@ gain = {"Standard": 0.10, "High fat": 0.55, "High sugar": 0.35, "Restricted": -0
 mice = {d: 25 + np.cumsum(rng.normal(g, 0.25, (8, weeks.size)), axis=1) - g for d, g in gain.items()}
 stats_by_diet = {d: (m.mean(axis=0), np.array([mean_ci(col)[1] for col in m.T]))
                  for d, m in mice.items()}
-lo = min((m - h).min() for m, h in stats_by_diet.values())
-hi = max((m + h).max() for m, h in stats_by_diet.values())
+lo = min(m.min() for m in mice.values())
+hi = max(m.max() for m in mice.values())
 
 fig, axes = plt.subplots(1, 4, figsize=(183 * MM, 45 * MM), sharey=True)
 for ax, (diet, (m, h)) in zip(axes, stats_by_diet.items()):
     start = stats_by_diet["Standard"][0][0]
     ax.axhline(start, color=LIGHT, lw=0.5, ls=(0, (2, 2)), zorder=1)   # week-0 level, from the data
-    ax.fill_between(weeks, m - h, m + h, color=GRAY, alpha=0.2, linewidth=0)
-    ax.plot(weeks, m, color=HIGHLIGHT if diet == "High fat" else GRAY)
+    # Two readings (SKILL.md rule 11): each mouse as a thin light line, the diet's
+    # mean as a heavier line on top
+    for mouse in mice[diet]:
+        ax.plot(weeks, mouse, color=LIGHT, lw=0.3, zorder=2)
+    ax.plot(weeks, m, color=HIGHLIGHT if diet == "High fat" else "black", lw=1.0, zorder=3)
     ax.text(0, 1.06, diet, transform=ax.transAxes, ha="left", va="bottom")
     direct_label(ax, weeks[-1], m[-1], f"{m[-1]:.1f}", dx=3)
     range_frame(ax, x=weeks, y=[lo, hi])
@@ -130,6 +140,8 @@ axes[0].text(0, 1.22, "Body mass (g)", transform=axes[0].transAxes, ha="left", v
 fig.text(0.5, 0.02, "Week", ha="center")
 fig.subplots_adjust(left=0.05, right=0.975, bottom=0.2, top=0.72, wspace=0.18)
 axes[0].text(12, start - 0.3, "Week-0 mean", ha="right", va="top", fontsize=5, color=GRAY)
+axes[-1].text(1, 1.06, "n = 8 mice per diet", transform=axes[-1].transAxes, ha="right",
+              va="bottom", color=GRAY)
 
 final = {d: m[-1] for d, (m, _) in stats_by_diet.items()}
 assert max(final, key=final.get) == "High fat" and min(final, key=final.get) == "Restricted"
@@ -153,11 +165,19 @@ ax_a = fig.add_axes([0.10, 0.15, 0.30, 0.68])
 ax_b = fig.add_axes([0.58, 0.15, 0.40, 0.68])
 
 paired_plot(ax_a, before, after, labels=("Before", "After"), highlight=~fell)
+range_frame(ax_a, y=np.concatenate([before, after]), label_ends=True, fmt="{:.0f}")
 horizontal_ylabel(ax_a, "Systolic pressure (mmHg)")
+note(ax_a, 1.02, after[~fell].max(), "2 rose", dx=6, dy=0, color=HIGHLIGHT)
+note(ax_a, 1.02, np.median(after[fell]), "10 fell", dx=6, dy=0)
 
 quartile_plot(ax_b, dist)
-range_frame(ax_b, y=np.concatenate(list(dist.values())))
+for i, values in enumerate(dist.values()):           # the medians, written in (rule 6)
+    ax_b.text(i + 0.1, np.median(values), f"{np.median(values):.1f}", va="center", fontsize=5.5)
+range_frame(ax_b, y=np.concatenate(list(dist.values())), label_ends=True, fmt="{:.1f}")
 horizontal_ylabel(ax_b, "Concentration (µg/L)")
+ax_b.text(1, 1.04, "n = 40 per site", transform=ax_b.transAxes, ha="right",
+          va="bottom", color=GRAY)
+ax_b.set_xlim(-0.4, len(dist) - 0.45)
 
 panel_letters(fig, [ax_a, ax_b], dx=-0.08, dy=0.08)
 assert fell.sum() == 10 and (~fell).sum() == 2, (fell.sum(), (~fell).sum())  # README: 10 of 12
@@ -207,7 +227,7 @@ for i, (x0, y0, lab) in enumerate(zip(px, py, plabels)):
     ax.annotate(lab, xy=(x0, y0), xytext=(off, 2), textcoords="offset points",
                 ha="right" if off < 0 else "left", fontsize=5, color=GRAY, zorder=5)
 ax.scatter(px[broad], py[broad], marker="+", s=45, color=HIGHLIGHT, linewidths=1.2, zorder=6)
-# Label in the nearest clear space (SKILL.md rule 13): the closest offset whose text
+# Label in the nearest clear space (SKILL.md rule 6): the closest offset whose text
 # box, about 2.6 by 0.7 map units, covers no death, pump or pump label
 bx, by = px[broad], py[broad]
 obstacles = [(x0 - 0.2, x0 + 0.25 + 0.14 * len(lab), y0 - 0.25, y0 + 0.45)

@@ -1,9 +1,13 @@
 """A two-panel figure for a journal article, drawn by the rules in SKILL.md.
 
-Nature single column (89 mm), Helvetica (Arial or a metric clone where Helvetica
-is not installed), white page, no title in the artwork, individual observations
-with means and 95% confidence intervals, a log dose axis, direct labels, bold
-lowercase panel letters, and vector PDF output with embedded TrueType fonts.
+Tufte's principles first: every observation shown, the comparison side by side,
+dose (the explanatory variable) on the x-axis, the key values written on the
+graphic (means, n, half-maximal doses and the fold change), direct labels,
+range frames whose ends report the data's range, and layers from dark data to
+light references. Then the journal's production rules: Nature single column
+(89 mm), Helvetica (Arial or a metric clone where Helvetica is not installed),
+white page, no title in the artwork, bold lowercase panel letters, and vector PDF
+output with embedded TrueType fonts.
 
 The data are synthetic, generated below with a fixed seed. The script checks the
 caption's claims against the data before saving, and prints the caption.
@@ -145,18 +149,23 @@ def main(outdir):
         m, h = stats[name]
         ax_a.plot([x + 0.24, x + 0.24], [m - h, m + h], color="black", lw=0.5)
         ax_a.plot([x + 0.17, x + 0.31], [m, m], color="black", lw=1.0)
+        ax_a.text(x + 0.33, m, f"{m:.2f}", ha="left", va="center", fontsize=5.5)  # the value, on the graphic
     all_a = np.concatenate(list(groups.values()))
     ax_a.set_xticks(range(len(groups)), list(groups))
     ax_a.tick_params(axis="x", length=0)
     ax_a.spines["bottom"].set_visible(False)
     ax_a.set_xlim(-0.45, len(groups) - 0.45)
     range_frame(ax_a, "y", all_a.min(), all_a.max())
+    ends = [all_a.min(), 1.0, 1.2, 1.4, all_a.max()]   # the frame's ends report the range
+    ax_a.set_yticks(ends, [f"{t:.2f}" if t in (all_a.min(), all_a.max()) else f"{t:.1f}" for t in ends])
     horizontal_ylabel(ax_a, "Response (a.u.)")
+    ax_a.text(1, 1.04, "n = 8 per group", transform=ax_a.transAxes, ha="right", va="bottom",
+              fontsize=5.5, color=GRAY)
 
     # b: dose-response on a log axis, means with 95% CI bands, labeled directly.
     # The curves meet at both ends, so each label sits where its curve stands apart:
     # Drug B above and left of its rise, the control below and right of its rise.
-    label_at = {"Drug B": (3, 1 / 1.7, +0.08, "right"), "Control": (5, 1.7, -0.08, "left")}
+    label_at = {"Drug B": (3, 1 / 1.7, +0.08, "right"), "Control": (6, 1.5, -0.1, "left")}
     for name, c in curves.items():
         color = HIGHLIGHT if name == "Drug B" else GRAY
         m = c.mean(axis=1)
@@ -166,6 +175,21 @@ def main(outdir):
         i, dx, dy, ha = label_at[name]
         ax_b.text(dose[i] * dx, m[i] + dy, name, ha=ha, va="center",
                   color=color if color == HIGHLIGHT else "black")  # gray text would print as a halftone
+    # The finding, written where it is: each half-maximal dose marked on its curve,
+    # and the fold change between them (rule 6). Thin, light marks keep the data on top.
+    halves = {name: (c.mean(axis=1).min() + c.mean(axis=1).max()) / 2 for name, c in curves.items()}
+    half = sum(halves.values()) / 2
+    for name, x0 in ec50.items():
+        ax_b.plot(x0, halves[name], "o", ms=3, mfc="white", mec="black", mew=0.5, zorder=4)
+    ax_b.annotate("", xy=(ec50["Drug B"], half), xytext=(ec50["Control"], half),
+                  arrowprops=dict(arrowstyle="<->", color="black", lw=0.4,
+                                  shrinkA=2.5, shrinkB=2.5, mutation_scale=4), zorder=3)
+    ax_b.text(np.sqrt(ec50["Drug B"] * ec50["Control"]), half + 0.035, f"{fold:.0f}-fold",
+              ha="center", va="bottom", fontsize=5.5)
+    ax_b.text(ec50["Drug B"] * 0.9, half - 0.05, f"EC$_{{50}}$ {ec50['Drug B']:.2f} µM",
+              ha="right", va="top", fontsize=5.5, color=HIGHLIGHT)
+    ax_b.text(ec50["Control"] * 1.12, half - 0.05, f"EC$_{{50}}$ {ec50['Control']:.2f} µM",
+              ha="left", va="top", fontsize=5.5)
     ax_b.set_xscale("log")
     ax_b.xaxis.set_major_locator(FixedLocator([0.01, 0.1, 1, 10, 100]))
     ax_b.set_xticklabels(["0.01", "0.1", "1", "10", "100"])
@@ -187,10 +211,11 @@ def main(outdir):
         "Fig. 1 | Drug B raises the response and lowers the half-maximal dose about "
         f"{fold:.0f}-fold. a, Response of each culture (dots; n = 8 independent "
         "cultures per group); black lines show the mean and its 95% confidence "
-        "interval. b, Response against dose on a log scale; points are means of "
-        "n = 4 cultures per dose and bands are 95% confidence intervals. "
-        f"Half-maximal dose: control {ec50['Control']:.2f} µM, Drug B "
-        f"{ec50['Drug B']:.2f} µM. Synthetic data generated for illustration."
+        "interval, with the mean's value. b, Response against dose on a log scale; "
+        "points are means of n = 4 cultures per dose and bands are 95% confidence "
+        "intervals; open circles mark each half-maximal dose (EC50), interpolated "
+        f"between doses (control {ec50['Control']:.2f} µM, Drug B {ec50['Drug B']:.2f} µM). "
+        "Synthetic data generated for illustration."
     )
 
 
