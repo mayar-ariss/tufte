@@ -31,7 +31,7 @@ The skill has three parts, in order of authority.
 - **Carry information**: small multiples for multivariate data; high data density; multifunctioning elements such as range frames that report the data's range.
 - **Explain on the graphic, generously**: names, values, events and findings written beside what they explain; direct labels instead of legends.
 - **Stay clear by design, not by omission**: erase what carries no information; layer the rest from dark data to light references, so the figure reads at a glance and up close.
-- **Gray first, strong color in small areas**; type that is clear, precise and modest, running horizontally.
+- **Color last, gray first, strong color only in small areas**, one highlight by default; type that is clear, precise and modest, running horizontally.
 
 **2. The statistics literature adds the evidence Tufte left open** (rules 15–19): every observation for small samples instead of dynamite plots, error bars defined as SD, SEM or 95% confidence intervals, *n* stated, effect sizes before p-values, log axes for multiplicative data.
 
@@ -83,13 +83,13 @@ Nine numbers belong in a table, not a chart (Tufte, *The Visual Display of Quant
 | Color | Hex | Contrast | Use |
 |---|---|---:|---|
 | Gray (default) | `#666666` | 5.7 | Data, context, text |
-| Blue | `#0072B2` | 5.2 | Highlight; its label may share its color |
-| Vermillion | `#D55E00` | 3.9 | Second category; label in black |
-| Bluish green | `#009E73` | 3.4 | Third category; label in black |
+| Blue | `#0072B2` | 5.2 | Default highlight; its label may share its color |
+| Vermillion | `#D55E00` | 3.9 | Second highlight, only when needed; label in black |
+| Bluish green | `#009E73` | 3.4 | Third, only when needed; label in black |
 | Light gray | `#8c8c8c` | 3.4 | Individual observations, references |
-| Reddish purple | `#CC79A7` | 3.1 | Fourth category; label in black |
-| Sky blue | `#56B4E9` | 2.3 | Filled areas with a dark outline only |
-| Orange | `#E69F00` | 2.3 | Filled areas with a dark outline only |
+| Reddish purple | `#CC79A7` | 3.1 | Fourth, only when needed; label in black |
+| Sky blue | `#56B4E9` | 2.3 | Not for marks; never over large areas |
+| Orange | `#E69F00` | 2.3 | Not for marks; never over large areas |
 | Yellow | `#F0E442` | 1.3 | Avoid |
 
 `scripts/check_contrast.py` checks the palette documented in `rules/typography-and-color.md`, so it cannot drift.
