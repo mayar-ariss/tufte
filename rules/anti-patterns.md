@@ -24,7 +24,8 @@ Use this file when reviewing figure code or a finished figure for a scientific a
 | **Strong color over large areas**, or several categories colored by default | Bright fills side by side are loud and pull the picture apart (Imhof, via Tufte); color does work position or a label could do | Black and grays first, one red accent; light gray or a pale tint for large areas; separate categories by position, labels or small multiples | 12 |
 | **Red against green** as the only contrast | Indistinguishable for the most common color-vision deficiencies | The red accent against grays, blue as a second; Okabe–Ito for several categories; plus position, shape or a label | 12 |
 | **Key box** | Shuttling between key and data | Direct labels; symbols defined in the figure legend; a key only for a color scale, unframed | 7 |
-| **Gridlines, box, top and right spines** | Non-data-ink | Remove | 9 |
+| **Gridlines, box, top and right spines** | Non-data-ink; Nature avoids background gridlines | Remove; values that must be read exactly go in a table or the legend | 9 |
+| **Drop shadows, decorative icons** | Decoration; Nature avoids both | Remove; text labels instead of icons | 9 |
 | **Title inside the figure** | Duplicates the legend, wastes the column | Make it the brief title that opens the figure legend | 22 |
 | **Legend of 300 words or more, or with methods** | Nature's limit; methods belong in the Methods section | Brief title, each panel and its symbols, statistics; under 300 words | 22 |
 | **All-caps or Title Case labels** | Harder to read; not Nature's style | Lower case with an initial capital, no full stop | 13, 21 |
@@ -39,7 +40,7 @@ Use this file when reviewing figure code or a finished figure for a scientific a
 | **Panels comparing one quantity on different scales** | Defeats comparison | Shared axis and range | 3, 5 |
 | **Reference line or target not in the data** | Invents context | Remove, or use a value the user supplies | 3 |
 | **Different colors for the same condition** across figures | Design variation read as data variation | One color per condition throughout the paper | 2, 12 |
-| **Hatching or pattern fills** | Moiré vibration (chartjunk) | Lightness steps or direct labels | 9 |
+| **Hatching or pattern fills** | Moiré vibration (chartjunk); Nature asks for solid fills | Solid lightness steps or direct labels | 9 |
 
 ## Per-library detection
 

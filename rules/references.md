@@ -32,6 +32,8 @@ Cited in the rules by author and year.
 Read 16 November 2026; quoted in `rules/journals.md`. Check the current version before submitting.
 
 - Nature. Formatting guide. https://www.nature.com/nature/for-authors/formatting-guide
+- Nature Research figure guide. Preparing figures – our specifications. https://research-figure-guide.nature.com/figures/preparing-figures-our-specifications/
+- Nature Reviews. Guide to designing figures. https://www.nature.com/documents/natrev-artworkguide.pdf
 - Nature. Final submission. https://www.nature.com/nature/for-authors/final-submission
 - Nature Research figure guide. Building and exporting figure panels. https://research-figure-guide.nature.com/figures/building-and-exporting-figure-panels/
 - Nature Research figure guide. Extended Data formatting guidelines. https://research-figure-guide.nature.com/figures/extended-data-formatting-guidelines

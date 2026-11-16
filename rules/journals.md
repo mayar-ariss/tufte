@@ -6,7 +6,7 @@ Requirements quoted from the journals' author guidelines, read on 16 November 20
 
 ## Nature
 
-Sources: Nature, "Formatting guide" and "Final submission"; Nature Research figure guide, "Building and exporting figure panels" and "Extended Data formatting guidelines" (URLs in `rules/references.md`).
+Sources: Nature, "Formatting guide" and "Final submission"; Nature Research figure guide, "Preparing figures – our specifications", "Building and exporting figure panels" and "Extended Data formatting guidelines" (URLs in `rules/references.md`).
 
 ### Size, type and files
 
@@ -35,6 +35,12 @@ Sources: Nature, "Formatting guide" and "Final submission"; Nature Research figu
 | Panels | "Figures should not contain more than one panel unless the parts are logically connected"; panels in alphabetical order, laid out neatly and space-efficiently, minimizing white space, each sized by its content |
 | Keys | "Where possible, text, including keys to symbols, should be provided in the legend rather than on the figure itself" (formatting guide); keys or keylines in the figure "rather than having colour descriptions in the figure caption" (figure guide) |
 | Icons | text labels instead of decorative icons |
+| Graphs: required | axis lines and tick marks; axes labeled with units in parentheses; an accessible palette; text of at least 5 pt; standard fonts |
+| Graphs: avoided | background gridlines; superfluous icons and decorative elements; drop shadows; patterns; text on busy backgrounds; overlapping text; coloured text ("keylines, keys, etc. should be used instead") |
+| Colour references | keylines pointing to black text labels; coloured boxes with black text to refer to a colour |
+| Greek letters | Symbol font for glyphs and the Greek alphabet |
+| Photographs | at least 300 dpi; 450 dpi or more for the best online proof; scale bars and their text on a separate, editable layer |
+| Schematics | no separate specification: they follow the rules for all figures; a simple schematic may go in an Extended Data figure |
 | Color | avoid red/green combinations and rainbow scales |
 
 `SKILL.md` reconciles the two key rules: series are labeled directly on the figure, in black (the in-figure key); symbols, values and notes go in the legend (rules 6 and 7).
@@ -50,6 +56,20 @@ Sources: Nature, "Formatting guide" and "Final submission"; Nature Research figu
 | Units | unusual units or abbreviations defined in the legend |
 | Methods | no details of methods when the paper has a Methods section |
 | Placement | with the figure at initial submission; at final submission, listed one after another in the text document. Extended Data legends are prepared the same way |
+
+### Nature Reviews: conceptual figures (secondary)
+
+Nature's "Guide to designing figures" for Nature Reviews covers conceptual figures in commissioned content (reviews, News & Views), which Nature's art team redraws. It is not a requirement for research papers; `rules/diagrams-flowcharts.md` uses it as secondary guidance for diagrams. Its 8 pt text size is not followed: the research figure guide's 5–7 pt governs.
+
+| Topic | Guidance |
+|---|---|
+| Hierarchy | key elements most saturated, background elements neutral |
+| Flow | logical, top to bottom or left to right; readers look top left first; circular layouts only for circular processes |
+| Arrows | one arrow for an action; no multiple arrow weights and styles whose meaning is unclear |
+| Clarity | explain all elements in labels or the legend; label the first instance of every object |
+| Brevity | a full-page figure of no more than six panels |
+| Icons | only to aid understanding and context |
+| Figure or table | content that only categorises ideas works better as a list or table |
 
 ## Other journals (reference only)
 
