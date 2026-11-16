@@ -19,6 +19,7 @@ Cited in the rules by author and year.
 - Cumming G, Fidler F, Vaux DL. Error bars in experimental biology. *Journal of Cell Biology*. 2007;177(1):7–11. doi:10.1083/jcb.200611141
 - Krzywinski M, Altman N. Points of significance: Error bars. *Nature Methods*. 2013;10(10):921–922. doi:10.1038/nmeth.2659
 - Krzywinski M, Altman N. Points of significance: Visualizing samples with box plots. *Nature Methods*. 2014;11(2):119–120. doi:10.1038/nmeth.2813
+- Machado GM, Oliveira MM, Fernandes LAF. A physiologically-based model for simulation of color vision deficiency. *IEEE Transactions on Visualization and Computer Graphics*. 2009;15(6):1291–1298. doi:10.1109/TVCG.2009.113
 - Okabe M, Ito K. Color Universal Design (CUD): how to make figures and presentations that are friendly to colorblind people. 2008. https://jfly.uni-koeln.de/color/
 - Rougier NP, Droettboom M, Bourne PE. Ten simple rules for better figures. *PLoS Computational Biology*. 2014;10(9):e1003833. doi:10.1371/journal.pcbi.1003833
 - Vaux DL. Research methods: Know when your numbers are significant. *Nature*. 2012;492:180–181. doi:10.1038/492180a

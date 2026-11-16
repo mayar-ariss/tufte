@@ -31,7 +31,10 @@ theme_science <- function(base_size = 7, family = "Helvetica") {
 }
 
 GRAY <- "#666666"
-HIGHLIGHT <- "#0072B2"   # Okabe-Ito blue
+HIGHLIGHT <- "#CC0000"   # the accent (rule 12)
+SECOND <- "#0072B2"      # second accent, only when needed
+FIELD <- "#e5e5e5"       # muted field: normal ranges, bands, large areas
+# Fallback when three or more categories must be colored
 OKABE_ITO <- c(blue = "#0072B2", vermillion = "#D55E00",
                bluish_green = "#009E73", reddish_purple = "#CC79A7")
 ```
@@ -146,7 +149,7 @@ from plotnine import (aes, element_blank, element_text, geom_jitter, geom_line,
 
 plt.rcParams.update({"pdf.fonttype": 42, "ps.fonttype": 42})   # embedded TrueType fonts
 
-GRAY, HIGHLIGHT = "#666666", "#0072B2"
+GRAY, HIGHLIGHT = "#666666", "#CC0000"
 
 theme_science = theme_classic(base_size=7, base_family="Helvetica") + theme(
     text=element_text(color="black"),
